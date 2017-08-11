@@ -1,0 +1,7 @@
+.c9/
+vendor/
+composer.lock
+adminer.php
+tasks/pids/Daemon.pid
+tmp/
+backups/

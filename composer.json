@@ -1,0 +1,58 @@
+{
+    "name": "lcherone/cloud-developer",
+    "description": "Cloud developer system.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lawrence Cherone",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "require": {
+        "bcosca/fatfree-core": "^3.6",
+        "brandonwamboldt/utilphp": "1.0.*",
+        "gabordemooij/redbean": ">=4.2",
+        "guzzlehttp/guzzle": ">=6.2.1",
+        "h4cc/wkhtmltoimage-amd64": "0.12.x",
+        "h4cc/wkhtmltopdf-amd64": "^0.12.3",
+        "knplabs/knp-snappy": "^0.4.3",
+        "league/climate": "@dev",
+        "markstory/mini-asset": "^1.1",
+        "monolog/monolog": "^1.19",
+        "natxet/CssMin": "^3.0",
+        "opensaucesystems/lxd": "^0.6.0",
+        "php-http/guzzle6-adapter": "^1.1",
+        "plinker/core": ">=v0.1",
+        "plinker/cron": ">=v0.1",
+        "plinker/lxc": ">=v0.1",
+        "plinker/peer": "dev-master",
+        "plinker/redbean": ">=v0.1",
+        "plinker/system": ">=v1.0.1",
+        "plinker/tasks": "dev-master",
+        "tedivm/jshrink": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tasks\\": "tasks"
+        }
+    },
+    "scripts": {
+       "_post-update-cmd": [
+            "bash ./bin/minify_assets.sh",
+            "bash ./bin/fix_permissions.sh"
+        ],
+        "_post-install-cmd": [
+            "bash ./bin/minify_assets.sh",
+            "bash ./bin/fix_permissions.sh"
+        ],
+        "_setup": "bash ./bin/setup.sh",
+        "_build": "bash ./bin/minify_assets.sh"
+    }
+}
