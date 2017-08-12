@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Admin <small> - Objects</small>
+            Objects
         </h1>
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active"><i class="fa fa-code"></i> Opjects</li>
+            <li class="active"><i class="fa fa-code"></i> Objects</li>
         </ol>
     </div>
 </div>
@@ -34,6 +34,7 @@
                     </div>
                 </div>
             </div>
+            <?php if (!empty($objects)): ?>
             <div class="panel-body nopadding">
                 <div class="table-responsive">
                     <table class="table table-condensed table-hover">
@@ -41,6 +42,7 @@
                             <tr>
                                 <th>Title</th>
                                 <th>Lines</th>
+                                <th>Priority</th>
                                 <th style="width:1%"></th>
                             </tr>
                         </thead>
@@ -48,7 +50,8 @@
                             <?php foreach ($objects as $row): ?>
                             <tr>
                                 <td><a href="/admin/objects/edit/<?= $row->id ?>"><?= $row->title ?></a></td>
-                                <td><?= $row->line_count ?></td>
+                                <td><?= (int) $row->line_count ?></td>
+                                <td><?= (int) $row->priority ?></td>
                                 <td><a href="/admin/objects/delete/<?= $row->id ?>" class="btn btn-xs btn-danger remove-object"><i class="fa fa-times"></i></a></td>
                             </tr>
                             <?php endforeach ?>
@@ -56,6 +59,11 @@
                     </table>
                 </div>
             </div>
+            <?php else: ?>
+            <div class="panel-body">
+                You have not created any objects.
+            </div>
+            <?php endif ?>
         </div>
     </div>
 </div>

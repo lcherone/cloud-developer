@@ -5,8 +5,8 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="/admin/module"><i class="fa fa-list"></i> Modules</a></li>
-            <li class="active"><i class="fa fa-pencil"></i> Create</li>
+            <li><a href="/admin/module"><i class="fa fa-folder-o"></i> Modules</a></li>
+            <li class="active"><i class="fa fa-folder-o"></i> Create</li>
         </ol>
     </div>
 </div>
@@ -18,91 +18,145 @@
 </div>
 <?php endif ?>
 <?php if (!empty($form['errors']['success'])): ?>
-<div class="alert alert-success">
-    <a href="#" class="close" data-dismiss="alert">&times;</a>
-    <?= $form['errors']['success'] ?>
-</div>
+    <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <?= $form['errors']['success'] ?>
+    </div>
 <?php endif ?>
 
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list fa-fw"></i> Edit Module</h3>
-            </div>
-            <div class="panel-body">
-                <form class="form-horizontal" method="post">
-                    <input type="hidden" name="csrf" value="<?= $csrf ?>">
+<form class="form-horizontal" method="post" action="/admin/module/create">
+    <input type="hidden" name="csrf" value="<?= $csrf ?>">
 
-                    <div class="form-group<?= (!empty($form['errors']['title']) ? ' has-error has-feedback' : '') ?>">
-                        <label for="input-title" class="control-label col-xs-2">Title</label>
-                        <div class="col-xs-8">
-                            <input type="text" class="form-control" id="input-title" name="title" value="<?= (!empty($form['values']['title']) ? htmlentities($form['values']['title']) : '') ?>" placeholder="title...">
-                            <?php if (!empty($form['errors']['title'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
-                            <?php if (!empty($form['errors']['title'])): ?><span class="help-block"><?= $form['errors']['title'] ?></span><?php endif ?>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group<?= (!empty($form['errors']['icon']) ? ' has-error has-feedback' : '') ?>">
-                        <label for="input-icon" class="control-label col-xs-2">Icon</label>
-                        <div class="col-xs-8">
-                            <input list="input-icon" class="form-control" name="icon" value="<?= (!empty($form['values']['icon']) ? htmlentities($form['values']['icon']) : '') ?>">
-                            <datalist id="input-icon"></datalist>
-                            <?php if (!empty($form['errors']['icon'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
-                            <?php if (!empty($form['errors']['icon'])): ?><span class="help-block"><?= $form['errors']['icon'] ?></span><?php endif ?>
-                        </div>
-                    </div>
-
-                    <div class="form-group<?= (!empty($form['errors']['slug']) ? ' has-error has-feedback' : '') ?>">
-                        <label for="input-slug" class="control-label col-xs-2">Slug</label>
-                        <div class="col-xs-8">
-                            <input type="text" class="form-control" id="input-slug" name="slug" value="<?= (!empty($form['values']['slug']) ? htmlentities($form['values']['slug']) : '') ?>" placeholder="slug...">
-                            <?php if (!empty($form['errors']['slug'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
-                            <?php if (!empty($form['errors']['slug'])): ?><span class="help-block"><?= $form['errors']['slug'] ?></span><?php endif ?>
-                        </div>
-                    </div>
-
-                    <div class="form-group<?= (!empty($form['errors']['visibility']) ? ' has-error has-feedback' : '') ?>">
-                        <label for="input-visibility" class="control-label col-xs-2">Visibility</label>
-                        <div class="col-xs-8">
-                            <select class="form-control" id="input-visibility" name="visibility">
-                                <option value="1"<?= ($form['values']['visibility'] == '1' ? ' selected' : '') ?>>Always</option>
-                                <option value="2"<?= ($form['values']['visibility'] == '2' ? ' selected' : '') ?>>When not signed in</option>
-                                <option value="3"<?= ($form['values']['visibility'] == '3' ? ' selected' : '') ?>>When signed in</option>
-                                <option value="4"<?= ($form['values']['visibility'] == '4' ? ' selected' : '') ?>>When developer</option>
-                            </select>
-                            <?php if (!empty($form['errors']['visibility'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
-                            <?php if (!empty($form['errors']['visibility'])): ?><span class="help-block"><?= $form['errors']['visibility'] ?></span><?php endif ?>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-xs-offset-2 col-xs-10">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
-                    </div>
-                </form>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-folder-o fa-fw"></i> Module Details</h3>
+                </div>
+                <div class="panel-body nopadding">
+                    <table class="table table-condensed form-table">
+                        <tbody>
+                            <tr class="form-group<?= (!empty($form['errors']['name']) ? ' has-error has-feedback' : '') ?>">
+                                <td class="text-right col-md-2"><label for="input-name" class="control-label">Name</label></td>
+                                <td>
+                                    <div class="input-group col-xs-10">
+                                        <input type="text" class="form-control" id="input-name" name="name" value="<?= (!empty($form['values']['name']) ? htmlentities($form['values']['name']) : '') ?>" placeholder="Enter module name... e.g: Blog">
+                                        <!--<span class="input-group-btn">-->
+                                        <!--    <button class="btn btn-success add-row" type="button"><i class="fa fa-plus"></i></button>-->
+                                        <!--</span>-->
+                                    </div>
+                                    <?php if (!empty($form['errors']['name'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
+                                    <?php if (!empty($form['errors']['name'])): ?><span class="help-block"><?= $form['errors']['name'] ?></span><?php endif ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="form-group">
+                                <td class="text-right"></td>
+                                <td>
+                                    <div class="input-group col-xs-10">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> Before Load
+                    <div class="btn-group pull-right">
+                        <?php if (!empty($snippets)): ?>
+                        <a href="#" role="button" class="btn btn-link btn-xs label-btn" aria-disabled="true">Snippets:</a>
+                        <?php foreach ($snippets as $row): if ($row->type != 'beforeload') { continue; } ?>
+                        <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>
+                        <?php endforeach ?>
+                        <?php endif ?>
+                    </div>
+                    </h3>
+                </div>
+                <div class="panel-body nopadding">
+                    <div class="">
+                        <textarea class="form-control form-textarea" rows="10" id="input-beforeload" name="beforeload"><?= (!empty($form['values']['beforeload']) ? $form['values']['beforeload'] : '') ?></textarea>
+                        <div id="beforeload" style="position: relative;height: 380px;width: 100%"></div>
+                        <?php if (!empty($form['errors']['beforeload'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
+                        <?php if (!empty($form['errors']['beforeload'])): ?><span class="help-block"><?= $form['errors']['beforeload'] ?></span><?php endif ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 <?php ob_start() ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.6.0/js-yaml.min.js"></script>
-<script>
+<script src="https://ajaxorg.github.io/ace-builds/src-min-noconflict/ace.js"></script>
+<script type="text/javascript">
     $(document).ready(function() {
-        $.get('https://rawgit.com/FortAwesome/Font-Awesome/master/src/icons.yml', function(data){    
-            var parsedYaml = jsyaml.load(data);
-            var select = $('datalist#input-icon');
-            var selected = select.data('value');
-            
-            $.each(parsedYaml.icons, function(index, icon) {
-            	select.append('<option value="fa fa-' + icon.id + '"' + (selected === 'fa fa-' + icon.id ? ' selected' : '') + '></option>');
+        
+        //
+        var textareaA = $('textarea[name="beforeload"]').hide(),
+            editorA = ace.edit("beforeload"),
+            editorSessionA = editorA.getSession();
+
+        editorA.setTheme("ace/theme/eclipse");
+        editorA.setOptions({
+            minLines: 20,
+            maxLines: Infinity
+        });
+
+        editorSessionA.setUseWorker(false);
+        editorSessionA.setMode("ace/mode/php");
+        editorSessionA.setValue(textareaA.val());
+        editorSessionA.on('change', function() {
+            textareaA.val(editorSessionA.getValue());
+        });
+        
+        $(document).on('click', '.fetch-snippet', function(){
+            var id = $(this).data('id');
+            var type = $(this).data('type');
+            $.ajax({
+                type: "GET",
+                url: '/admin/snippet/get/'+id,
+                dataType: "text",
+                success: function(data) {
+                    if (type == 'beforeload') {
+                        editorSessionA.insert(editorA.getCursorPosition(), data);
+                    }
+                    
+                    if (type == 'body') {
+                        editorSession.insert(editor.getCursorPosition(), data);
+                    }
+                    
+                    if (type == 'javascript') {
+                        editorSessionJS.insert(editorJS.getCursorPosition(), data);
+                    }
+                    
+                    if (type == 'css') {
+                        editorSession.insert(editor.getCursorPosition(), data);
+                    }
+                }
             });
         });
 
-        // load.script('/js/module/tasks.js', function() {
-        //     nodes.init();
+        $(window).bind('keydown', function(event) {
+            if (event.ctrlKey || event.metaKey) {
+                switch (String.fromCharCode(event.which).toLowerCase()) {
+                    case 's':
+                        event.preventDefault();
+                        $('[type="submit"]').trigger('click');
+                    break;
+                }
+            }
+        });
+        
+        // load.script('/js/tasks.js', function() {
+        //     tasks.view();
         // });
     });
 </script>

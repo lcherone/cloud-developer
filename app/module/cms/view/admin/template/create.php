@@ -6,7 +6,7 @@
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="/admin/template"><i class="fa fa-columns"></i> Template</a></li>
-            <li class="active"><i class="fa fa-pencil"></i> Create</li>
+            <li class="active"><i class="fa fa-plus"></i> Create</li>
         </ol>
     </div>
 </div>

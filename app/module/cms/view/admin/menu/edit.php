@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Admin <small> - Menu - Edit</small>
+            Menu <small> - Edit</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
@@ -24,68 +24,92 @@
 </div>
 <?php endif ?>
 
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list fa-fw"></i> Edit Menu</h3>
-            </div>
-            <div class="panel-body">
-                <form class="form-horizontal" method="post">
-                    <input type="hidden" name="csrf" value="<?= $csrf ?>">
-
-                    <div class="form-group<?= (!empty($form['errors']['title']) ? ' has-error has-feedback' : '') ?>">
-                        <label for="input-title" class="control-label col-xs-2">Title</label>
-                        <div class="col-xs-8">
-                            <input type="text" class="form-control" id="input-title" name="title" value="<?= (!empty($form['values']['title']) ? htmlentities($form['values']['title']) : '') ?>" placeholder="title...">
-                            <?php if (!empty($form['errors']['title'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
-                            <?php if (!empty($form['errors']['title'])): ?><span class="help-block"><?= $form['errors']['title'] ?></span><?php endif ?>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group<?= (!empty($form['errors']['icon']) ? ' has-error has-feedback' : '') ?>">
-                        <label for="input-icon" class="control-label col-xs-2">Icon</label>
-                        <div class="col-xs-8">
-                            <input list="input-icon" class="form-control" name="icon" value="<?= (!empty($form['values']['icon']) ? htmlentities($form['values']['icon']) : '') ?>">
-                            <datalist id="input-icon"></datalist>
-                            <?php if (!empty($form['errors']['icon'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
-                            <?php if (!empty($form['errors']['icon'])): ?><span class="help-block"><?= $form['errors']['icon'] ?></span><?php endif ?>
-                        </div>
-                    </div>
-
-                    <div class="form-group<?= (!empty($form['errors']['slug']) ? ' has-error has-feedback' : '') ?>">
-                        <label for="input-slug" class="control-label col-xs-2">Slug</label>
-                        <div class="col-xs-8">
-                            <input type="text" class="form-control" id="input-slug" name="slug" value="<?= (!empty($form['values']['slug']) ? htmlentities($form['values']['slug']) : '') ?>" placeholder="slug...">
-                            <?php if (!empty($form['errors']['slug'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
-                            <?php if (!empty($form['errors']['slug'])): ?><span class="help-block"><?= $form['errors']['slug'] ?></span><?php endif ?>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group<?= (!empty($form['errors']['visibility']) ? ' has-error has-feedback' : '') ?>">
-                        <label for="input-visibility" class="control-label col-xs-2">Visibility</label>
-                        <div class="col-xs-8">
-                            <select class="form-control" id="input-visibility" name="visibility">
-                                <option value="1"<?= ($form['values']['visibility'] == '1' ? ' selected' : '') ?>>Always</option>
-                                <option value="2"<?= ($form['values']['visibility'] == '2' ? ' selected' : '') ?>>When not signed in</option>
-                                <option value="3"<?= ($form['values']['visibility'] == '3' ? ' selected' : '') ?>>When signed in</option>
-                                <option value="4"<?= ($form['values']['visibility'] == '4' ? ' selected' : '') ?>>When developer</option>
-                            </select>
-                            <?php if (!empty($form['errors']['visibility'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
-                            <?php if (!empty($form['errors']['visibility'])): ?><span class="help-block"><?= $form['errors']['visibility'] ?></span><?php endif ?>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-xs-offset-2 col-xs-10">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
-                    </div>
-                </form>
+<form class="form-horizontal" method="post">
+    <input type="hidden" name="csrf" value="<?= $csrf ?>">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list fa-fw"></i> Create Menu</h3>
+                </div>
+                <div class="panel-body nopadding">
+                    <table class="table table-condensed form-table">
+                        <tbody>
+                            <tr class="form-group<?= (!empty($form['errors']['title']) ? ' has-error has-feedback' : '') ?>">
+                                <td class="text-right col-md-2"><label for="input-title" class="control-label">Title</label></td>
+                                <td>
+                                    <div class="input-group col-xs-10">
+                                        <input type="text" class="form-control" id="input-title" name="title" value="<?= (!empty($form['values']['title']) ? htmlentities($form['values']['title']) : '') ?>" placeholder="Enter title... e.g: Blog">
+                                        <!--<span class="input-group-btn">-->
+                                        <!--    <button class="btn btn-success add-row" type="button"><i class="fa fa-plus"></i></button>-->
+                                        <!--</span>-->
+                                    </div>
+                                    <?php if (!empty($form['errors']['title'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
+                                    <?php if (!empty($form['errors']['title'])): ?><span class="help-block"><?= $form['errors']['title'] ?></span><?php endif ?>
+                                </td>
+                            </tr>
+                            <tr class="form-group<?= (!empty($form['errors']['icon']) ? ' has-error has-feedback' : '') ?>">
+                                <td class="text-right col-md-2"><label for="input-icon" class="control-label">Icon</label></td>
+                                <td>
+                                    <div class="input-group col-xs-10">
+                                        <input list="input-icon" class="form-control" name="icon" value="<?= (!empty($form['values']['icon']) ? htmlentities($form['values']['icon']) : '') ?>" placeholder="Enter icon (Font Awesome)... e.g: fa fa-horn">
+                                        <datalist id="input-icon"></datalist>
+                                        <!--<span class="input-group-btn">-->
+                                        <!--    <button class="btn btn-success add-row" type="button"><i class="fa fa-plus"></i></button>-->
+                                        <!--</span>-->
+                                    </div>
+                                    <?php if (!empty($form['errors']['icon'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
+                                    <?php if (!empty($form['errors']['icon'])): ?><span class="help-block"><?= $form['errors']['icon'] ?></span><?php endif ?>
+                                </td>
+                            </tr>
+                            <tr class="form-group<?= (!empty($form['errors']['slug']) ? ' has-error has-feedback' : '') ?>">
+                                <td class="text-right col-md-2"><label for="input-slug" class="control-label">Slug</label></td>
+                                <td>
+                                    <div class="input-group col-xs-10">
+                                        <input type="text" class="form-control" id="input-slug" name="slug" value="<?= (!empty($form['values']['slug']) ? htmlentities($form['values']['slug']) : '') ?>" placeholder="Enter slug... e.g: /blog">
+                                        <!--<span class="input-group-btn">-->
+                                        <!--    <button class="btn btn-success add-row" type="button"><i class="fa fa-plus"></i></button>-->
+                                        <!--</span>-->
+                                    </div>
+                                    <?php if (!empty($form['errors']['slug'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
+                                    <?php if (!empty($form['errors']['slug'])): ?><span class="help-block"><?= $form['errors']['slug'] ?></span><?php endif ?>
+                                </td>
+                            </tr>
+                            <tr class="form-group<?= (!empty($form['errors']['visibility']) ? ' has-error has-feedback' : '') ?>">
+                                <td class="text-right col-md-2"><label for="input-visibility" class="control-label">Visibility</label></td>
+                                <td>
+                                    <div class="input-group col-xs-10">
+                                        <select class="form-control" id="input-visibility" name="visibility">
+                                            <option value="1"<?= ($form['values']['visibility'] == '1' ? ' selected' : '') ?>>Always</option>
+                                            <option value="2"<?= ($form['values']['visibility'] == '2' ? ' selected' : '') ?>>When not signed in</option>
+                                            <option value="3"<?= ($form['values']['visibility'] == '3' ? ' selected' : '') ?>>When signed in</option>
+                                            <option value="4"<?= ($form['values']['visibility'] == '4' ? ' selected' : '') ?>>When developer</option>
+                                        </select>
+                                        <!--<span class="input-group-btn">-->
+                                        <!--    <button class="btn btn-success add-row" type="button"><i class="fa fa-plus"></i></button>-->
+                                        <!--</span>-->
+                                    </div>
+                                    <?php if (!empty($form['errors']['visibility'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
+                                    <?php if (!empty($form['errors']['visibility'])): ?><span class="help-block"><?= $form['errors']['slug'] ?></span><?php endif ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="form-group">
+                                <td class="text-right"></td>
+                                <td>
+                                    <div class="input-group col-xs-10">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</form>
 
 <?php ob_start() ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.6.0/js-yaml.min.js"></script>

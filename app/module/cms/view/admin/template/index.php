@@ -34,6 +34,7 @@
                     </div>
                 </div>
             </div>
+            <?php if (!empty($templates)): ?>
             <div class="panel-body nopadding">
                 <div class="table-responsive">
                     <table class="table table-condensed table-hover">
@@ -56,6 +57,11 @@
                     </table>
                 </div>
             </div>
+            <?php else: ?>
+            <div class="panel-body">
+                No tasks have been created.
+            </div>
+            <?php endif ?>
         </div>
     </div>
 </div>

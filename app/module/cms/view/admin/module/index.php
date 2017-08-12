@@ -27,13 +27,14 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-folder-o fa-fw"></i> Modules</h3>
+                <h3 class="panel-title"><i class="fa fa-folder-o fa-fw"></i> All Modules</h3>
                 <div class="panel-buttons text-right">
                     <div class="btn-group-xs">
-                        <a href="/admin/module/create" class="btn btn-success ajax-link"><i class="fa fa-plus"></i> New Module</a>
+                        <a href="/admin/module/create" class="btn btn-success ajax-link"><i class="fa fa-plus"></i> Create Module</a>
                     </div>
                 </div>
             </div>
+            <?php if (!empty($modules)): ?>
             <div class="panel-body nopadding">
                 <div class="table-responsive">
                     <table class="table table-condensed table-hover">
@@ -55,7 +56,12 @@
                         </tbody>
                     </table>
                 </div>
+            </div>           
+            <?php else: ?>
+            <div class="panel-body">
+                You have not added any modules.
             </div>
+            <?php endif ?>
         </div>
     </div>
 </div>

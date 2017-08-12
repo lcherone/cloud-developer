@@ -34,6 +34,7 @@
                     </div>
                 </div>
             </div>
+            <?php if (!empty($snippets)): ?>
             <div class="panel-body nopadding">
                 <div class="table-responsive">
                     <table class="table table-condensed table-hover">
@@ -56,6 +57,11 @@
                     </table>
                 </div>
             </div>
+            <?php else: ?>
+            <div class="panel-body">
+                You have not added any code snippets.
+            </div>
+            <?php endif ?>
         </div>
     </div>
 </div>

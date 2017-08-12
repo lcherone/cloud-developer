@@ -133,7 +133,7 @@ class Controller extends \Framework\Controller
         $f3->set('menus', (array) $this->menu->findAll());
 
         // execute all object code
-        foreach ((array) $this->objects->findAll() as $row) {
+        foreach ((array) $this->objects->findAll('ORDER BY priority DESC') as $row) {
             ob_start();
             eval('?>'.$row->source);
             $page->body = ob_get_clean().$page->body;

@@ -195,7 +195,7 @@ class Admin extends \Framework\Controller
                     }
 
                     // count source lines
-                    $form['values']['line_count'] = 0;
+                    $form['values']['line_count'] = 1;
 
                     $lineCount = function($key) use ($form) {
                         $lines = substr_count($form['values'][$key], PHP_EOL);
@@ -290,7 +290,7 @@ class Admin extends \Framework\Controller
                     }
 
                     // count source lines
-                    $form['values']['line_count'] = 0;
+                    $form['values']['line_count'] = 1;
 
                     $lineCount = function($key) use ($form) {
                         $lines = substr_count($form['values'][$key], PHP_EOL);
@@ -545,13 +545,8 @@ class Admin extends \Framework\Controller
                     unset($form['values']['csrf']);
 
                     // check title
-                    if (empty($form['values']['title'])) {
-                        $form['errors']['title'] = 'Title is a required field.';
-                    }
-
-                    // check slug
-                    if (empty($form['values']['slug'])) {
-                        $form['errors']['slug'] = 'Slug is a required field.';
+                    if (empty($form['values']['name'])) {
+                        $form['errors']['name'] = 'Title is a required field.';
                     }
 
                     $form['values']['site'] = $_SERVER['HTTP_HOST'];
@@ -559,7 +554,7 @@ class Admin extends \Framework\Controller
                     // alls good
                     if (empty($form['errors'])) {
                         // count source lines
-                        $form['values']['line_count'] = 0;
+                        $form['values']['line_count'] = 1;
 
                         $lineCount = function($key) use ($form) {
                             $lines = substr_count($form['values'][$key], PHP_EOL);
@@ -570,6 +565,10 @@ class Admin extends \Framework\Controller
 
                         $module = $this->module->create($form['values']);
                         $this->module->store($module);
+                        
+                        $module = $module->fresh();
+                        
+                        $f3->reroute('/admin/module/view/'.$module->id.'?c');
 
                         // success
                         $form['errors']['success'] = 'Module created.';
@@ -622,7 +621,7 @@ class Admin extends \Framework\Controller
                     // alls good
                     if (empty($form['errors'])) {
                         // count source lines
-                        $form['values']['line_count'] = 0;
+                        $form['values']['line_count'] = 1;
 
                         $lineCount = function($key) use ($form) {
                             $lines = substr_count($form['values'][$key], PHP_EOL);
@@ -703,6 +702,9 @@ class Admin extends \Framework\Controller
                 // bit of a hack coz not using session flashbag
                 if (isset($_GET['s'])) {
                     $form['errors']['success'] = 'Module Updated.';
+                }
+                if (isset($_GET['c'])) {
+                    $form['errors']['success'] = 'Module Created.';
                 }
 
                 $f3->set('form', $form);
@@ -1612,8 +1614,22 @@ class Admin extends \Framework\Controller
 
                     // alls good
                     if (empty($form['errors'])) {
+                        
+                        // count source lines
+                        $form['values']['line_count'] = 1;
+    
+                        $lineCount = function($key) use ($form) {
+                            $lines = substr_count($form['values'][$key], PHP_EOL);
+                            return $lines === 0 ? 1 : $lines;
+                        };
+                        $form['values']['line_count'] = $form['values']['line_count'] + $lineCount('source');
+                        
                         $object = $this->objects->create($form['values']);
                         $this->objects->store($object);
+                        
+                        $object = $object->fresh();
+                        
+                        $f3->reroute('/admin/objects/edit/'.$object->id.'?c');
 
                         // success
                         $form['errors']['success'] = 'Object created.';
@@ -1624,6 +1640,26 @@ class Admin extends \Framework\Controller
 
                 //
                 $this->set_csrf();
+                
+                //
+                $objects = (array) $this->objects->findAll();
+                $f3->set('objects', $objects);
+                
+                // helper function pick out object based on priority
+                $f3->set('helper.getObjectNameByPriority', function($priority = null) use ($objects) {
+                    $matched = [];
+                    foreach ($objects as $row) {
+                        if ($row->priority == $priority) {
+                            $matched[] = $row->title;
+                        }
+                    }
+                    
+                    if (empty($matched)) {
+                        return;
+                    } else {
+                        return ' ('.implode(', ', $matched).')';
+                    }
+                });
 
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
@@ -1668,6 +1704,15 @@ class Admin extends \Framework\Controller
 
                     // alls good
                     if (empty($form['errors'])) {
+                        // count source lines
+                        $form['values']['line_count'] = 1;
+    
+                        $lineCount = function($key) use ($form) {
+                            $lines = substr_count($form['values'][$key], PHP_EOL);
+                            return $lines === 0 ? 1 : $lines;
+                        };
+                        $form['values']['line_count'] = $form['values']['line_count'] + $lineCount('source');
+                        
                         // ..
                         $object->import($form['values']);
                         $this->objects->store($object);
@@ -1681,6 +1726,34 @@ class Admin extends \Framework\Controller
                 }
 
                 $f3->set('form', $form);
+                
+                //
+                $objects = (array) $this->objects->findAll();
+                $f3->set('objects', $objects);
+                
+                // helper function pick out object based on priority
+                $f3->set('helper.getObjectNameByPriority', function($priority = null) use ($objects) {
+                    $matched = [];
+                    foreach ($objects as $row) {
+                        if ($row->priority == $priority) {
+                            $matched[] = $row->title;
+                        }
+                    }
+                    
+                    if (empty($matched)) {
+                        return;
+                    } else {
+                        return ' ('.implode(', ', $matched).')';
+                    }
+                });
+                
+                // bit of a hack coz not using session flashbag
+                if (isset($_GET['u'])) {
+                    $form['errors']['success'] = 'Object Updated.';
+                }
+                if (isset($_GET['c'])) {
+                    $form['errors']['success'] = 'Object Created.';
+                }
 
                 //
                 $this->set_csrf();
@@ -1707,7 +1780,7 @@ class Admin extends \Framework\Controller
              *
              */
             default: {
-                $f3->set('objects', (array) $this->objects->findAll());
+                $f3->set('objects', (array) $this->objects->findAll('ORDER by priority ASC'));
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
                     'page' => [
