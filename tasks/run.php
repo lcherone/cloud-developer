@@ -1,4 +1,6 @@
 <?php
+use RedBeanPHP\R;
+
 require '../vendor/autoload.php';
 require 'lib/Runner.php';
 
@@ -8,36 +10,33 @@ $f3 = \Base::instance();
 // load app config
 $f3->config('../app/config.ini');
 
-$config = [
-    // plinker configuration
-    'plinker' => [
-        // tracker or control system which reports should be sent to
-        'tracker' => 'http://c9-cloud.free.lxd.systems',
-        
-        // peer should point to this instance
-        'peer' => 'http://c9-cloud.free.lxd.systems',
+// connect to redbean
+if (!R::testConnection()) {
 
-        // network keys
-        'public_key'  => 'f6e894b79c8a8368b0f6d94c6b322e0f6881bab7da964abbed85525386e9cb37',
-        
-        // should be the same across all servers
-        'private_key' => 'd80fcf7b7a4ebd98574a7e73fc1801cf201e6c95aa5a0b8f8f5e6eafc155ef1d',
+    // get framework
+    $f3 = \Base::instance();
 
-        'enabled' => true,
-        'encrypted' => true
-    ],
+    $db = $f3->get('db');
 
-    // database connection
-    // default: sqlite:'.__DIR__.'/database.db
-    'database' => $f3->get('db'),
+    R::addDatabase(
+        'connection',
+        $db['dsn'],
+        $db['username'],
+        $db['password']
+    );
 
-    // displays output to consoles
-    'debug' => true,
+    R::selectDatabase('connection');
+    R::freeze($db['freeze']);
+    R::debug($db['debug'], 2);
+}
 
-    // daemon sleep time
-    'sleep_time' => 1
-];
+// load local plinker server endpoint
+$server = R::load('servers', 1);
 
+// convert its config into an array
+$config = json_decode($server->config, true);
+
+// init task runner
 $task = new Tasks\Runner($config);
 $task->climate = new League\CLImate\CLImate;
 

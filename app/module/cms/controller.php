@@ -14,6 +14,7 @@ class Controller extends \Framework\Controller
         $this->page     = new \Framework\Model('page');
         $this->menu     = new \Framework\Model('menu');
         $this->module   = new \Framework\Model('module');
+        $this->servers  = new \Framework\Model('servers');
         $this->objects  = new \Framework\Model('objects');
         $this->template = new \Framework\Model('template');
         $this->settings = new \Framework\Model('settings');
@@ -24,9 +25,84 @@ class Controller extends \Framework\Controller
      */
     public function index(\Base $f3, $params)
     {
+        // load local plinker server config
+        $server = $this->servers->load(1);
+
+        // if empty insert self into db
+        if (empty($server->id)) {
+            /**
+             * Plinker Config
+             */
+            $plinker = [
+                // plinker configuration
+                'plinker' => [
+                    // endpoint should point to this instance
+                    'endpoint' => 'http://'.$_SERVER['HTTP_HOST'],
+            
+                    // network keys
+                    'public_key'  => hash('sha256', microtime(true).uniqid(true)),
+                    
+                    // should be the same across all servers
+                    'private_key' => $f3->get('plinker.private_key'),
+            
+                    'enabled' => $f3->get('plinker.enabled'),
+                    'encrypted' => true
+                ],
+                    
+                // database connection
+                'database' => $f3->get('db'),
+                    
+                // displays output to task runner console
+                'debug' => true,
+                    
+                // daemon sleep time
+                'sleep_time' => 1
+            ];
+
+            // insert config into database
+            $server = $this->servers->create([
+                'name'    => $_SERVER['HTTP_HOST'],
+                'endpoint'    => $plinker['plinker']['endpoint'],
+                'public_key' => $plinker['plinker']['public_key'],
+                'private_key' => $plinker['plinker']['private_key'],
+                'enabled' =>  $plinker['plinker']['enabled'],
+                'encrypted' =>  $plinker['plinker']['encrypted'],
+                'config' => json_encode($plinker)
+            ]);
+            $this->servers->store($server);
+            
+            $server = $server->fresh();
+        }
+
         // get site settings
         foreach ((array) $this->settings->findAll() as $row) {
             $f3->set('setting.'.$row->key, $row->value); 
+        }
+        
+        // plinker handler
+        /**
+         * Plinker Server
+         */
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        
+            /** 
+             * Plinker server listener
+             */
+            if (isset($_POST['data']) && 
+                isset($_POST['token']) && 
+                isset($_POST['public_key'])
+            ) {
+                // test its encrypted
+                file_put_contents('./tmp/encryption-proof.txt', print_r($_POST, true));
+        
+                //
+                $server = new \Plinker\Core\Server(
+                    $_POST,
+                    hash('sha256', gmdate('h').$server->public_key),
+                    hash('sha256', gmdate('h').$server->private_key)
+                );
+                exit($server->execute());
+            }
         }
 
         //

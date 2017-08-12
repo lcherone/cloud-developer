@@ -23,7 +23,7 @@ class Asset extends \Prefab
      */
     public function css(\Base $f3, $params)
     {
-        if (isset($_SESSION['template_id'])) {
+        if (isset($_SESSION['template_id']) && !empty($_GET['default'])) {
             $template = 'tmp/template/'.$_SESSION['template_id'].'/css/'.basename($params['filename']);
         } else {
             $template = 'app/template/css/'.basename($params['filename']);
@@ -38,7 +38,7 @@ class Asset extends \Prefab
      */
     public function js(\Base $f3, $params)
     {
-        if (isset($_SESSION['template_id'])) {
+        if (isset($_SESSION['template_id']) && !empty($_GET['default'])) {
             $template = 'tmp/template/'.$_SESSION['template_id'].'/js/'.basename($params['filename']);
         } else {
             $template = 'app/template/js/'.basename($params['filename']);
@@ -53,7 +53,7 @@ class Asset extends \Prefab
      */
     public function dist(\Base $f3, $params)
     {
-        if (isset($_SESSION['template_id'])) {
+        if (isset($_SESSION['template_id']) && !empty($_GET['default'])) {
             $template = 'tmp/template/'.$_SESSION['template_id'].'/dist/'.basename($params['filename']);
         } else {
             $template = 'app/template/dist/'.basename($params['filename']);
@@ -68,7 +68,7 @@ class Asset extends \Prefab
      */
     public function img(\Base $f3, $params)
     {
-        if (isset($_SESSION['template_id'])) {
+        if (isset($_SESSION['template_id']) && !empty($_GET['default'])) {
             $template = 'tmp/template/'.$_SESSION['template_id'].'/img/'.basename($params['filename']);
         } else {
             $template = 'app/template/img/'.basename($params['filename']);

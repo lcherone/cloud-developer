@@ -140,7 +140,7 @@ if (empty($server)) {
 try {
     $error = [];
     $tasks = new Plinker\Core\Client(
-        $server->peer,
+        $server->endpoint,
         'Tasks\Manager',
         hash('sha256', gmdate('h').$server->public_key),
         hash('sha256', gmdate('h').$server->private_key),

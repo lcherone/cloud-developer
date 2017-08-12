@@ -30,6 +30,93 @@ class Admin extends \Framework\Controller
      */
     public function index(\Base $f3, $params)
     {
+        //$f3->set('servers', (array) $this->servers->findAll());
+        $f3->set('tasks', (array) $this->tasks->findAll());
+        $f3->set('pages', (array) $this->page->findAll());
+        $f3->set('menus', (array) $this->menu->findAll());
+        $f3->set('templates', (array) $this->template->findAll());
+        $f3->set('snippets', (array) $this->snippet->findAll());
+        $f3->set('modules', (array) $this->module->findAll());
+        $f3->set('objects', (array) $this->objects->findAll('ORDER by priority ASC'));
+
+        // load local plinker server endpoint
+        $server =  $this->servers->load(1);
+
+        // connect to tracker - which is self at this stage
+        $tasks = new \Plinker\Core\Client(
+            $server->endpoint,
+            'Tasks\Manager',
+            hash('sha256', gmdate('h').$server->public_key),
+            hash('sha256', gmdate('h').$server->private_key),
+            json_decode($server->config, true),
+            $server->encrypted
+        );
+        
+        // // create the task on the server - we call it system
+        try {
+            // create task
+            $tasks->create(
+                // name
+                'System Information',
+                // source
+                '<?php
+        $system = new \Plinker\System\System();
+        
+        $return = [];
+            
+        // move into tmp folder so files are written there
+        $cwd = getcwd();
+        chdir(\'../tmp\');
+        
+        if ($params[0] == \'system_updates\') {   $return[@$params[0]] = $system->system_updates(); }
+        if ($params[0] == \'disk_space\') {       $return[@$params[0]] = $system->disk_space([@$params[1]]); }
+        if ($params[0] == \'memory_stats\') {     $return[@$params[0]] = $system->memory_stats(); }
+        if ($params[0] == \'memory_total\') {     $return[@$params[0]] = $system->memory_total(); }
+        if ($params[0] == \'server_cpu_usage\') { $return[@$params[0]] = $system->server_cpu_usage(); }
+        if ($params[0] == \'machine_id\') {       $return[@$params[0]] = $system->machine_id(); }
+        if ($params[0] == \'netstat\') {          $return[@$params[0]] = $system->netstat(); }
+        if ($params[0] == \'arch\') {             $return[@$params[0]] = $system->arch(); }
+        if ($params[0] == \'hostname\') {         $return[@$params[0]] = $system->hostname(); }
+        if ($params[0] == \'logins\') {           $return[@$params[0]] = $system->logins(); }
+        if ($params[0] == \'pstree\') {           $return[@$params[0]] = $system->pstree(); }
+        if ($params[0] == \'top\') {              $return[@$params[0]] = $system->top(); }
+        if ($params[0] == \'uname\') {            $return[@$params[0]] = $system->uname(); }
+        if ($params[0] == \'cpuinfo\') {          $return[@$params[0]] = $system->cpuinfo(); }
+        if ($params[0] == \'netusage\') {         $return[@$params[0]] = $system->netusage(); }
+        if ($params[0] == \'load\') {             $return[@$params[0]] = $system->load(); }
+        if ($params[0] == \'disks\') {            $return[@$params[0]] = $system->disks(); }
+        if ($params[0] == \'uptime\') {           $return[@$params[0]] = $system->uptime([@$params[1]]); }
+        if ($params[0] == \'ping\') {             $return[@$params[0]] = $system->ping([@$params[1]]); }
+        if ($params[0] == \'distro\') {           $return[@$params[0]] = $system->distro(); }
+        if ($params[0] == \'drop_cache\') {       $return[@$params[0]] = $system->drop_cache(); }
+        if ($params[0] == \'clear_swap\') {       $return[@$params[0]] = $system->clear_swap(); }
+        if ($params[0] == \'reboot\') {           $return[@$params[0]] = $system->reboot(); }
+        if ($params[0] == \'check_updates\') {    $return[@$params[0]] = $system->check_updates(); }
+            
+        // move back
+        chdir($cwd);
+        
+        echo json_encode($return);
+        ',
+                // type
+                'php-raw',
+                // description
+                'System task - Collects system metrics - Hooks into official Plinker System component.',
+                // params
+                []
+            );
+        } catch (\Exception $e) {
+            if ($e->getMessage() == 'Unauthorised') {
+                //alert('warning', '<strong>Error:</strong> Connected successfully but could not authenticate! Check public and private keys.');
+                //redirect('/nodes');
+            }
+            //alert('danger', '<strong>Error:</strong> '.str_replace('Could not unserialize response:', '', trim(htmlentities($e->getMessage()))));
+            //redirect('/nodes');
+        }
+        
+        //
+        $f3->set('tasks', $tasks);
+
         $f3->mset([
             'template' => 'app/module/cms/view/admin.php',
             'page' => [
@@ -985,7 +1072,7 @@ class Admin extends \Framework\Controller
 
                 $error = [];
                 $tasks = new \Plinker\Core\Client(
-                    $server->peer,
+                    $server->endpoint,
                     'Tasks\Manager',
                     hash('sha256', gmdate('h').$server->public_key),
                     hash('sha256', gmdate('h').$server->private_key),
@@ -1027,7 +1114,7 @@ class Admin extends \Framework\Controller
 
                 $error = [];
                 $tasks = new \Plinker\Core\Client(
-                    $server->peer,
+                    $server->endpoint,
                     'Tasks\Manager',
                     hash('sha256', gmdate('h').$server->public_key),
                     hash('sha256', gmdate('h').$server->private_key),
@@ -1082,45 +1169,16 @@ class Admin extends \Framework\Controller
      */
     public function tasks(\Base $f3, $params)
     {
-        /**
-         * Plinker Config
-         */
-        $plinker = [
-            // plinker configuration
-            'plinker' => [
-                // tracker or control system which reports should be sent to
-                'tracker' => 'http://c9-cloud.free.lxd.systems',
-
-                // peer should point to this instance
-                'peer' => 'http://c9-cloud.free.lxd.systems',
-
-                // network keys
-                'public_key'  => 'f6e894b79c8a8368b0f6d94c6b322e0f6881bab7da964abbed85525386e9cb37',
-
-                // should be the same across all servers
-                'private_key' => 'd80fcf7b7a4ebd98574a7e73fc1801cf201e6c95aa5a0b8f8f5e6eafc155ef1d',
-
-                'enabled' => true,
-                'encrypted' => true
-            ],
-            // database connection
-            'database' => $f3->get('db'),
-
-            // displays output to task runner console
-            'debug' => true,
-
-            // daemon sleep time
-            'sleep_time' => 1
-        ];
+        $server = $this->servers->load(1);
 
         // connect to tracker - which is self at this stage
         $tasks = new \Plinker\Core\Client(
-            $plinker['plinker']['tracker'],
+            $server->endpoint,
             'Tasks\Manager',
-            hash('sha256', gmdate('h').$plinker['plinker']['public_key']),
-            hash('sha256', gmdate('h').$plinker['plinker']['private_key']),
-            $plinker,
-            $plinker['plinker']['encrypted']
+            hash('sha256', gmdate('h').$server->public_key),
+            hash('sha256', gmdate('h').$server->private_key),
+            json_decode($server->config, true),
+            $server->encrypted
         );
 
         // we will be posting code back so turn off good old browsers xss protection
@@ -1852,45 +1910,16 @@ class Admin extends \Framework\Controller
             default: {
                 $settings = $this->settings->findAll();
 
-                /**
-                 * Plinker Config
-                 */
-                $plinker = [
-                    // plinker configuration
-                    'plinker' => [
-                        // tracker or control system which reports should be sent to
-                        'tracker' => 'http://c9-cloud.free.lxd.systems',
-
-                        // peer should point to this instance
-                        'peer' => 'http://c9-cloud.free.lxd.systems',
-
-                        // network keys
-                        'public_key'  => 'f6e894b79c8a8368b0f6d94c6b322e0f6881bab7da964abbed85525386e9cb37',
-
-                        // should be the same across all servers
-                        'private_key' => 'd80fcf7b7a4ebd98574a7e73fc1801cf201e6c95aa5a0b8f8f5e6eafc155ef1d',
-
-                        'enabled' => true,
-                        'encrypted' => true
-                    ],
-                    // database connection
-                    'database' => $f3->get('db'),
-
-                    // displays output to task runner console
-                    'debug' => true,
-
-                    // daemon sleep time
-                    'sleep_time' => 1
-                ];
+                $server = $this->servers->load(1);
 
                 // connect to tracker - which is self at this stage
                 $tasks = new \Plinker\Core\Client(
-                    $plinker['plinker']['tracker'],
+                    $server->endpoint,
                     'Tasks\Manager',
-                    hash('sha256', gmdate('h').$plinker['plinker']['public_key']),
-                    hash('sha256', gmdate('h').$plinker['plinker']['private_key']),
-                    $plinker,
-                    $plinker['plinker']['encrypted']
+                    hash('sha256', gmdate('h').$server->public_key),
+                    hash('sha256', gmdate('h').$server->private_key),
+                    json_decode($server->config, true),
+                    $server->encrypted
                 );
 
                 $form = [
