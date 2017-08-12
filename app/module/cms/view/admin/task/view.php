@@ -114,9 +114,9 @@
                                 <td><?= $row->id ?></td>
                                 <td><?= htmlentities($row->name) ?></td>
                                 <td><?= $params ?></td>
-                                <td><a href="#" class="repeats-select" data-type="select" data-pk="<?= $row->id ?>" data-name="repeats" data-value="<?= $row->repeats ?>" data-url="/tasks/inline_update/queue/<?= $row->id ?>" data-title="Set sleep time in seconds."></a></td>
+                                <td><a href="#" class="repeats-select" data-type="select" data-pk="<?= $row->id ?>" data-name="repeats" data-value="<?= $row->repeats ?>" data-url="/admin/tasks/inline_edit/<?= $row->id ?>" data-title="Set sleep time in seconds."></a></td>
                                 <td>
-                                    <a href="#" class="editable-input" data-type="text" data-pk="<?= $row->id ?>" data-name="sleep" data-value="<?= $row->sleep ?>" data-url="/tasks/inline_update/queue/<?= $row->id ?>" data-title="Set sleep time in seconds."></a>
+                                    <a href="#" class="editable-input" data-type="text" data-pk="<?= $row->id ?>" data-name="sleep" data-value="<?= $row->sleep ?>" data-url="/admin/tasks/inline_edit/<?= $row->id ?>" data-title="Set sleep time in seconds."></a>
                                 </td>
                                 <td><?= (int) $row->run_count ?></td>
                                 <td><?= (empty($row->run_last) ? '-' : date_create($row->run_last)->format('F jS Y, g:ia')) ?></td>

@@ -281,7 +281,7 @@
                     ?>
                     <tr>
                         <td>CPU Usage<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td><td>
-                        <div class="progress" data-placement="bottom" data-toggle="tooltip" href="#">
+                        <div class="progress">
                             <div class="progress-bar progress-bar-danger" style="width: <?= $result ?>%">
                                 <?= $result ?>%
                             </div>
@@ -304,7 +304,7 @@
                             $mem_cache = @$result['cache'];
                             $mem_free = 100 - $mem_used - $mem_cache;
                             ?>
-                            <div class="progress" data-placement="bottom" data-toggle="tooltip" href="#" data-original-title="Total memory:">
+                            <div class="progress">
                                 <div class="progress-bar progress-bar-danger" style="width: <?= $mem_used ?>%">
                                     <?= $mem_used ?>%
                                 </div>
@@ -325,7 +325,7 @@
                     <tr>
                         <td class="col-md-2">Diskspace<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
                         <td class="col-md-10">
-                            <div class="progress" data-placement="bottom" data-toggle="tooltip" href="#" data-original-title="Total disk space: ">
+                            <div class="progress">
                                 <div class="progress-bar progress-bar-danger" style="width: <?= 100-$result ?>%">
                                     <?= 100-$result ?>%
                                 </div>
@@ -338,11 +338,11 @@
 
                     <?php
                     $taskResult = $getTaskResult(['memory_total'], 21600);
-                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['memory_total'] : '-');
+                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['memory_total'] : '0');
                     ?>
                     <tr>
                         <td>Total Memory<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
-                        <td><pre><?= $result ?></pre></td>
+                        <td><pre><?= \utilphp\util::size_format((int) $result * 1000, 2) ?></pre></td>
                     </tr>
 
                     <?php

@@ -60,7 +60,7 @@
                                             <?php if ($current  == '1'): ?>
                                             <span class="help-block">Visit any url to automatically generate your pages.</span>
                                             <?php else: ?>
-                                            <span class="help-block">Pages are not generated instead users will be shown a 404.</span>
+                                            <span class="help-block">Pages are not generated, instead users will be shown a 404.</span>
                                             <?php endif ?>
                                         <?php endif ?>
                                     </div>

@@ -1277,7 +1277,7 @@ echo json_encode($result);
              */
             case "edit": {
 
-                $task = $this->tasksource->load((int)$params['sub_action_id']);
+                $task = $this->tasksource->load((int) $params['sub_action_id']);
                 $tasklog = $this->tasks->findAll('tasksource_id = ? ORDER BY id DESC', [(int) $params['sub_action_id']]);
 
                 $form = [
@@ -1344,6 +1344,65 @@ echo json_encode($result);
                         'body' => $this->view->render('app/module/cms/view/admin/task/edit.php')
                     ]
                 ]);
+            } break;
+            
+            
+            case "inline_update": {
+
+                // AJAX
+                if (!empty($f3->get('AJAX'))) {
+                    
+                    header('Content-Type: application/json; charset=utf-8');
+
+                    if (!is_numeric($params['sub_action_id'])) {
+                        exit('{"success": false, "msg": "Invalid task id."}');
+                    }
+                    
+                    $id = (int) $params['sub_action_id'];
+
+                    $update = [
+                        'id'    => @$_POST['pk'],
+                        'name'  => @$_POST['name'],
+                        'value' => @$_POST['value']
+                    ];
+                    
+                    $task = $this->tasks->load($update['id']);
+                    
+                    if (empty($task)) {
+                        exit('{"success": false, "msg": "Invalid task id."}');
+                    }
+                    
+                    if (!isset($task[$update['name']])){
+                        exit('{"success": false, "msg": "Invalid task property."}');
+                    }
+                    
+                    // handle sleep update
+                    if ($_POST['name'] == 'sleep' && !is_numeric($_POST['value']) && !is_int($_POST['value'])) {
+                        exit('{"success": false, "msg": "Invalid sleep value, expected integer."}');
+                    } elseif ($_POST['name'] == 'sleep' && $_POST['value'] < 1) {
+                        exit('{"success": false, "msg": "Invalid sleep value, must be greater than 0"}');
+                    } elseif ($_POST['name'] == 'sleep' && $_POST['value'] > 31557600) {
+                        exit('{"success": false, "msg": "Invalid sleep value, must be less than 31557600"}');
+                    } elseif ($_POST['name'] == 'sleep') {
+                        $task->run_next = date_create($task->run_last)->modify("+".(int) $_POST['value']." seconds")->format('Y-m-d h:i:s');
+                    }
+                    
+                    // update
+                    $task[$update['name']] = $update['value'];
+                    
+                    // addons
+                    if ($update['name'] == 'repeats') {
+                        if ($update['value'] == '1') {
+                            $task['completed'] = '';
+                        }
+                    }
+                
+                    $this->tasks->store($task);
+                
+                    exit('{"success": true, "msg": "Task queue item updated."}');
+                }
+                
+                $f3->error(404);
             } break;
 
             /**
@@ -1958,11 +2017,11 @@ echo json_encode($result);
                                         // name
                                         'Composer Update',
                                         // source
-                                        "#!/bin/bash\n".
+                                        "#!/bin/bash\n\n".
                                         "# Run composer update\n".
-                                        "/usr/local/bin/composer update -d /var/www/html 2>&1\n".
-                                        "# Change ownership to www-data user\n".
-                                        "chown www-data:www-data /var/www/html/.* -R\n",
+                                        "/usr/local/bin/composer update -d /var/www/html 2>&1\n\n".
+                                        "# Change files ownership to www-data user\n".
+                                        "chown www-data:www-data /var/www/html/.* -R",
                                         // type
                                         'bash',
                                         // description
