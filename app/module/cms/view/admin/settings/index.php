@@ -25,11 +25,12 @@
 
 <form class="form-horizontal" method="post">
     <input type="hidden" name="csrf" value="<?= $csrf ?>">
+
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-columns fa-fw"></i> Site Settings</h3>
+                    <h3 class="panel-title"><i class="fa fa-cogs fa-fw"></i> Site Settings</h3>
                 </div>
                 <div class="panel-body nopadding">
                     <table class="table table-condensed form-table">
@@ -86,7 +87,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-columns fa-fw"></i> Composer</h3>
+                    <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> Composer</h3>
                 </div>
                 <div class="panel-body nopadding">
                     <?php $current = file_get_contents('./composer.json'); ?>
@@ -106,10 +107,7 @@
     </div>
 </form>
 
-<?php
-$backups = array_diff(scandir('backups/'), array('..', '.'));
-
-?>
+<?php $backups = array_diff(scandir('backups/'), array('..', '.')) ?>
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">

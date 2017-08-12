@@ -36,7 +36,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-info-circle fa-fw"></i> Task Details</h3>
+                <h3 class="panel-title"><i class="fa fa-tasks fa-fw"></i> Task Details</h3>
                 <div class="panel-buttons text-right">
                     <a href="/admin/tasks/edit/<?= (int) $f3->get('PARAMS.sub_action_id') ?>" class="btn btn-xs btn-primary ajax-link"><i class="fa fa-pencil"></i> Edit Task</a>
                     <a href="/admin/tasks/remove/<?= (int) $f3->get('PARAMS.sub_action_id') ?>" class="btn btn-xs btn-danger ajax-link"><i class="fa fa-trash"></i> Remove Task</a>
@@ -78,7 +78,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title" id="task-queue"><i class="fa fa-info-circle fa-fw"></i> Tasks Queue</h3>
+                <h3 class="panel-title" id="task-queue"><i class="fa fa-tasks fa-fw"></i> Tasks Queue</h3>
             </div>
             <div class="panel-body nopadding">
                 <div class="table-responsive">

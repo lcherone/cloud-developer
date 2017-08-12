@@ -10,19 +10,18 @@ class Admin extends \Framework\Controller
     {
         parent::__construct();
 
-        // task parent
-        $this->tasksource = new \Framework\Model('tasksource');
-        // task log
+        // load models
+        $this->user = new \Framework\Model('user');
+        $this->page = new \Framework\Model('page');
+        $this->menu = new \Framework\Model('menu');
         $this->tasks = new \Framework\Model('tasks');
-        $this->servers = new \Framework\Model('servers');
         $this->module = new \Framework\Model('module');
+        $this->servers = new \Framework\Model('servers');
         $this->objects = new \Framework\Model('objects');
         $this->snippet = new \Framework\Model('snippet');
         $this->template = new \Framework\Model('template');
         $this->settings = new \Framework\Model('settings');
-        $this->user = new \Framework\Model('user');
-        $this->page = new \Framework\Model('page');
-        $this->menu = new \Framework\Model('menu');
+        $this->tasksource = new \Framework\Model('tasksource');
     }
 
     /**
@@ -149,6 +148,7 @@ echo json_encode($result);
         ];
 
         if (!empty($f3->get('POST'))) {
+            
             // check csrf
             if (!$this->check_csrf($f3->get('POST.csrf'))) {
                 die('Invalid CSRF token!');
