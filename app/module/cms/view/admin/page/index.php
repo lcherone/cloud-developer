@@ -52,7 +52,7 @@
                         <tbody>
                             <?php $line_count = 0; foreach ($pages as $row): ?>
                             <tr>
-                                <td><a href="/admin/page/edit/<?= $row->id ?>"><?= $row->title ?></a></td>
+                                <td><a href="/admin/page/edit/<?= $row->id ?>"><?= (!empty($row->title) ? $row->title : '-') ?></a></td>
                                 <td><a href="/admin/template/edit/<?= $row->template->id ?>"><?= $row->template->title ?></a></td>
                                 <td><a href="/admin/module/view/<?= $row->module->id ?>"><?= $row->module->name ?></a></td>
                                 <td><a href="javascript:;" data-type="popup" data-url="<?= htmlentities($row->slug) ?>" data-name="<?= htmlentities($row->slug) ?>"><?= htmlentities($row->slug) ?></a></td>

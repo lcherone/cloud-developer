@@ -10,13 +10,13 @@ class Controller extends \Framework\Controller
     {
         parent::__construct();
         
-        $this->module = new \Framework\Model('module');
-        $this->objects = new \Framework\Model('objects');
+        $this->user     = new \Framework\Model('user');
+        $this->page     = new \Framework\Model('page');
+        $this->menu     = new \Framework\Model('menu');
+        $this->module   = new \Framework\Model('module');
+        $this->objects  = new \Framework\Model('objects');
         $this->template = new \Framework\Model('template');
         $this->settings = new \Framework\Model('settings');
-        $this->user = new \Framework\Model('user');
-        $this->page = new \Framework\Model('page');
-        $this->menu = new \Framework\Model('menu');
     }
 
     /**
@@ -112,7 +112,6 @@ class Controller extends \Framework\Controller
     If you no longer want pages to be automatically generated then <a href="/admin/settings">turn off the setting here</a>.
 </p>
 ';
-
         }
         
         $_SESSION['template_id'] = (int) $page->template_id;

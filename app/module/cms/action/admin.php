@@ -158,11 +158,11 @@ class Admin extends \Framework\Controller
                     'errors' => [],
                     'values' => !empty($f3->get('POST')) ? $f3->get('POST') : []
                 ];
-                
+
                 //
                 if (!empty($_GET['module_id'])) {
                     $module = $this->module->load((int) $_GET['module_id']);
-                    
+
                     if (!empty($module)) {
                         $form['values']['module_id'] = (int) $_GET['module_id'];
                         $form['values']['slug'] = '/'.strtolower($module->name);
@@ -901,7 +901,7 @@ class Admin extends \Framework\Controller
 
                 if (isset($_GET['display'])) {
                     $template = $this->template->load($_GET['display']);
-                    
+
                     $_SESSION['template_id'] = (int) $template->id;
 
                     // get site settings
@@ -976,7 +976,7 @@ class Admin extends \Framework\Controller
              */
             case "file": {
                 $template = $this->template->load($params['sub_action_id']);
-                
+
                 $server =  $this->servers->load(1);
 
                 $error = [];
@@ -992,7 +992,7 @@ class Admin extends \Framework\Controller
                 $path = str_replace('/admin/template/file/'.$params['sub_action_id'].'/', '', $params[0]);
 
                 header('Content-Type: text/plain; charset=utf-8');
-                
+
                 if (isset($_GET['del'])) {
                     exit(base64_decode($tasks->deleteFile('/var/www/html/tmp/template/'.(int) $params['sub_action_id'].'/'.$path)));
                 } elseif(isset($_GET['save'])) {
@@ -1018,7 +1018,7 @@ class Admin extends \Framework\Controller
              */
             case "upload-file": {
                 $template = $this->template->load($params['sub_action_id']);
-                
+
                 $server =  $this->servers->load(1);
 
                 $error = [];
@@ -1037,9 +1037,9 @@ class Admin extends \Framework\Controller
                 if (move_uploaded_file($_FILES["file"]["tmp_name"], '/var/www/html/tmp/template/'.(int) $params['sub_action_id'].$path.'/'.basename($_FILES['file']['name']))) {
                   $fileData = file_get_contents('/var/www/html/tmp/template/'.(int) $params['sub_action_id'].$path.'/'.basename($_FILES['file']['name']));
                 }
-                
+
                 header('Content-Type: text/plain; charset=utf-8');
-                
+
                 try {
                     $tasks->saveFile('/var/www/html/tmp/template/'.(int) $params['sub_action_id'].$path.'/'.basename($_FILES['file']['name']), base64_encode($fileData));
                 } catch(\Exception $e) {
@@ -1724,141 +1724,192 @@ class Admin extends \Framework\Controller
      */
     public function settings(\Base $f3, $params)
     {
-        $settings = $this->settings->findAll();
+        switch ($params['sub_action']) {
+            /**
+             *
+             */
+            case "backups": {
+                // create
+                if ($params['sub_action_id'] == 'create') {
+                    
+                    $db = $f3->get('db');
+                    $date = date_create()->format('Y-m-d_H:i:s');
+                    
+                    `mysqldump --add-drop-table --user={$db['username']} --password={$db['password']} --host=127.0.0.1 app | gzip > /var/www/html/backups/backup.{$date}.sql.gz &`;
+                    
+                    $f3->reroute('/admin/settings');
+                } 
+                // remove
+                elseif ($params['sub_action_id'] == 'remove') {
+                    $file = base64_decode($f3->get('GET.file'));
+                    
+                    unlink('backups/'.basename($file));
+                    $f3->reroute('/admin/settings');
+                }
+                // restore
+                elseif ($params['sub_action_id'] == 'restore') {
+                    $file = base64_decode($f3->get('GET.file'));
+                    
+                    $db = $f3->get('db');
+                    $date = date_create()->format('Y-m-d_H:i:s');
+                    
+                    // backup current
+                    `mysqldump --add-drop-table --user={$db['username']} --password={$db['password']} --host=127.0.0.1 app | gzip > /var/www/html/backups/before.restore.{$date}.sql.gz`;
+                    
+                    // restore
+                    `zcat /var/www/html/backups/{$file} | mysql --user={$db['username']} --password={$db['password']} app`;
 
-        /**
-         * Plinker Config
-         */
-        $plinker = [
-            // plinker configuration
-            'plinker' => [
-                // tracker or control system which reports should be sent to
-                'tracker' => 'http://c9-cloud.free.lxd.systems',
+                    $f3->reroute('/admin/settings');
+                } else {
+                    $f3->error(404);
+                }
+            } break;
+            
+            default: {
+                $settings = $this->settings->findAll();
 
-                // peer should point to this instance
-                'peer' => 'http://c9-cloud.free.lxd.systems',
+                /**
+                 * Plinker Config
+                 */
+                $plinker = [
+                    // plinker configuration
+                    'plinker' => [
+                        // tracker or control system which reports should be sent to
+                        'tracker' => 'http://c9-cloud.free.lxd.systems',
 
-                // network keys
-                'public_key'  => 'f6e894b79c8a8368b0f6d94c6b322e0f6881bab7da964abbed85525386e9cb37',
+                        // peer should point to this instance
+                        'peer' => 'http://c9-cloud.free.lxd.systems',
 
-                // should be the same across all servers
-                'private_key' => 'd80fcf7b7a4ebd98574a7e73fc1801cf201e6c95aa5a0b8f8f5e6eafc155ef1d',
+                        // network keys
+                        'public_key'  => 'f6e894b79c8a8368b0f6d94c6b322e0f6881bab7da964abbed85525386e9cb37',
 
-                'enabled' => true,
-                'encrypted' => true
-            ],
-            // database connection
-            'database' => $f3->get('db'),
+                        // should be the same across all servers
+                        'private_key' => 'd80fcf7b7a4ebd98574a7e73fc1801cf201e6c95aa5a0b8f8f5e6eafc155ef1d',
 
-            // displays output to task runner console
-            'debug' => true,
+                        'enabled' => true,
+                        'encrypted' => true
+                    ],
+                    // database connection
+                    'database' => $f3->get('db'),
 
-            // daemon sleep time
-            'sleep_time' => 1
-        ];
+                    // displays output to task runner console
+                    'debug' => true,
 
-        // connect to tracker - which is self at this stage
-        $tasks = new \Plinker\Core\Client(
-            $plinker['plinker']['tracker'],
-            'Tasks\Manager',
-            hash('sha256', gmdate('h').$plinker['plinker']['public_key']),
-            hash('sha256', gmdate('h').$plinker['plinker']['private_key']),
-            $plinker,
-            $plinker['plinker']['encrypted']
-        );
+                    // daemon sleep time
+                    'sleep_time' => 1
+                ];
 
-        $form = [
-            'errors' => [],
-            'values' => !empty($f3->get('POST')) ? $f3->get('POST') : (array) $settings
-        ];
+                // connect to tracker - which is self at this stage
+                $tasks = new \Plinker\Core\Client(
+                    $plinker['plinker']['tracker'],
+                    'Tasks\Manager',
+                    hash('sha256', gmdate('h').$plinker['plinker']['public_key']),
+                    hash('sha256', gmdate('h').$plinker['plinker']['private_key']),
+                    $plinker,
+                    $plinker['plinker']['encrypted']
+                );
 
-        if (!empty($f3->get('POST'))) {
+                $form = [
+                    'errors' => [],
+                    'values' => !empty($f3->get('POST')) ? $f3->get('POST') : (array) $settings
+                ];
 
-            // check csrf
-            if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                $form['errors']['global'] = 'Invalid CSRF token.';
-            }
-            // expire csrf
-            $f3->set('SESSION.csrf', '');
-            unset($form['values']['csrf']);
+                if (!empty($f3->get('POST'))) {
 
-            // check title
-            if (empty($form['values']['sitename'])) {
-                $form['errors']['title'] = 'Site name is a required field.';
-            }
-
-            // alls good
-            if (empty($form['errors'])) {
-                foreach ($form['values'] as $key => $value) {
-                    // update composer file
-                    if ($key == 'composer') {
-                        chmod('./composer.json', 0664);
-                        file_put_contents('./composer.json', $value);
-
-                        // create task
-                        $tasks->create(
-                        // name
-                        'Composer Update',
-                        // source
-                        "#!/bin/bash
-
-/usr/local/bin/composer update -d /var/www/html 2>&1
-",
-                            // type
-                            'bash',
-                            // description
-                            'Executes composer update, required for system settings.',
-                            // params
-                            []
-                        );
-
-                        $tasks->run('Composer Update', []);
+                    // check csrf
+                    if (!$this->check_csrf($f3->get('POST.csrf'))) {
+                        $form['errors']['global'] = 'Invalid CSRF token.';
                     }
-                    // everything else
-                    else {
-                        $setting = $this->settings->findOrCreate([
-                            'key' => $key
-                        ]);
-                        $setting->value = $value;
-                        $this->settings->store($setting);
+                    // expire csrf
+                    $f3->set('SESSION.csrf', '');
+                    unset($form['values']['csrf']);
+
+                    // check title
+                    if (empty($form['values']['sitename'])) {
+                        $form['errors']['title'] = 'Site name is a required field.';
+                    }
+
+                    // alls good
+                    if (empty($form['errors'])) {
+                        foreach ($form['values'] as $key => $value) {
+                            // update composer file
+                            if ($key == 'composer') {
+                                chmod('./composer.json', 0664);
+                                file_put_contents('./composer.json', $value);
+
+                                try {
+                                    // create task
+                                    $tasks->create(
+                                        // name
+                                        'Composer Update',
+                                        // source
+                                        "#!/bin/bash\n".
+                                        "# Run composer update\n".
+                                        "/usr/local/bin/composer update -d /var/www/html 2>&1\n".
+                                        "# Change ownership to www-data user\n".
+                                        "chown www-data:www-data /var/www/html/.* -R\n",
+                                        // type
+                                        'bash',
+                                        // description
+                                        'Executes composer update, required for system settings.',
+                                        // params
+                                        []
+                                    );
+                                    $tasks->run('Composer Update', []);
+                                } catch (\Exception $e) {
+
+                                }
+                            }
+                            // everything else
+                            else {
+                                $setting = $this->settings->findOrCreate([
+                                    'key' => $key
+                                ]);
+                                $setting->value = $value;
+                                $this->settings->store($setting);
+                            }
+                        }
+
+                        // good
+                        $settings = $this->settings->findAll();
+                        $form = [
+                            'errors' => [
+                                'success' => 'Settings updated.'
+                            ],
+                            'values' => $settings
+                        ];
                     }
                 }
 
-                // good
-                $settings = $this->settings->findAll();
-                $form = [
-                    'errors' => [
-                        'success' => 'Settings updated.'
-                    ],
-                    'values' => $settings
-                ];
-            }
+                try {
+                    $composerTask = $tasks->get('Composer Update');
+                    $form['values']['composer_result'] = $tasks->getTasksLog($composerTask->id);
+                    $form['values']['composer_result'] = array_values($form['values']['composer_result'])[0]->result;
+                } catch (\Exception $e) {
+
+                }
+
+                $f3->set('form', $form);
+
+                $f3->set('helper.extractValue', function($key) use ($settings) {
+                    foreach ($settings as $row) {
+                        if ($row->key == $key) return $row->value;
+                    }
+                    return;
+                });
+
+                //
+                $this->set_csrf();
+
+                $f3->mset([
+                    'template' => 'app/module/cms/view/admin.php',
+                    'page' => [
+                        'title' => 'Admin - Settings',
+                        'body' => $this->view->render('app/module/cms/view/admin/settings/index.php')
+                    ]
+                ]);
+            } break;
         }
-
-        $composerTask = $tasks->get('Composer Update');
-
-        $form['values']['composer_result'] = $tasks->getTasksLog($composerTask->id);
-        $form['values']['composer_result'] = array_values($form['values']['composer_result'])[0]->result;
-
-        $f3->set('form', $form);
-
-        $f3->set('helper.extractValue', function($key) use ($settings) {
-            foreach ($settings as $row) {
-                if ($row->key == $key) return $row->value;
-            }
-            return;
-        });
-
-        //
-        $this->set_csrf();
-
-        $f3->mset([
-            'template' => 'app/module/cms/view/admin.php',
-            'page' => [
-                'title' => 'Admin - Settings',
-                'body' => $this->view->render('app/module/cms/view/admin/settings/index.php')
-            ]
-        ]);
     }
 
 }

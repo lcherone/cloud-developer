@@ -134,18 +134,23 @@ $server =  $db->findOne('id = ?', [1]);
 
 if (empty($server)) {
     //alert('danger', '<strong>Error:</strong> Node not found.');
-    $f3->reroute('/servers');
+    //$f3->reroute('/servers');
 }
 
-$error = [];
-$tasks = new Plinker\Core\Client(
-    $server->peer,
-    'Tasks\Manager',
-    hash('sha256', gmdate('h').$server->public_key),
-    hash('sha256', gmdate('h').$server->private_key),
-    json_decode($server->config, true),
-    $server->encrypted // enable encryption [default: true]
-);
+try {
+    $error = [];
+    $tasks = new Plinker\Core\Client(
+        $server->peer,
+        'Tasks\Manager',
+        hash('sha256', gmdate('h').$server->public_key),
+        hash('sha256', gmdate('h').$server->private_key),
+        json_decode($server->config, true),
+        $server->encrypted // enable encryption [default: true]
+    );
+    $files = $tasks->files('/var/www/html/tmp/template/'.(int) $f3->get('PARAMS.sub_action_id'));
+} catch (\Exception $e) {
+    $files = '{}';
+}
 ?>
 <script src="https://ajaxorg.github.io/ace-builds/src-min-noconflict/ace.js"></script>
 <script src="/js/filebrowser.js"></script>
@@ -160,8 +165,13 @@ $tasks = new Plinker\Core\Client(
         var template = (function() {
 
             var init = function(options) {
-                Dropzone.autoDiscover = false;
-                var myDropzone = new Dropzone("form.dropzone", { url: "/admin/template/upload-file/<?= $f3->get('PARAMS.sub_action_id') ?>"});
+                
+                //if (options.files.length > 0) {
+                    Dropzone.autoDiscover = false;
+                    var myDropzone = new Dropzone("form.dropzone", { url: "/admin/template/upload-file/<?= $f3->get('PARAMS.sub_action_id') ?>"});
+                //} else {
+                //    $('#fileList').parent().hide();
+                //}
 
                 var textarea = $('textarea[name="source"]').hide();
                 var editor = ace.edit("source");
@@ -178,44 +188,46 @@ $tasks = new Plinker\Core\Client(
                     textarea.val(editor.getSession().getValue());
                 });
 
-                $("#fileList").fileBrowser({
-                    json: options.files,
-                    path: '/',
-                    view: 'details',
-                    select: false,
-                    breadcrumbs: true,
-                    onSelect: function(obj, file, folder, type) {
-                        $('button.new-file').data('folder', folder);
-                    },
-                    onOpen: function(obj, file, folder, type) {
-                        if (type == 'file') {
-                            if (folder == '/') {
-                                folder = '';
-                            }
-
-                            $('.remove-file').removeClass('hidden').data('file', folder + '/' + file);
-                            $('.save-file').removeClass('hidden').data('file', folder + '/' + file);
-                            $('.new-file').data('file', folder + '/' + file);
-
-                            $('.dropzone').addClass('hidden');
-
-                            loadFile(folder + '/' + file);
-                        }
-                        else {
-                            if (folder == '/') {
-                                folder = '';
-                            }
-
-                            myDropzone.options.url = '/admin/template/upload-file/<?= $f3->get('PARAMS.sub_action_id') ?>' + folder;
-
-                            $('.dropzone').removeClass('hidden');
-                            $('.remove-file').addClass('hidden');
-                            $('.save-file').addClass('hidden');
+                //if (options.files.length > 0) {
+                    $("#fileList").fileBrowser({
+                        json: options.files,
+                        path: '/',
+                        view: 'details',
+                        select: false,
+                        breadcrumbs: true,
+                        onSelect: function(obj, file, folder, type) {
                             $('button.new-file').data('folder', folder);
+                        },
+                        onOpen: function(obj, file, folder, type) {
+                            if (type == 'file') {
+                                if (folder == '/') {
+                                    folder = '';
+                                }
+    
+                                $('.remove-file').removeClass('hidden').data('file', folder + '/' + file);
+                                $('.save-file').removeClass('hidden').data('file', folder + '/' + file);
+                                $('.new-file').data('file', folder + '/' + file);
+    
+                                $('.dropzone').addClass('hidden');
+    
+                                loadFile(folder + '/' + file);
+                            }
+                            else {
+                                if (folder == '/') {
+                                    folder = '';
+                                }
+    
+                                myDropzone.options.url = '/admin/template/upload-file/<?= $f3->get('PARAMS.sub_action_id') ?>' + folder;
+    
+                                $('.dropzone').removeClass('hidden');
+                                $('.remove-file').addClass('hidden');
+                                $('.save-file').addClass('hidden');
+                                $('button.new-file').data('folder', folder);
+                            }
+                            $('.sfbBreadCrumbs li').first().html('/var/www/html');
                         }
-                        $('.sfbBreadCrumbs li').first().html('/var/www/html');
-                    }
-                });
+                    });
+                //}
 
                 function loadFile(path) {
                     if (path.charAt(0) == "/") path = path.substr(1);
@@ -301,7 +313,7 @@ $tasks = new Plinker\Core\Client(
 
         template.init({
             route_id: '<?= (int) $f3->get('PARAMS.sub_action_id') ?>',
-            files: <?= $tasks->files('/var/www/html/tmp/template/'.(int) $f3->get('PARAMS.sub_action_id')) ?>
+            files: <?= $files ?>
         });
 
     });
