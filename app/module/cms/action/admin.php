@@ -30,7 +30,6 @@ class Admin extends \Framework\Controller
      */
     public function index(\Base $f3, $params)
     {
-        //$f3->set('servers', (array) $this->servers->findAll());
         $f3->set('tasks', (array) $this->tasks->findAll());
         $f3->set('pages', (array) $this->page->findAll());
         $f3->set('menus', (array) $this->menu->findAll());
@@ -52,68 +51,71 @@ class Admin extends \Framework\Controller
             $server->encrypted
         );
         
-        // // create the task on the server - we call it system
-        try {
-            // create task
-            $tasks->create(
-                // name
-                'System Information',
-                // source
-                '<?php
-        $system = new \Plinker\System\System();
+        //
+        $systeminformation = $this->tasksource->findOne('name = "System Information"');
         
-        $return = [];
-            
-        // move into tmp folder so files are written there
-        $cwd = getcwd();
-        chdir(\'../tmp\');
-        
-        if ($params[0] == \'system_updates\') {   $return[@$params[0]] = $system->system_updates(); }
-        if ($params[0] == \'disk_space\') {       $return[@$params[0]] = $system->disk_space([@$params[1]]); }
-        if ($params[0] == \'memory_stats\') {     $return[@$params[0]] = $system->memory_stats(); }
-        if ($params[0] == \'memory_total\') {     $return[@$params[0]] = $system->memory_total(); }
-        if ($params[0] == \'server_cpu_usage\') { $return[@$params[0]] = $system->server_cpu_usage(); }
-        if ($params[0] == \'machine_id\') {       $return[@$params[0]] = $system->machine_id(); }
-        if ($params[0] == \'netstat\') {          $return[@$params[0]] = $system->netstat(); }
-        if ($params[0] == \'arch\') {             $return[@$params[0]] = $system->arch(); }
-        if ($params[0] == \'hostname\') {         $return[@$params[0]] = $system->hostname(); }
-        if ($params[0] == \'logins\') {           $return[@$params[0]] = $system->logins(); }
-        if ($params[0] == \'pstree\') {           $return[@$params[0]] = $system->pstree(); }
-        if ($params[0] == \'top\') {              $return[@$params[0]] = $system->top(); }
-        if ($params[0] == \'uname\') {            $return[@$params[0]] = $system->uname(); }
-        if ($params[0] == \'cpuinfo\') {          $return[@$params[0]] = $system->cpuinfo(); }
-        if ($params[0] == \'netusage\') {         $return[@$params[0]] = $system->netusage(); }
-        if ($params[0] == \'load\') {             $return[@$params[0]] = $system->load(); }
-        if ($params[0] == \'disks\') {            $return[@$params[0]] = $system->disks(); }
-        if ($params[0] == \'uptime\') {           $return[@$params[0]] = $system->uptime([@$params[1]]); }
-        if ($params[0] == \'ping\') {             $return[@$params[0]] = $system->ping([@$params[1]]); }
-        if ($params[0] == \'distro\') {           $return[@$params[0]] = $system->distro(); }
-        if ($params[0] == \'drop_cache\') {       $return[@$params[0]] = $system->drop_cache(); }
-        if ($params[0] == \'clear_swap\') {       $return[@$params[0]] = $system->clear_swap(); }
-        if ($params[0] == \'reboot\') {           $return[@$params[0]] = $system->reboot(); }
-        if ($params[0] == \'check_updates\') {    $return[@$params[0]] = $system->check_updates(); }
-            
-        // move back
-        chdir($cwd);
-        
-        echo json_encode($return);
-        ',
-                // type
-                'php-raw',
-                // description
-                'System task - Collects system metrics - Hooks into official Plinker System component.',
-                // params
-                []
-            );
-        } catch (\Exception $e) {
-            if ($e->getMessage() == 'Unauthorised') {
-                //alert('warning', '<strong>Error:</strong> Connected successfully but could not authenticate! Check public and private keys.');
-                //redirect('/nodes');
+        // task not found lets add it
+        if (empty($systeminformation)) {
+            // create the task through plinker
+            try {
+                // create task
+                $tasks->create(
+                    // name
+                    'System Information',
+                    // source
+                    '<?php
+/**
+ * System information task.
+ * This code hooks into the Plinker System component and reports system metrics.
+ */
+$system = new \Plinker\System\System();
+         
+// move into tmp folder so files are written there
+$cwd = getcwd();
+chdir(\'../tmp\');
+
+// check then call
+$result = [];
+if (method_exists($system, $params[0])) {
+    $result[@$params[0]] = $system->{$params[0]}(@$params[1]); 
+}
+
+// move back
+chdir($cwd);
+
+// echo task result
+echo json_encode($result);
+',
+                    // type
+                    'php-raw',
+                    // description
+                    'System task - Hooks into official Plinker System component and reports system metrics.',
+                    // params
+                    []
+                );
+            } catch (\Exception $e) {
+                if ($e->getMessage() == 'Unauthorised') {
+                    //alert('warning', '<strong>Error:</strong> Connected successfully but could not authenticate! Check public and private keys.');
+                    //redirect('/nodes');
+                    $form['errors']['global'] = '<strong>Plinker Error:</strong> Connected successfully but could not authenticate! Check public and private keys.';
+                } else {
+                    $form['errors']['global'] = '<strong>Plinker Error:</strong> '.str_replace('Could not unserialize response:', '', trim(htmlentities($e->getMessage())));
+                }
             }
-            //alert('danger', '<strong>Error:</strong> '.str_replace('Could not unserialize response:', '', trim(htmlentities($e->getMessage()))));
-            //redirect('/nodes');
-        }
         
+        }
+
+        // helper to get task result from systeminformation task
+        $getTaskResult = function ($params, $sleeptime = 60) use ($systeminformation, $tasks) {
+            $result = $systeminformation->withCondition('params = ? LIMIT 1', [json_encode($params)])->ownTasks;
+            if (empty($result)) {
+                return $tasks->run('System Information', $params, $sleeptime);
+            } else {
+                return array_values($result)[0];
+            }
+        };
+        $f3->set('getTaskResult', $getTaskResult);
+
         //
         $f3->set('tasks', $tasks);
 

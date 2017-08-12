@@ -11,6 +11,19 @@
     </div>
 </div>
 
+<?php if (!empty($form['errors']['global'])): ?>
+<div class="alert alert-danger">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <?= $form['errors']['global'] ?>
+</div>
+<?php endif ?>
+<?php if (!empty($form['errors']['success'])): ?>
+    <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <?= $form['errors']['success'] ?>
+    </div>
+<?php endif ?>
+
 <div class="row">
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-default">
@@ -105,28 +118,6 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-server fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge"><?= count($servers) ?></div>
-                        <h2>Servers</h2>
-                    </div>
-                </div>
-            </div>
-            <a href="/admin/servers">
-                <div class="panel-footer">
-                    <span class="pull-left">View Servers</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
                         <i class="fa fa-tasks fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
@@ -188,6 +179,28 @@
             </a>
         </div>
     </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-cogs fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">&nbsp;</div>
+                        <h2>Settings</h2>
+                    </div>
+                </div>
+            </div>
+            <a href="/admin/settings">
+                <div class="panel-footer">
+                    <span class="pull-left">View Settings</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
 </div>
 <!-- /.row -->
 
@@ -200,10 +213,8 @@
             <table class="table table-condensed form-table">
                 <tbody>
                     <?php
-                            $key        = 'hostname';
-                            $params     = [$key];
-                            $taskResult = $tasks->run('System Information', $params, 21600);
-                            $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)[$key] : '-');
+                    $taskResult = $getTaskResult(['hostname'], 86400);
+                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['hostname'] : '-');
                     ?>
                     <tr>
                         <td>Hostname<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
@@ -211,10 +222,8 @@
                     </tr>
 
                     <?php
-                            $key        = 'uname';
-                            $params     = [$key];
-                            $taskResult = $tasks->run('System Information', $params, 86400);
-                            $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)[$key] : '-');
+                    $taskResult = $getTaskResult(['uname'], 86400);
+                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['uname'] : '-');
                     ?>
                     <tr>
                         <td>Uname<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
@@ -222,10 +231,8 @@
                     </tr>
 
                     <?php
-                            $key        = 'uptime';
-                            $params     = [$key];
-                            $taskResult = $tasks->run('System Information', $params, 60);
-                            $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)[$key] : '-');
+                    $taskResult = $getTaskResult(['uptime'], 60);
+                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['uptime'] : '-');
                     ?>
                     <tr>
                         <td>Uptime<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
@@ -233,10 +240,8 @@
                     </tr>
 
                     <?php
-                            $key        = 'ping';
-                            $params     = [$key, 'phive.free.lxd.systems'];
-                            $taskResult = $tasks->run('System Information', $params, 300);
-                            $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)[$key] : '-');
+                    $taskResult = $getTaskResult(['ping', 'phive.free.lxd.systems'], 300);
+                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['ping'] : '-');
                     ?>
                     <tr>
                         <td>Ping<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
@@ -244,10 +249,8 @@
                     </tr>
 
                     <?php
-                            $key        = 'distro';
-                            $params     = [$key];
-                            $taskResult = $tasks->run('System Information', $params, 86400);
-                            $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)[$key] : '-');
+                    $taskResult = $getTaskResult(['distro'], 86400);
+                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['distro'] : '-');
                     ?>
                     <tr>
                         <td>Distro<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
@@ -255,10 +258,8 @@
                     </tr>
 
                     <?php
-                            $key        = 'arch';
-                            $params     = [$key];
-                            $taskResult = $tasks->run('System Information', $params, 86400);
-                            $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)[$key] : '-');
+                    $taskResult = $getTaskResult(['arch'], 86400);
+                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['arch'] : '-');
                     ?>
                     <tr>
                         <td>Arch<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
@@ -266,10 +267,8 @@
                     </tr>
 
                     <?php
-                            $key        = 'load';
-                            $params     = [$key];
-                            $taskResult = $tasks->run('System Information', $params, 120);
-                            $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)[$key] : '-');
+                    $taskResult = $getTaskResult(['load'], 120);
+                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['load'] : '-');
                     ?>
                     <tr>
                         <td>Load<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
@@ -277,10 +276,8 @@
                     </tr>
 
                     <?php
-                            $key        = 'server_cpu_usage';
-                            $params     = [$key];
-                            $taskResult = $tasks->run('System Information', $params, 15);
-                            $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)[$key] : '-');
+                    $taskResult = $getTaskResult(['server_cpu_usage'], 30);
+                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['server_cpu_usage'] : '-');
                     ?>
                     <tr>
                         <td>CPU Usage<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td><td>
@@ -296,10 +293,8 @@
                     </tr>
 
                     <?php
-                            $key        = 'memory_stats';
-                            $params     = [$key];
-                            $taskResult = $tasks->run('System Information', $params, 15);
-                            $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)[$key] : '-');
+                    $taskResult = $getTaskResult(['memory_stats'], 30);
+                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['memory_stats'] : '-');
                     ?>
                     <tr>
                         <td class="col-md-2">Memory stats<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
@@ -324,10 +319,8 @@
                     </tr>
 
                     <?php
-                            $key        = 'disk_space';
-                            $params     = [$key, '/'];
-                            $taskResult = $tasks->run('System Information', $params, 60);
-                            $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)[$key] : '-');
+                    $taskResult = $getTaskResult(['disk_space', '/'], 60);
+                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['disk_space'] : '-');
                     ?>
                     <tr>
                         <td class="col-md-2">Diskspace<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
@@ -344,10 +337,8 @@
                     </tr>
 
                     <?php
-                            $key        = 'memory_total';
-                            $params     = [$key];
-                            $taskResult = $tasks->run('System Information', $params, 21600);
-                            $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)[$key] : '-');
+                    $taskResult = $getTaskResult(['memory_total'], 21600);
+                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['memory_total'] : '-');
                     ?>
                     <tr>
                         <td>Total Memory<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
@@ -355,10 +346,8 @@
                     </tr>
 
                     <?php
-                            $key        = 'machine_id';
-                            $params     = [$key];
-                            $taskResult = $tasks->run('System Information', $params, 86400);
-                            $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)[$key] : '-');
+                    $taskResult = $getTaskResult(['machine_id'], 86400);
+                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['machine_id'] : '-');
                     ?>
                     <tr>
                         <td>Machine ID<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
@@ -366,10 +355,8 @@
                     </tr>
 
                     <?php
-                            $key        = 'netstat';
-                            $params     = [$key, '-pant'];
-                            $taskResult = $tasks->run('System Information', $params, 3600);
-                            $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)[$key] : '-');
+                    $taskResult = $getTaskResult(['netstat', '-pant'], 3600);
+                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['netstat'] : '-');
                     ?>
                     <tr>
                         <td>Netstat<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
@@ -377,10 +364,8 @@
                     </tr>
 
                     <?php
-                            $key        = 'logins';
-                            $params     = [$key];
-                            $taskResult = $tasks->run('System Information', $params, 600);
-                            $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)[$key] : '-');
+                    $taskResult = $getTaskResult(['logins'], 600);
+                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['logins'] : '-');
                     ?>
                     <tr>
                         <td>System Logins<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
@@ -388,10 +373,8 @@
                     </tr>
 
                     <?php
-                            $key        = 'pstree';
-                            $params     = [$key];
-                            $taskResult = $tasks->run('System Information', $params, 21600);
-                            $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)[$key] : '-');
+                    $taskResult = $getTaskResult(['pstree'], 600);
+                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['pstree'] : '-');
                     ?>
                     <tr>
                         <td>Process Tree<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
@@ -399,10 +382,8 @@
                     </tr>
 
                     <?php
-                            $key        = 'top';
-                            $params     = [$key];
-                            $taskResult = $tasks->run('System Information', $params, 21600);
-                            $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)[$key] : '-');
+                    $taskResult = $getTaskResult(['top'], 21600);
+                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['top'] : '-');
                     ?>
                     <tr>
                         <td>Top<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
@@ -410,10 +391,8 @@
                     </tr>
 
                     <?php
-                            $key        = 'cpuinfo';
-                            $params     = [$key];
-                            $taskResult = $tasks->run('System Information', $params, 21600);
-                            $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)[$key] : '-');
+                    $taskResult = $getTaskResult(['cpuinfo'], 21600);
+                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['cpuinfo'] : '-');
                     ?>
                     <tr>
                         <td>CPU Information<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
@@ -421,10 +400,8 @@
                     </tr>
 
                     <?php
-                            $key        = 'disks';
-                            $params     = [$key];
-                            $taskResult = $tasks->run('System Information', $params, 21600);
-                            $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)[$key] : '-');
+                    $taskResult = $getTaskResult(['disks'], 21600);
+                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['disks'] : '-');
                     ?>
                     <tr>
                         <td>Disks<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
