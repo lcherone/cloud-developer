@@ -37,7 +37,7 @@
                         <?php foreach ($menus as $row): ?>
                         <?php 
                         // check for admin only
-                        if (empty($f3->get('SESSION.user')) && !empty($row->admin_only)) {
+                        if (empty($f3->get('SESSION.user')) && $row->visibility == 4) {
                             continue;
                         }
                         ?>

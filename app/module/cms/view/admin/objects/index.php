@@ -49,7 +49,7 @@
                             <tr>
                                 <td><a href="/admin/objects/edit/<?= $row->id ?>"><?= $row->title ?></a></td>
                                 <td><?= $row->line_count ?></td>
-                                <td><a href="/admin/objects/delete/<?= $row->id ?>" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a></td>
+                                <td><a href="/admin/objects/delete/<?= $row->id ?>" class="btn btn-xs btn-danger remove-object"><i class="fa fa-times"></i></a></td>
                             </tr>
                             <?php endforeach ?>
                         </tbody>
@@ -59,3 +59,23 @@
         </div>
     </div>
 </div>
+
+<?php ob_start() ?>
+<script>
+$(document).ready(function() {
+    $(document).on('click', '.remove-object', function(e){
+        e.preventDefault();
+            
+        var elm = $(this);
+        var url = $(this).attr('href');
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function(data) {
+                elm.closest('tr').remove();
+            }
+        });
+    });
+ });
+</script>
+<?php $f3->set('javascript', $f3->get('javascript').ob_get_clean()) ?>

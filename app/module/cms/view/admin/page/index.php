@@ -58,8 +58,8 @@
                                 <td><a href="javascript:;" data-type="popup" data-url="<?= htmlentities($row->slug) ?>" data-name="<?= htmlentities($row->slug) ?>"><?= htmlentities($row->slug) ?></a></td>
                                 <td><?= (int) $row->line_count ?></td>
                                 <td><?= (int) $row->views ?></td>
-                                <td><a href="#" data-toggle="tooltip" title="<?= (!empty($row->admin_only) ? 'When signed in' : 'Always') ?>"><i class="fa fa-<?= (!empty($row->admin_only) ? 'lock text-warning' : 'unlock text-success') ?>"></i></a></td>
-                                <td><a href="/admin/page/delete/<?= $row->id ?>" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a></td>
+                                <td><?= $row->visibility ?></td>
+                                <td><a href="/admin/page/delete/<?= $row->id ?>" class="btn btn-xs btn-danger remove-page"><i class="fa fa-times"></i></a></td>
                             </tr>
                             <?php $line_count = $line_count + (int) $row->line_count; endforeach ?>
                         </tbody>
@@ -75,3 +75,23 @@
         </div>
     </div>
 </div>
+
+<?php ob_start() ?>
+<script>
+$(document).ready(function() {
+    $(document).on('click', '.remove-page', function(e){
+        e.preventDefault();
+            
+        var elm = $(this);
+        var url = $(this).attr('href');
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function(data) {
+                elm.closest('tr').remove();
+            }
+        });
+    });
+ });
+</script>
+<?php $f3->set('javascript', $f3->get('javascript').ob_get_clean()) ?>

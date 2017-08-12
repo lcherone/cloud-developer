@@ -141,7 +141,7 @@ $backups = array_diff(scandir('backups/'), array('..', '.'));
                                 <td>
                                     <div class="btn-group" style="display:flex">
                                         <a title="Restore" href="/admin/settings/backups/restore?file=<?= base64_encode($row) ?>" class="btn btn-xs btn-primary"><i class="fa fa-reply"></i></a>
-                                        <a title="Remove" href="/admin/settings/backups/remove?file=<?= base64_encode($row) ?>" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                                        <a title="Remove" href="/admin/settings/backups/remove?file=<?= base64_encode($row) ?>" class="btn btn-xs btn-danger remove-backup"><i class="fa fa-times"></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -154,10 +154,23 @@ $backups = array_diff(scandir('backups/'), array('..', '.'));
     </div>
 </div>
 
-
 <?php ob_start() ?>
 <script>
     $(document).ready(function() {
+        
+        $(document).on('click', '.remove-backup', function(e){
+            e.preventDefault();
+            
+            var elm = $(this);
+            var url = $(this).attr('href');
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function(data) {
+                    elm.closest('tr').remove();
+                }
+            });
+        });
         
         var textarea = $('textarea[name="composer"]').hide(),
             editor = ace.edit("composer"),

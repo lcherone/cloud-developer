@@ -52,8 +52,8 @@
                                 <td><?= (!empty($row->icon) ? '<i class="'.$row->icon.'"></i>' : '') ?></td>
                                 <td><a href="/admin/menu/edit/<?= $row->id ?>"><?= $row->title ?></a></td>
                                 <td><?= $row->slug ?></td>
-                                <td><i class="fa fa-<?= (!empty($row->admin_only) ? 'check text-success' : 'times text-danger') ?>"></i></td>
-                                <td><a href="/admin/menu/delete/<?= $row->id ?>" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a></td>
+                                <td><?= $row->visibility ?></td>
+                                <td><a href="/admin/menu/delete/<?= $row->id ?>" class="btn btn-xs btn-danger remove-menu"><i class="fa fa-times"></i></a></td>
                             </tr>
                             <?php endforeach ?>
                         </tbody>
@@ -63,3 +63,23 @@
         </div>
     </div>
 </div>
+
+<?php ob_start() ?>
+<script>
+$(document).ready(function() {
+    $(document).on('click', '.remove-menu', function(e){
+        e.preventDefault();
+            
+        var elm = $(this);
+        var url = $(this).attr('href');
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function(data) {
+                elm.closest('tr').remove();
+            }
+        });
+    });
+ });
+</script>
+<?php $f3->set('javascript', $f3->get('javascript').ob_get_clean()) ?>

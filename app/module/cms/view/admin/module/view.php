@@ -123,7 +123,7 @@
                                 <td><a href="javascript:;" data-type="popup" data-url="<?= htmlentities($row->slug) ?>" data-name="<?= htmlentities($row->slug) ?>"><?= htmlentities($row->slug) ?></a></td>
                                 <td><?= (int) $row->line_count ?></td>
                                 <td><?= (int) $row->views ?></td>
-                                <td><a href="#" data-toggle="tooltip" title="<?= (!empty($row->admin_only) ? 'When signed in' : 'Always') ?>"><i class="fa fa-<?= (!empty($row->admin_only) ? 'lock text-warning' : 'unlock text-success') ?>"></i></a></td>
+                                <td><?= $row->visibility ?></td>
                                 <td><a href="/admin/page/delete/<?= $row->id ?>" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a></td>
                             </tr>
                             <?php $line_count = $line_count + (int) $row->line_count; endforeach ?>

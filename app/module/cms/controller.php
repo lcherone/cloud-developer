@@ -60,11 +60,20 @@ class Controller extends \Framework\Controller
             }
         }
         
-        // check for admin only
-        if (empty($f3->get('SESSION.user')) && !empty($page->admin_only)) {
+        // visibility
+        // when not signed in
+        if (!empty($f3->get('SESSION.user')) && $page->visibility == 2) {
             $f3->error(401);
         }
-        
+        // when signed in
+        if (empty($f3->get('SESSION.user')) && $page->visibility == 3) {
+            $f3->error(401);
+        }
+        // check for admin/developer
+        if (empty($f3->get('SESSION.developer')) && $page->visibility == 4) {
+            $f3->error(401);
+        }
+
         if (empty($page->template_id)) {
             $page->template_id = 1;
         }

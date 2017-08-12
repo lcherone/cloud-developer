@@ -49,7 +49,7 @@
                             <tr>
                                 <td><a href="/admin/module/view/<?= $row->id ?>"><?= $row->name ?></a></td>
                                 <td><a href="/admin/module/view/<?= $row->id ?>#module-pages"><?= count($row->ownPage) ?></a></td>
-                                <td><a href="/admin/module/delete/<?= $row->id ?>" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a></td>
+                                <td><a href="/admin/module/delete/<?= $row->id ?>" class="btn btn-xs btn-danger remove-module"><i class="fa fa-times"></i></a></td>
                             </tr>
                             <?php endforeach ?>
                         </tbody>
@@ -59,3 +59,23 @@
         </div>
     </div>
 </div>
+
+<?php ob_start() ?>
+<script>
+$(document).ready(function() {
+    $(document).on('click', '.remove-module', function(e){
+        e.preventDefault();
+            
+        var elm = $(this);
+        var url = $(this).attr('href');
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function(data) {
+                elm.closest('tr').remove();
+            }
+        });
+    });
+ });
+</script>
+<?php $f3->set('javascript', $f3->get('javascript').ob_get_clean()) ?>

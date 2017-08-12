@@ -62,15 +62,17 @@
                         </div>
                     </div>
                     
-                    <div class="form-group<?= (!empty($form['errors']['admin_only']) ? ' has-error has-feedback' : '') ?>">
-                        <label for="input-admin_only" class="control-label col-xs-2">Visibility</label>
+                    <div class="form-group<?= (!empty($form['errors']['visibility']) ? ' has-error has-feedback' : '') ?>">
+                        <label for="input-visibility" class="control-label col-xs-2">Visibility</label>
                         <div class="col-xs-8">
-                            <select class="form-control" id="input-admin_only" name="admin_only">
-                                <option value="1"<?= ($form['values']['admin_only'] == '1' ? ' selected' : '') ?>>When signed in</option>
-                                <option value="0"<?= ($form['values']['admin_only'] == '0' ? ' selected' : '') ?>>Always</option>
+                            <select class="form-control" id="input-visibility" name="visibility">
+                                <option value="1"<?= ($form['values']['visibility'] == '1' ? ' selected' : '') ?>>Always</option>
+                                <option value="2"<?= ($form['values']['visibility'] == '2' ? ' selected' : '') ?>>When not signed in</option>
+                                <option value="3"<?= ($form['values']['visibility'] == '3' ? ' selected' : '') ?>>When signed in</option>
+                                <option value="4"<?= ($form['values']['visibility'] == '4' ? ' selected' : '') ?>>When developer</option>
                             </select>
-                            <?php if (!empty($form['errors']['admin_only'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
-                            <?php if (!empty($form['errors']['admin_only'])): ?><span class="help-block"><?= $form['errors']['admin_only'] ?></span><?php endif ?>
+                            <?php if (!empty($form['errors']['visibility'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
+                            <?php if (!empty($form['errors']['visibility'])): ?><span class="help-block"><?= $form['errors']['visibility'] ?></span><?php endif ?>
                         </div>
                     </div>
 
