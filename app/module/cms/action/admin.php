@@ -1445,8 +1445,12 @@ class Admin extends \Framework\Controller
 
                     // alls good
                     if (empty($form['errors'])) {
-                        $template = $this->snippet->create($form['values']);
-                        $this->snippet->store($template);
+                        $snippet = $this->snippet->create($form['values']);
+                        $this->snippet->store($snippet);
+                        
+                        $snippet = $snippet->fresh();
+                        
+                        $f3->reroute('/admin/snippet/edit/'.$snippet->id.'?c');
 
                         // success
                         $form['errors']['success'] = 'Snippet created.';
@@ -1515,6 +1519,11 @@ class Admin extends \Framework\Controller
 
                         // success
                         $form['errors']['success'] = 'Snippet updated.';
+                    }
+                } else {
+                    // bit of a hack coz not using session flashbag
+                    if (isset($_GET['c'])) {
+                        $form['errors']['success'] = 'Snippet created.';
                     }
                 }
 
