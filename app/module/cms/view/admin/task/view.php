@@ -27,7 +27,7 @@
 <?php if (!file_exists(getcwd().'/tasks/pids/Daemon.pid')): ?>
 <div class="alert alert-info">
     <a href="#" class="close" data-dismiss="alert">&times;</a>
-    It appers the task runner is not currently running, <a href="" class="ajax-link alert-link">click here to reload</a>. If the problem persists, check you have applyed the following crontask.<br>
+    It appers the task runner is not currently running, <a href="/admin/tasks/view/<?= (int) $f3->get('PARAMS.sub_action_id') ?>" class="ajax-link alert-link">click here to reload</a>. If the problem persists, check you have applyed the following crontask.<br>
     <code class="code">* * * * * cd <?= realpath(getcwd().'/tasks') ?> && /usr/bin/php <?= realpath(getcwd().'/tasks') ?>/run.php >/dev/null 2>&1</code>
 </div>
 <?php endif ?>
@@ -74,7 +74,6 @@
         </div>
     </div>
 </div>
-
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -99,13 +98,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ((array) $tasklog as $row): 
-                            // extract source from closure
-                            // if ($col == 'source') {
-                            //   preg_match('/"function";s:\d+:"(.*)";s:\d+:/smi', $value, $matches);
-                            //   $value = $matches[1];
-                            // }
-                            $params = json_decode($row->params);
+                            <?php
+                            foreach ((array) $tasklog as $row): 
+
+                            $params = json_decode(html_entity_decode($row->params));
+
                             if (is_array($params)) {
                                 $params = json_encode($params);
                             }

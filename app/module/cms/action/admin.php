@@ -1347,7 +1347,7 @@ echo json_encode($result);
             } break;
             
             
-            case "inline_update": {
+            case "inline_edit": {
 
                 // AJAX
                 if (!empty($f3->get('AJAX'))) {
