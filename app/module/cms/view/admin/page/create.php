@@ -123,7 +123,6 @@
                             </tr>
                         </tfoot>
                     </table>
-
                 </div>
             </div>
         </div>
@@ -211,18 +210,18 @@
     </div>
 </form>
 
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-info-circle fa-fw"></i> Page Preview <small>(note: PHP and JavaScript is NOT rendered in preview)</small></h3>
-            </div>
-            <div class="panel-body">
-                <div id="page-preview"></div>
-            </div>
-        </div>
-    </div>
-</div>
+<!--<div class="row">-->
+<!--    <div class="col-lg-12">-->
+<!--        <div class="panel panel-default">-->
+<!--            <div class="panel-heading">-->
+<!--                <h3 class="panel-title"><i class="fa fa-info-circle fa-fw"></i> Page Preview <small>(note: PHP and JavaScript is NOT rendered in preview)</small></h3>-->
+<!--            </div>-->
+<!--            <div class="panel-body">-->
+<!--                <div id="page-preview"></div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 <?php ob_start() ?>
 <script>
@@ -278,10 +277,10 @@
         editorSession.on('change', function() {
             textarea.val(editorSession.getValue());
 
-            console.log('sorry <script> tags wont work on live preview.');
-            $('#page-preview').html($('<div/>').html(editorSession.getValue()).find('script').remove().end().contents());
+            //console.log('sorry <script> tags wont work on live preview.');
+            //$('#page-preview').html($('<div/>').html(editorSession.getValue()).find('script').remove().end().contents());
         });
-        $('#page-preview').html($('<div/>').html(editorSession.getValue()).find('script').remove().end().contents());
+        //$('#page-preview').html($('<div/>').html(editorSession.getValue()).find('script').remove().end().contents());
         
         
         $(document).on('click', '.fetch-snippet', function(){

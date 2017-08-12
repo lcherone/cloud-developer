@@ -244,6 +244,7 @@ class Admin extends \Framework\Controller
                 $f3->set('templates', (array) $this->template->findAll());
                 $f3->set('snippets', (array) $this->snippet->findAll());
                 $f3->set('modules', (array) $this->module->findAll());
+                $f3->set('objects', (array) $this->objects->findAll('ORDER by priority ASC'));
 
                 //
                 $this->set_csrf();
@@ -337,6 +338,7 @@ class Admin extends \Framework\Controller
                 $f3->set('templates', (array) $this->template->findAll());
                 $f3->set('snippets', (array) $this->snippet->findAll());
                 $f3->set('modules', (array) $this->module->findAll());
+                $f3->set('objects', (array) $this->objects->findAll('ORDER by priority ASC'));
 
                 //
                 $this->set_csrf();

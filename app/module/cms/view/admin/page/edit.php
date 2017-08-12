@@ -130,94 +130,146 @@ $formStyle = [
                             </tr>
                         </tfoot>
                     </table>
-
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> Before Load
-                    <div class="btn-group pull-right">
-                        <?php if (!empty($snippets)): ?>
-                        <a href="#" role="button" class="btn btn-link btn-xs label-btn" aria-disabled="true">Snippets:</a>
-                        <?php foreach ($snippets as $row): if ($row->type != 'beforeload') { continue; } ?>
-                        <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>
-                        <?php endforeach ?>
-                        <?php endif ?>
-                    </div>
-                    </h3>
-                </div>
-                <div class="panel-body nopadding">
-                    <div class="">
-                        <textarea class="form-control form-textarea" rows="10" id="input-beforeload" name="beforeload"><?= (!empty($form['values']['beforeload']) ? $form['values']['beforeload'] : '') ?></textarea>
-                        <div id="beforeload" style="position: relative;height: 380px;width: 100%"></div>
-
-                        <?php if (!empty($form['errors']['beforeload'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
-                        <?php if (!empty($form['errors']['beforeload'])): ?><span class="help-block"><?= $form['errors']['beforeload'] ?></span><?php endif ?>
-                    </div>
+    <div class="timeline">
+        <!-- Line -->
+        <div class="line text-muted"></div>
+        
+        <?php if (!empty($objects)): ?>
+        <article class="panel panel-default">
+            <div class="panel-heading icon">
+                <i class="fa fa-angle-down"></i>
+            </div>
+            <div class="panel-heading">
+                <h2 class="panel-title">Load Objects</h2>
+            </div>
+            <div class="panel-body nopadding">
+                <div class="table-responsive">
+                    <table class="table table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Lines</th>
+                                <th>Priority</th>
+                                <th style="width:1%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($objects as $row): ?>
+                            <tr>
+                                <td><?= $row->title ?></td>
+                                <td><?= (int) $row->line_count ?></td>
+                                <td><?= (int) $row->priority ?></td>
+                                <td><a href="/admin/objects/edit/<?= $row->id ?>" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> Edit Object</a></td>
+                            </tr>
+                            <?php endforeach ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> Body
-                    <div class="btn-group pull-right">
-                        <?php if (!empty($snippets)): ?>
-                        <a href="#" role="button" class="btn btn-link btn-xs label-btn" aria-disabled="true">Snippets:</a>
-                        <?php foreach ($snippets as $row): if ($row->type != 'body') { continue; } ?>
-                        <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>
-                        <?php endforeach ?>
-                        <?php endif ?>
+        </article>
+        <?php endif ?>
+        <?php $beforeload = $form['values']->module->beforeload; if (!empty($beforeload)): ?>
+        <article class="panel panel-default">
+            <div class="panel-heading icon">
+                <i class="fa fa-angle-down"></i>
+            </div>
+            <div class="panel-heading">
+                <h2 class="panel-title">
+                    Load Module Beforeload
+                    <div class="panel-buttons text-right">
+                        <div class="btn-group-xs">
+                            <a href="#" class="btn btn-default show-code"><i class="fa fa-eye"></i> Show Code</a>
+                            <a href="/admin/module/view/<?= $form['values']->module->id ?>" class="btn btn-primary ajax-link"><i class="fa fa-pencil"></i> Edit Module</a>
+                        </div>
                     </div>
-                    </h3>
+                </h2>
+            </div>
+            <div class="panel-body hidden"></div>
+        </article>
+        <?php endif ?>
+        <article class="panel panel-default">
+            <div class="panel-heading icon">
+                <i class="fa fa-angle-down"></i>
+            </div>
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> Before Load
+                <div class="btn-group pull-right">
+                    <?php if (!empty($snippets)): ?>
+                    <a href="#" role="button" class="btn btn-link btn-xs label-btn" aria-disabled="true">Snippets:</a>
+                    <?php foreach ($snippets as $row): if ($row->type != 'beforeload') { continue; } ?>
+                    <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>
+                    <?php endforeach ?>
+                    <?php endif ?>
                 </div>
-                <div class="panel-body nopadding">
-                    <div class="">
-                        <textarea class="form-control form-textarea" rows="10" id="input-body" name="body"><?= (!empty($form['values']['body']) ? $form['values']['body'] : '') ?></textarea>
-                        <div id="body" style="position: relative;height: 380px;width: 100%"></div>
-
-                        <?php if (!empty($form['errors']['body'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
-                        <?php if (!empty($form['errors']['body'])): ?><span class="help-block"><?= $form['errors']['body'] ?></span><?php endif ?>
-                    </div>
+                </h3>
+            </div>
+            <div class="panel-body nopadding">
+                <div class="">
+                    <textarea class="form-control form-textarea" rows="10" id="input-beforeload" name="beforeload"><?= (!empty($form['values']['beforeload']) ? $form['values']['beforeload'] : '') ?></textarea>
+                    <div id="beforeload" style="position: relative;height: 380px;width: 100%"></div>
+    
+                    <?php if (!empty($form['errors']['beforeload'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
+                    <?php if (!empty($form['errors']['beforeload'])): ?><span class="help-block"><?= $form['errors']['beforeload'] ?></span><?php endif ?>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> Javascript
-                    <div class="btn-group pull-right">
-                        <?php if (!empty($snippets)): ?>
-                        <a href="#" role="button" class="btn btn-link btn-xs label-btn" aria-disabled="true">Snippets:</a>
-                        <?php foreach ($snippets as $row): if ($row->type != 'javascript') { continue; } ?>
-                        <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>
-                        <?php endforeach ?>
-                        <?php endif ?>
-                    </div>
-                    </h3>
+        </article>
+        <article class="panel panel-default">
+            <div class="panel-heading icon">
+                <i class="fa fa-angle-down"></i>
+            </div>
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> Body
+                <div class="btn-group pull-right">
+                    <?php if (!empty($snippets)): ?>
+                    <a href="#" role="button" class="btn btn-link btn-xs label-btn" aria-disabled="true">Snippets:</a>
+                    <?php foreach ($snippets as $row): if ($row->type != 'body') { continue; } ?>
+                    <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>
+                    <?php endforeach ?>
+                    <?php endif ?>
                 </div>
-                <div class="panel-body nopadding">
-                    <div class="">
-                        <textarea class="form-control form-textarea" rows="10" id="input-javascript" name="javascript"><?= (!empty($form['values']['javascript']) ? $form['values']['javascript'] : '') ?></textarea>
-                        <div id="javascript" style="position: relative;height: 380px;width: 100%"></div>
-
-                        <?php if (!empty($form['errors']['javascript'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
-                        <?php if (!empty($form['errors']['javascript'])): ?><span class="help-block"><?= $form['errors']['javascript'] ?></span><?php endif ?>
-                    </div>
+                </h3>
+            </div>
+            <div class="panel-body nopadding">
+                <div class="">
+                    <textarea class="form-control form-textarea" rows="10" id="input-body" name="body"><?= (!empty($form['values']['body']) ? $form['values']['body'] : '') ?></textarea>
+                    <div id="body" style="position: relative;height: 380px;width: 100%"></div>
+    
+                    <?php if (!empty($form['errors']['body'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
+                    <?php if (!empty($form['errors']['body'])): ?><span class="help-block"><?= $form['errors']['body'] ?></span><?php endif ?>
                 </div>
             </div>
-        </div>
+        </article>
+        <article class="panel panel-default">
+            <div class="panel-heading icon">
+                <i class="fa fa-angle-down"></i>
+            </div>
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> Javascript
+                <div class="btn-group pull-right">
+                    <?php if (!empty($snippets)): ?>
+                    <a href="#" role="button" class="btn btn-link btn-xs label-btn" aria-disabled="true">Snippets:</a>
+                    <?php foreach ($snippets as $row): if ($row->type != 'javascript') { continue; } ?>
+                    <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>
+                    <?php endforeach ?>
+                    <?php endif ?>
+                </div>
+                </h3>
+            </div>
+            <div class="panel-body nopadding">
+                <div class="">
+                    <textarea class="form-control form-textarea" rows="10" id="input-javascript" name="javascript"><?= (!empty($form['values']['javascript']) ? $form['values']['javascript'] : '') ?></textarea>
+                    <div id="javascript" style="position: relative;height: 380px;width: 100%"></div>
+    
+                    <?php if (!empty($form['errors']['javascript'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
+                    <?php if (!empty($form['errors']['javascript'])): ?><span class="help-block"><?= $form['errors']['javascript'] ?></span><?php endif ?>
+                </div>
+            </div>
+        </article>
     </div>
 </form>
 
