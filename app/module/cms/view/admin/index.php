@@ -24,185 +24,176 @@
     </div>
 <?php endif ?>
 
-<div class="row">
+<div class="row top-panel">
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-default">
+            <a href="/admin/module">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-folder-o fa-5x"></i>
+                        <i class="fa fa-folder-o fa-4x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge"><?= count($modules) ?></div>
+                        <span class="label label-default"><?= count($modules) ?></span>
                         <h2>Modules</h2>
                     </div>
                 </div>
             </div>
-            <a href="/admin/module">
-                <div class="panel-footer">
-                    <span class="pull-left">View Modules</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
             </a>
+            <div class="panel-footer">
+                <a href="/admin/module/create" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Module</a>
+                <div class="clearfix"></div>
+            </div>
         </div>
     </div>
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-default">
+            <a href="/admin/page">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-file-o fa-5x"></i>
+                        <i class="fa fa-file-o fa-4x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge"><?= count($pages) ?></div>
+                        <span class="label label-default"><?= count($pages) ?></span>
                         <h2>Pages</h2>
                     </div>
                 </div>
             </div>
-            <a href="/admin/page">
-                <div class="panel-footer">
-                    <span class="pull-left">View Pages</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
             </a>
+            <div class="panel-footer">
+                <a href="/admin/page/create" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Page</a>
+                <div class="clearfix"></div>
+            </div>
         </div>
     </div>
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-default">
+            <a href="/admin/objects">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-code fa-5x"></i>
+                        <i class="fa fa-code fa-4x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge"><?= count($objects) ?></div>
+                        <span class="label label-default"><?= count($objects) ?></span>
                         <h2>Objects</h2>
                     </div>
                 </div>
             </div>
-            <a href="/admin/objects">
-                <div class="panel-footer">
-                    <span class="pull-left">View Objects</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
             </a>
+            <div class="panel-footer">
+                <a href="/admin/objects/create" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Object</a>
+                <div class="clearfix"></div>
+            </div>
         </div>
     </div>
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-default">
+            <a href="/admin/snippet">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-code fa-5x"></i>
+                        <i class="fa fa-code fa-4x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge"><?= count($snippets) ?></div>
+                        <span class="label label-default"><?= count($snippets) ?></span>
                         <h2>Snippets</h2>
                     </div>
                 </div>
             </div>
-            <a href="/admin/snippet">
-                <div class="panel-footer">
-                    <span class="pull-left">View Snippets</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
             </a>
+            <div class="panel-footer">
+                <a href="/admin/snippet/create" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Snippet</a>
+                <div class="clearfix"></div>
+            </div>
         </div>
     </div>
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-default">
+            <a href="/admin/tasks">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-tasks fa-5x"></i>
+                        <i class="fa fa-tasks fa-4x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge"><?= count($tasks) ?></div>
+                        <span class="label label-default"><?= count($snippets) ?></span>
                         <h2>Tasks</h2>
                     </div>
                 </div>
             </div>
-            <a href="/admin/tasks">
-                <div class="panel-footer">
-                    <span class="pull-left">View Tasks</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
             </a>
+            <div class="panel-footer">
+                <a href="/admin/tasks/create" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Task</a>
+                <div class="clearfix"></div>
+            </div>
         </div>
     </div>
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-default">
+            <a href="/admin/menu">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-list fa-5x"></i>
+                        <i class="fa fa-list fa-4x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge"><?= count($menus) ?></div>
+                        <span class="label label-default"><?= count($menus) ?></span>
                         <h2>Menu</h2>
                     </div>
                 </div>
             </div>
-            <a href="/admin/menu">
-                <div class="panel-footer">
-                    <span class="pull-left">View Menu</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
             </a>
+            <div class="panel-footer">
+                <a href="/admin/menu/create" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Menu Link</a>
+                <div class="clearfix"></div>
+            </div>
         </div>
     </div>
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-default">
+            <a href="/admin/template">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-columns fa-5x"></i>
+                        <i class="fa fa-columns fa-4x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge"><?= count($templates) ?></div>
+                        <span class="label label-default"><?= count($templates) ?></span>
                         <h2>Templates</h2>
                     </div>
                 </div>
             </div>
-            <a href="/admin/template">
-                <div class="panel-footer">
-                    <span class="pull-left">View Templates</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
             </a>
+            <div class="panel-footer">
+                <a href="/admin/template/create" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Template</a>
+                <div class="clearfix"></div>
+            </div>
         </div>
     </div>
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-default">
+            <a href="/admin/settings">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-cogs fa-5x"></i>
+                        <i class="fa fa-cogs fa-4x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">&nbsp;</div>
+                        <span class="label label-default">&nbsp;</span>
                         <h2>Settings</h2>
                     </div>
                 </div>
             </div>
-            <a href="/admin/settings">
-                <div class="panel-footer">
-                    <span class="pull-left">View Settings</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
             </a>
+            <div class="panel-footer">
+                <a href="/admin/settings" class="btn-xs btn-success pull-right"><i class="fa fa-pencil"></i> Edit Settings</a>
+                <div class="clearfix"></div>
+            </div>
         </div>
     </div>
 </div>
-<!-- /.row -->
 
 <div class="panel panel-default">
     <div class="panel-heading">

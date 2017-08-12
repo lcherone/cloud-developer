@@ -30,7 +30,7 @@
                 <h3 class="panel-title"><i class="fa fa-tasks fa-fw"></i> All Tasks</h3>
                 <div class="panel-buttons text-right">
                     <div class="btn-group-xs">
-                        <a href="/admin/tasks/create" class="btn btn-success ajax-link">New Tasks</a>
+                        <a href="/admin/tasks/create" class="btn btn-success ajax-link"><i class="fa fa-plus"></i> New Tasks</a>
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                                 <td><?= strlen($row->source) ?></td>
                                 <td><?= date_create($row->created)->format('F jS Y, g:ia') ?></td>
                                 <td><?= date_create($row->updated)->format('F jS Y, g:ia') ?></td>
-                                <td><?php //$tasks->getTasksLogCount($row->id) ?></td>
+                                <td><a href="/admin/tasks/view/<?= $row->id ?>#task-queue"><?= count($row->ownTasks) ?></a></td>
                                 <td>
                                     <div class="btn-group" style="display:flex">
                                         <a href="/admin/tasks/run/<?= $row->id ?>" class="btn btn-xs btn-success ajax-link"><i class="fa fa-play"></i></a>

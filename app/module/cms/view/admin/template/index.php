@@ -30,7 +30,7 @@
                 <h3 class="panel-title"><i class="fa fa-columns fa-fw"></i> All Templates</h3>
                 <div class="panel-buttons text-right">
                     <div class="btn-group-xs">
-                        <a href="/admin/template/create" class="btn btn-success ajax-link">New Template</a>
+                        <a href="/admin/template/create" class="btn btn-success ajax-link"><i class="fa fa-plus"></i> New Template</a>
                     </div>
                 </div>
             </div>

@@ -112,12 +112,12 @@
         },
         init: function() {
             var b = this;
-            b.path = b._trim(this.opts.path, "/", "right").split("/"), b.$element.html(""), b.$element.addClass("sfb"), 1 == b.opts.breadcrumbs && (b.$elements.breadcrumbs = a("<ul />").addClass("sfbBreadCrumbs"), b.$element.append(b.$elements.breadcrumbs), b.$elements.breadcrumbs.on("click", "li", function() {
+            b.path = b._trim(this.opts.path, "/", "right").split("/"), b.$element.html(""), b.$element.addClass("fm"), 1 == b.opts.breadcrumbs && (b.$elements.breadcrumbs = a("<ul />").addClass("fmBreadCrumbs"), b.$element.append(b.$elements.breadcrumbs), b.$elements.breadcrumbs.on("click", "li", function() {
                 var c = a(this);
                 b.path = b._trim(c.data("path"), "/", "right").split("/"), b._get().then(function(a) {
                     b._draw(a)
                 })
-            })), b.$elements.content = a("<div />").addClass("sfbContent"), b.$element.append(b.$elements.content);
+            })), b.$elements.content = a("<div />").addClass("fmContent"), b.$element.append(b.$elements.content);
             var c = function(a) {
                     "folder" == a.data("type") && (b._pathChange(a.data("name")), b._get().then(function(a) {
                         b._draw(a)
@@ -139,7 +139,7 @@
             })
         },
         remove: function() {
-            this.html(""), this.$element.removeData("plugin_" + f), this.$element.removeClass("sfb x32 x22 x16")
+            this.html(""), this.$element.removeData("plugin_" + f), this.$element.removeClass("fm x32 x22 x16")
         },
         getSelected: function() {
             var a = this;

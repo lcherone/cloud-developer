@@ -1,6 +1,6 @@
 {
     "name": "lcherone/cloud-developer",
-    "description": "A PHP cloud development system.",
+    "description": "Cloud developer system.",
     "type": "project",
     "license": "MIT",
     "authors": [

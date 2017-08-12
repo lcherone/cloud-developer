@@ -421,14 +421,16 @@ echo json_encode($result);
                     }
                 }
 
+                // set into form
                 $f3->set('form', $form);
 
+                // load model data
                 $f3->set('menus', (array) $this->menu->findAll());
                 $f3->set('templates', (array) $this->template->findAll());
                 $f3->set('snippets', (array) $this->snippet->findAll());
                 $f3->set('modules', (array) $this->module->findAll());
                 $f3->set('objects', (array) $this->objects->findAll('ORDER by priority ASC'));
-
+                
                 //
                 $this->set_csrf();
 
@@ -455,6 +457,17 @@ echo json_encode($result);
              */
             default: {
                 $f3->set('pages', (array)$this->page->findAll('ORDER by slug'));
+                
+                // helper - visibility name
+                $f3->set('visibilityname', function ($key = null) {
+                    $n = [
+                        1 => 'Always',
+                        2 => 'When not signed in',
+                        3 => 'When signed in',
+                        4 => 'When developer',
+                    ];
+                    return (isset($n[$key]) ? $n[$key] : '');
+                });
 
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
@@ -599,6 +612,18 @@ echo json_encode($result);
              */
             default: {
                 $f3->set('menus', (array) $this->menu->findAll());
+                
+                // helper - visibility name
+                $f3->set('visibilityname', function ($key = null) {
+                    $n = [
+                        1 => 'Always',
+                        2 => 'When not signed in',
+                        3 => 'When signed in',
+                        4 => 'When developer',
+                    ];
+                    return (isset($n[$key]) ? $n[$key] : '');
+                });
+                
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
                     'page' => [

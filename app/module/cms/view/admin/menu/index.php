@@ -1,3 +1,4 @@
+
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
@@ -53,7 +54,7 @@
                                 <td><?= (!empty($row->icon) ? '<i class="'.$row->icon.'"></i>' : '') ?></td>
                                 <td><a href="/admin/menu/edit/<?= $row->id ?>"><?= $row->title ?></a></td>
                                 <td><?= $row->slug ?></td>
-                                <td><?= $row->visibility ?></td>
+                                <td><?= $visibilityname($row->visibility) ?></td>
                                 <td><a href="/admin/menu/delete/<?= $row->id ?>" class="btn btn-xs btn-danger remove-menu"><i class="fa fa-times"></i></a></td>
                             </tr>
                             <?php endforeach ?>

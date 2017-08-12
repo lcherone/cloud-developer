@@ -30,7 +30,7 @@
                 <h3 class="panel-title"><i class="fa fa-folder-o fa-fw"></i> All Modules</h3>
                 <div class="panel-buttons text-right">
                     <div class="btn-group-xs">
-                        <a href="/admin/module/create" class="btn btn-success ajax-link"><i class="fa fa-plus"></i> Create Module</a>
+                        <a href="/admin/module/create" class="btn btn-success ajax-link"><i class="fa fa-plus"></i> New Module</a>
                     </div>
                 </div>
             </div>

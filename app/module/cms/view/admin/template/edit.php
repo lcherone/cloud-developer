@@ -224,7 +224,7 @@ try {
                                 $('.save-file').addClass('hidden');
                                 $('button.new-file').data('folder', folder);
                             }
-                            $('.sfbBreadCrumbs li').first().html('/var/www/html');
+                            $('.fmBreadCrumbs li').first().html('/var/www/html');
                         }
                     });
                 //}
@@ -303,7 +303,7 @@ try {
                     });
                 });
 
-                $('.sfbBreadCrumbs').first('li').html('/var/www/html');
+                $('.fmBreadCrumbs').first('li').html('/var/www/html');
             };
 
             return {

@@ -24,46 +24,44 @@
     </div>
 <?php endif ?>
 
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-columns fa-fw"></i> Create Template</h3>
-            </div>
-            <div class="panel-body">
-                <form class="form-horizontal" method="post">
-                    <input type="hidden" name="csrf" value="<?= $csrf ?>">
-
-                    <div class="form-group<?= (!empty($form['errors']['title']) ? ' has-error has-feedback' : '') ?>">
-                        <label for="input-title" class="control-label col-xs-2">Title</label>
-                        <div class="col-xs-8">
-                            <input type="text" class="form-control" id="input-title" name="title" value="<?= (!empty($form['values']['title']) ? htmlentities($form['values']['title']) : '') ?>" placeholder="title...">
-                            <?php if (!empty($form['errors']['title'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
-                            <?php if (!empty($form['errors']['title'])): ?><span class="help-block"><?= $form['errors']['title'] ?></span><?php endif ?>
-                        </div>
-                    </div>
-
-                    <div class="form-group<?= (!empty($form['errors']['source']) ? ' has-error has-feedback' : '') ?>">
-                        <label for="input-source" class="control-label col-xs-2">Source</label>
-                        <div class="col-xs-8">
-                            <textarea class="form-control form-textarea" rows="10" id="input-source" name="source"><?= (!empty($form['values']['source']) ? $form['values']['source'] : '') ?></textarea>
-                            <div id="source" style="position: relative;height: 380px;width: 100%"></div>
-
-                            <?php if (!empty($form['errors']['source'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
-                            <?php if (!empty($form['errors']['source'])): ?><span class="help-block"><?= $form['errors']['source'] ?></span><?php endif ?>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-xs-offset-2 col-xs-10">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
-                    </div>
-                </form>
+<form class="form-horizontal" method="post">
+    <input type="hidden" name="csrf" value="<?= $csrf ?>">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-columns fa-fw"></i> Template Details</h3>
+                </div>
+                <div class="panel-body nopadding">
+                    <table class="table table-condensed form-table">
+                        <tbody>
+                            <tr class="form-group<?= (!empty($form['errors']['name']) ? ' has-error has-feedback' : '') ?>">
+                                <td class="text-right col-md-2"><label for="input-name" class="control-label">Name</label></td>
+                                <td>
+                                    <div class="input-group col-xs-10">
+                                        <input type="text" class="form-control" id="input-name" name="name" value="<?= (!empty($form['values']['name']) ? htmlentities($form['values']['name']) : '') ?>" placeholder="Enter template name... e.g: Default">
+                                    </div>
+                                    <?php if (!empty($form['errors']['name'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
+                                    <?php if (!empty($form['errors']['name'])): ?><span class="help-block"><?= $form['errors']['name'] ?></span><?php endif ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="form-group">
+                                <td class="text-right"></td>
+                                <td>
+                                    <div class="input-group col-xs-10">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</form> 
 
 <?php ob_start() ?>
 <script>
