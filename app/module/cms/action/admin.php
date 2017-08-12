@@ -867,9 +867,9 @@ echo json_encode($result);
                     $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
-                    // check title
-                    if (empty($form['values']['title'])) {
-                        $form['errors']['title'] = 'Title is a required field.';
+                    // check name
+                    if (empty($form['values']['name'])) {
+                        $form['errors']['name'] = 'Name is a required field.';
                     }
 
                     // check source
@@ -935,9 +935,9 @@ echo json_encode($result);
                     $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
-                    // check title
-                    if (empty($form['values']['title'])) {
-                        $form['errors']['title'] = 'Title is a required field.';
+                    // check name
+                    if (empty($form['values']['name'])) {
+                        $form['errors']['name'] = 'Name is a required field.';
                     }
 
                     // check source

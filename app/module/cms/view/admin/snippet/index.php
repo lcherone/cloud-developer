@@ -27,7 +27,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> Snippets</h3>
+                <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> All Snippets</h3>
                 <div class="panel-buttons text-right">
                     <div class="btn-group-xs">
                         <a href="/admin/snippet/create" class="btn btn-success">New Snippet</a>

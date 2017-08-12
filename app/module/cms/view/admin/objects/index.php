@@ -27,7 +27,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> Objects</h3>
+                <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> All Objects</h3>
                 <div class="panel-buttons text-right">
                     <div class="btn-group-xs">
                         <a href="/admin/objects/create" class="btn btn-success">New Object</a>

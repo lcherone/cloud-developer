@@ -27,7 +27,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-tasks fa-fw"></i> Tasks</h3>
+                <h3 class="panel-title"><i class="fa fa-tasks fa-fw"></i> All Tasks</h3>
                 <div class="panel-buttons text-right">
                     <div class="btn-group-xs">
                         <a href="/admin/tasks/create" class="btn btn-success ajax-link">New Tasks</a>

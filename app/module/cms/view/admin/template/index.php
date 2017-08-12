@@ -40,7 +40,7 @@
                     <table class="table table-condensed table-hover">
                         <thead>
                             <tr>
-                                <th>Title</th>
+                                <th>Name</th>
                                 <th>Pages</th>
                                 <th style="width:1%"></th>
                             </tr>
@@ -48,7 +48,7 @@
                         <tbody>
                             <?php foreach ($templates as $row): ?>
                             <tr>
-                                <td><a href="/admin/template/edit/<?= $row->id ?>"><?= $row->title ?></a></td>
+                                <td><a href="/admin/template/edit/<?= $row->id ?>"><?= $row->name ?></a></td>
                                 <td><?= count($row->ownPage) ?></td>
                                 <td><a href="/admin/template/delete/<?= $row->id ?>" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a></td>
                             </tr>
