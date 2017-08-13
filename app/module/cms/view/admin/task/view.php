@@ -55,6 +55,11 @@
                                $value = (!empty($matches[1]) ? $matches[1] : $value);
                             }
                             
+                            // humanize date
+                            if ($col == 'created' || $col == 'updated') {
+                               $value = date_create($value)->format('F jS Y, g:ia');
+                            }
+                            
                             if ($col == 'params') {
                                 $col = 'Parameters';
                             }

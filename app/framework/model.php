@@ -37,7 +37,7 @@ namespace Framework {
         }
         
         /**
-    	 * Create
+    	 * New
     	 */
         public function create($data = [])
         {

@@ -30,7 +30,7 @@
                 <h3 class="panel-title"><i class="fa fa-tasks fa-fw"></i> All Tasks</h3>
                 <div class="panel-buttons text-right">
                     <div class="btn-group-xs">
-                        <a href="/admin/tasks/create" class="btn btn-success ajax-link"><i class="fa fa-plus"></i> New Task</a>
+                        <a href="/admin/tasks/new" class="btn btn-success ajax-link"><i class="fa fa-plus"></i> New Task</a>
                     </div>
                 </div>
             </div>

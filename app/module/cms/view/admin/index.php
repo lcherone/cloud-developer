@@ -41,7 +41,7 @@
             </div>
             </a>
             <div class="panel-footer">
-                <a href="/admin/module/create" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Module</a>
+                <a href="/admin/module/new" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Module</a>
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -62,7 +62,7 @@
             </div>
             </a>
             <div class="panel-footer">
-                <a href="/admin/page/create" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Page</a>
+                <a href="/admin/page/new" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Page</a>
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -83,7 +83,7 @@
             </div>
             </a>
             <div class="panel-footer">
-                <a href="/admin/objects/create" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Object</a>
+                <a href="/admin/objects/new" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Object</a>
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -104,7 +104,7 @@
             </div>
             </a>
             <div class="panel-footer">
-                <a href="/admin/snippet/create" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Snippet</a>
+                <a href="/admin/snippet/new" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Snippet</a>
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -125,7 +125,7 @@
             </div>
             </a>
             <div class="panel-footer">
-                <a href="/admin/tasks/create" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Task</a>
+                <a href="/admin/tasks/new" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Task</a>
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -146,7 +146,7 @@
             </div>
             </a>
             <div class="panel-footer">
-                <a href="/admin/menu/create" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Menu Link</a>
+                <a href="/admin/menu/new" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Menu Link</a>
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -167,7 +167,7 @@
             </div>
             </a>
             <div class="panel-footer">
-                <a href="/admin/template/create" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Template</a>
+                <a href="/admin/template/new" class="btn-xs btn-success pull-right"><i class="fa fa-plus"></i> Add Template</a>
                 <div class="clearfix"></div>
             </div>
         </div>

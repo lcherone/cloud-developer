@@ -31,7 +31,7 @@
                 <h3 class="panel-title"><i class="fa fa-list fa-fw"></i> All Menu Links</h3>
                 <div class="panel-buttons text-right">
                     <div class="btn-group-xs">
-                        <a href="/admin/menu/create" class="btn btn-success ajax-link"><i class="fa fa-plus"></i> New Menu</a>
+                        <a href="/admin/menu/new" class="btn btn-success ajax-link"><i class="fa fa-plus"></i> New Menu</a>
                     </div>
                 </div>
             </div>

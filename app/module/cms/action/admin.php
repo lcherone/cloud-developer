@@ -240,6 +240,8 @@ echo json_encode($result);
             /**
              *
              */
+            case "add":
+            case "new":
             case "create": {
                 $form = [
                     'errors' => [],
@@ -339,8 +341,8 @@ echo json_encode($result);
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
                     'page' => [
-                        'title' => 'Admin - Page - Create',
-                        'body' => $this->view->render('app/module/cms/view/admin/page/create.php')
+                        'title' => 'Admin - Page - New',
+                        'body' => $this->view->render('app/module/cms/view/admin/page/new.php')
                     ]
                 ]);
             } break;
@@ -487,6 +489,8 @@ echo json_encode($result);
             /**
              *
              */
+            case "add":
+            case "new":
             case "create": {
                 $form = [
                     'errors' => [],
@@ -533,8 +537,8 @@ echo json_encode($result);
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
                     'page' => [
-                        'title' => 'Admin - Menu - Create',
-                        'body' => $this->view->render('app/module/cms/view/admin/menu/create.php')
+                        'title' => 'Admin - Menu - New',
+                        'body' => $this->view->render('app/module/cms/view/admin/menu/new.php')
                     ]
                 ]);
             } break;
@@ -642,6 +646,8 @@ echo json_encode($result);
             /**
              *
              */
+            case "add":
+            case "new":
             case "create": {
                 $form = [
                     'errors' => [],
@@ -699,8 +705,8 @@ echo json_encode($result);
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
                     'page' => [
-                        'title' => 'Admin - Module - Create',
-                        'body' => $this->view->render('app/module/cms/view/admin/module/create.php')
+                        'title' => 'Admin - Module - New',
+                        'body' => $this->view->render('app/module/cms/view/admin/module/new.php')
                     ]
                 ]);
             } break;
@@ -815,10 +821,10 @@ echo json_encode($result);
 
                 // bit of a hack coz not using session flashbag
                 if (isset($_GET['s'])) {
-                    $form['errors']['success'] = 'Module Updated.';
+                    $form['errors']['success'] = 'Module updated.';
                 }
                 if (isset($_GET['c'])) {
-                    $form['errors']['success'] = 'Module Created.';
+                    $form['errors']['success'] = 'Module created.';
                 }
 
                 $f3->set('form', $form);
@@ -874,6 +880,8 @@ echo json_encode($result);
             /**
              *
              */
+            case "add":
+            case "new":
             case "create": {
                 $form = [
                     'errors' => [],
@@ -934,8 +942,8 @@ echo json_encode($result);
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
                     'page' => [
-                        'title' => 'Admin - Templates - Create',
-                        'body' => $this->view->render('app/module/cms/view/admin/template/create.php')
+                        'title' => 'Admin - Templates - New',
+                        'body' => $this->view->render('app/module/cms/view/admin/template/new.php')
                     ]
                 ]);
             } break;
@@ -1224,6 +1232,8 @@ echo json_encode($result);
             /**
              *
              */
+            case "add":
+            case "new":
             case "create": {
                 $form = [
                     'errors' => [],
@@ -1247,8 +1257,6 @@ echo json_encode($result);
                             'description' => (isset($_POST['description']) ? trim($_POST['description']) : null),
                             'type'    => (isset($_POST['type'])    ? trim($_POST['type'])   : null),
                             'params'  => (isset($_POST['params'])  ? $_POST['params'] : []),
-                            'repeats' => (isset($_POST['repeats']) ? 1 : 0),
-                            'sleep'   => (isset($_POST['sleep'])   ? (int) $_POST['sleep']  : 0),
                             'source'  => (isset($_POST['source'])  ? trim($_POST['source']) : null),
                         ]
                     ];
@@ -1275,17 +1283,21 @@ echo json_encode($result);
                         $form['errors']['source'] = 'Source is a required field.';
                     }
 
-                    $form['values']['site'] = $_SERVER['HTTP_HOST'];
-
                     // alls good
                     if (empty($form['errors'])) {
 
                         $form['values']['params'] = json_encode($form['values']['params']);
 
                         $task = $this->tasksource->create($form['values']);
+                        $task->created = date_create()->format('Y-m-d H:i:s');
+
                         $this->tasksource->store($task);
 
                         $form['values']['params'] = json_decode($form['values']['params'], true);
+                        
+                        $task = $task->fresh();
+                        
+                        $f3->reroute('/admin/tasks/view/'.$task->id.'?c');
 
                         // success
                         $form['errors']['success'] = 'Task created.';
@@ -1300,8 +1312,8 @@ echo json_encode($result);
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
                     'page' => [
-                        'title' => 'Admin - Template - Create',
-                        'body' => $this->view->render('app/module/cms/view/admin/task/create.php')
+                        'title' => 'Admin - Template - New',
+                        'body' => $this->view->render('app/module/cms/view/admin/task/new.php')
                     ]
                 ]);
             } break;
@@ -1357,9 +1369,15 @@ echo json_encode($result);
                         $form['values']['params'] = json_encode($form['values']['params']);
                         // ..
                         $task->import($form['values']);
+                        $task->updated = date_create()->format('Y-m-d H:i:s');
+                        
                         $this->tasksource->store($task);
 
                         $form['values']['params'] = json_decode($form['values']['params'], true);
+                        
+                        $task = $task->fresh();
+                        
+                        $f3->reroute('/admin/tasks/view/'.$task->id.'?u');
 
                         // success
                         $form['errors']['success'] = 'Task updated.';
@@ -1457,35 +1475,43 @@ echo json_encode($result);
                     'values' => !empty($f3->get('POST')) ? $f3->get('POST') : $task
                 ];
 
-                if (!empty($f3->get('POST'))) {
+                // if (!empty($f3->get('POST'))) {
 
-                    // check csrf
-                    if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                        $form['errors']['global'] = 'Invalid CSRF token.';
-                    }
-                    // expire csrf
-                    $f3->set('SESSION.csrf', '');
-                    unset($form['values']['csrf']);
+                //     // check csrf
+                //     if (!$this->check_csrf($f3->get('POST.csrf'))) {
+                //         $form['errors']['global'] = 'Invalid CSRF token.';
+                //     }
+                //     // expire csrf
+                //     $f3->set('SESSION.csrf', '');
+                //     unset($form['values']['csrf']);
 
-                    // check title
-                    if (empty($form['values']['title'])) {
-                        $form['errors']['title'] = 'Title is a required field.';
-                    }
+                //     // check title
+                //     if (empty($form['values']['title'])) {
+                //         $form['errors']['title'] = 'Title is a required field.';
+                //     }
 
-                    // check source
-                    if (empty($form['values']['source'])) {
-                        $form['errors']['source'] = 'Source is a required field.';
-                    }
+                //     // check source
+                //     if (empty($form['values']['source'])) {
+                //         $form['errors']['source'] = 'Source is a required field.';
+                //     }
 
-                    // alls good
-                    if (empty($form['errors'])) {
-                        // ..
-                        $task->import($form['values']);
-                        $this->tasks->store($task);
+                //     // alls good
+                //     if (empty($form['errors'])) {
+                //         // ..
+                //         $task->import($form['values']);
+                //         $this->tasks->store($task);
 
-                        // success
-                        $form['errors']['success'] = 'Task updated.';
-                    }
+                //         // success
+                //         $form['errors']['success'] = 'Task updated.';
+                //     }
+                // }
+                
+                if (isset($_GET['c'])) {
+                    $form['errors']['success'] = 'Task created.';
+                }
+                
+                if (isset($_GET['u'])) {
+                    $form['errors']['success'] = 'Task updated.';
                 }
 
                 $f3->set('form', $form);
@@ -1496,7 +1522,7 @@ echo json_encode($result);
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
                     'page' => [
-                        'title' => 'Admin - Tasks - Edit',
+                        'title' => 'Admin - Tasks - View',
                         'body' => $this->view->render('app/module/cms/view/admin/task/view.php')
                     ]
                 ]);
@@ -1565,6 +1591,8 @@ echo json_encode($result);
             /**
              *
              */
+            case "add":
+            case "new":
             case "create": {
                 $form = [
                     'errors' => [],
@@ -1620,8 +1648,8 @@ echo json_encode($result);
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
                     'page' => [
-                        'title' => 'Admin - Snippet - Create',
-                        'body' => $this->view->render('app/module/cms/view/admin/snippet/create.php')
+                        'title' => 'Admin - Snippet - New',
+                        'body' => $this->view->render('app/module/cms/view/admin/snippet/new.php')
                     ]
                 ]);
             } break;
@@ -1748,6 +1776,8 @@ echo json_encode($result);
             /**
              *
              */
+            case "add":
+            case "new":
             case "create": {
                 $form = [
                     'errors' => [],
@@ -1828,8 +1858,8 @@ echo json_encode($result);
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
                     'page' => [
-                        'title' => 'Admin - Object - Create',
-                        'body' => $this->view->render('app/module/cms/view/admin/objects/create.php')
+                        'title' => 'Admin - Object - New',
+                        'body' => $this->view->render('app/module/cms/view/admin/objects/new.php')
                     ]
                 ]);
             } break;
@@ -1913,10 +1943,10 @@ echo json_encode($result);
                 
                 // bit of a hack coz not using session flashbag
                 if (isset($_GET['u'])) {
-                    $form['errors']['success'] = 'Object Updated.';
+                    $form['errors']['success'] = 'Object updated.';
                 }
                 if (isset($_GET['c'])) {
-                    $form['errors']['success'] = 'Object Created.';
+                    $form['errors']['success'] = 'Object created.';
                 }
 
                 //

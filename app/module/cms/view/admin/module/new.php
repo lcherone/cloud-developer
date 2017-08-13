@@ -1,12 +1,12 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Modules <small> - Create</small>
+            Modules <small> - New</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="/admin/module"><i class="fa fa-folder-o"></i> Modules</a></li>
-            <li class="active"><i class="fa fa-folder-o"></i> Create</li>
+            <li class="active"><i class="fa fa-plus"></i> New</li>
         </ol>
     </div>
 </div>
@@ -24,7 +24,7 @@
     </div>
 <?php endif ?>
 
-<form class="form-horizontal" method="post" action="/admin/module/create">
+<form class="form-horizontal" method="post" action="/admin/module/new">
     <input type="hidden" name="csrf" value="<?= $csrf ?>">
 
     <div class="row">

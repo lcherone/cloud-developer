@@ -30,7 +30,7 @@
                 <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> All Snippets</h3>
                 <div class="panel-buttons text-right">
                     <div class="btn-group-xs">
-                        <a href="/admin/snippet/create" class="btn btn-success"><i class="fa fa-plus"></i> New Snippet</a>
+                        <a href="/admin/snippet/new" class="btn btn-success"><i class="fa fa-plus"></i> New Snippet</a>
                     </div>
                 </div>
             </div>

@@ -1,12 +1,12 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Menu <small> - Create</small>
+            Menu <small> - New</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="/admin/menu"><i class="fa fa-list"></i> Menu</a></li>
-            <li class="active"><i class="fa fa-plus"></i> Create</li>
+            <li class="active"><i class="fa fa-plus"></i> New</li>
         </ol>
     </div>
 </div>
@@ -30,7 +30,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-list fa-fw"></i> Create Menu</h3>
+                    <h3 class="panel-title"><i class="fa fa-list fa-fw"></i> New Menu</h3>
                 </div>
                 <div class="panel-body nopadding">
                     <table class="table table-condensed form-table">

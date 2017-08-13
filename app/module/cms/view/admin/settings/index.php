@@ -117,7 +117,7 @@
                 <h3 class="panel-title"><i class="fa fa-hdd-o fa-fw"></i> Database Backups</h3>
                 <div class="panel-buttons text-right">
                     <div class="btn-group-xs">
-                        <a href="/admin/settings/backups/create" class="btn btn-success ajax-link"><i class="fa fa-plus"></i> New Backup</a>
+                        <a href="/admin/settings/backups/new" class="btn btn-success ajax-link"><i class="fa fa-plus"></i> New Backup</a>
                     </div>
                 </div>
             </div>

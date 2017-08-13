@@ -1,12 +1,12 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Tasks <small> - Edit</small>
+            Tasks <small> - New</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="/admin/tasks"><i class="fa fa-columns"></i> Tasks</a></li>
-            <li class="active"><i class="fa fa-pencil"></i> Edit</li>
+            <li><a href="/admin/tasks"><i class="fa fa-tasks"></i> Tasks</a></li>
+            <li class="active"><i class="fa fa-plus"></i> New</li>
         </ol>
     </div>
 </div>
@@ -118,6 +118,7 @@
 </form>
 
 <?php ob_start() ?>
+<script src="https://ajaxorg.github.io/ace-builds/src-min-noconflict/ace.js"></script>
 <script>
     $(document).ready(function() {
         var textarea = $('textarea[name="source"]').hide();
@@ -129,10 +130,6 @@
         editor.getSession().setValue(textarea.val());
         editor.getSession().on('change', function() {
             textarea.val(editor.getSession().getValue());
-        });
-        editor.setOptions({
-            minLines: 20,
-            maxLines: Infinity
         });
 
         $(document).on('click', '.add-row', function(e) {

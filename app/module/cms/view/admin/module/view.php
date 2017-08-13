@@ -100,7 +100,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title" id="module-pages"><i class="fa fa-files-o fa-fw"></i> Module Pages</h3>
                 <div class="panel-buttons text-right">
-                    <a href="/admin/page/create?module_id=<?= $form['values']['id'] ?>" class="btn btn-xs btn-primary ajax-link"><i class="fa fa-plus"></i> New Page</a>
+                    <a href="/admin/page/new?module_id=<?= $form['values']['id'] ?>" class="btn btn-xs btn-primary ajax-link"><i class="fa fa-plus"></i> New Page</a>
                 </div>
             </div>
             <div class="panel-body nopadding">

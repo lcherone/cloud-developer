@@ -30,7 +30,7 @@
                 <h3 class="panel-title"><i class="fa fa-file-o fa-fw"></i> All Pages</h3>
                 <div class="panel-buttons text-right">
                     <div class="btn-group-xs">
-                        <a href="/admin/page/create" class="btn btn-success ajax-link"><i class="fa fa-plus"></i> New Page</a>
+                        <a href="/admin/page/new" class="btn btn-success ajax-link"><i class="fa fa-plus"></i> New Page</a>
                     </div>
                 </div>
             </div>

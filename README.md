@@ -29,7 +29,7 @@ Features
 
 **Menu**
 
- - Create menu links which can be used in your templates menu code. Not generally required if you integrate your own menus.
+ - New menu links which can be used in your templates menu code. Not generally required if you integrate your own menus.
 
 **Objects**
 
