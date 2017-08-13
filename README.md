@@ -9,7 +9,7 @@ Features
 **Pages**
 
  - Auto-Generate Pages based upon the URL structure (bit like a wiki), then fill in the blanks.
- - Build pages directly using PHP code with full access to the underlying framework (FatFree Framework).
+ - Build pages directly using PHP code with full access to the underlying framework (FatFree Framework) and composer libraries.
  - See the flow of the request and easy access of whats being loaded whilst editing pages.
  - Pages contain a before load section, which can be used to handle POST callbacks or anything which you want to happen before rendering.
  - Each page contains also JavaScript section which allows you to abstract out any inline JavaScript. With end-of-document placement.
