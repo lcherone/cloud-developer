@@ -5,7 +5,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="/admin/tasks"><i class="fa fa-columns"></i> Tasks</a></li>
+            <li><a href="/admin/tasks"><i class="fa fa-tasks"></i> Tasks</a></li>
             <li class="active"><i class="fa fa-plus"></i> Create</li>
         </ol>
     </div>
@@ -28,7 +28,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-columns fa-fw"></i> Create Task</h3>
+                <h3 class="panel-title"><i class="fa fa-tasks fa-fw"></i> Create Task</h3>
             </div>
             <div class="panel-body">
                 <form class="form-horizontal" method="post">
