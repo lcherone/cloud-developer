@@ -331,9 +331,20 @@ echo json_encode($result);
 
                 $f3->set('menus', (array) $this->menu->findAll());
                 $f3->set('templates', (array) $this->template->findAll());
-                $f3->set('snippets', (array) $this->snippet->findAll());
                 $f3->set('modules', (array) $this->module->findAll());
                 $f3->set('objects', (array) $this->objects->findAll('ORDER by priority ASC'));
+                
+                // snippets helper
+                $snippets = $this->snippet->findAll();
+                $f3->set('getsnippets', function($type = null) use ($snippets) {
+                    $return = [];
+                    foreach ($snippets as $row) {
+                        if ($row->type != $type) { continue; }
+                        $return[] = $row;
+                    }
+                    return $return;
+                });
+
 
                 //
                 $this->set_csrf();
@@ -415,6 +426,8 @@ echo json_encode($result);
                         $form['values']['module_id'] = (int) $module->id;
 
                         $this->page->store($page);
+                        
+                        $form['values'] = $page->fresh();
 
                         // success
                         $form['errors']['success'] = 'Page updated.';
@@ -427,9 +440,20 @@ echo json_encode($result);
                 // load model data
                 $f3->set('menus', (array) $this->menu->findAll());
                 $f3->set('templates', (array) $this->template->findAll());
-                $f3->set('snippets', (array) $this->snippet->findAll());
                 $f3->set('modules', (array) $this->module->findAll());
                 $f3->set('objects', (array) $this->objects->findAll('ORDER by priority ASC'));
+                
+                // snippets helper
+                $snippets = $this->snippet->findAll();
+                $f3->set('getsnippets', function($type = null) use ($snippets) {
+                    $return = [];
+                    foreach ($snippets as $row) {
+                        if ($row->type != $type) { continue; }
+                        $return[] = $row;
+                    }
+                    return $return;
+                });
+
                 
                 //
                 $this->set_csrf();
@@ -697,7 +721,16 @@ echo json_encode($result);
 
                 $f3->set('form', $form);
 
-                $f3->set('snippets', (array) $this->snippet->findAll());
+                // snippets helper
+                $snippets = $this->snippet->findAll();
+                $f3->set('getsnippets', function($type = null) use ($snippets) {
+                    $return = [];
+                    foreach ($snippets as $row) {
+                        if ($row->type != $type) { continue; }
+                        $return[] = $row;
+                    }
+                    return $return;
+                });
 
                 //
                 $this->set_csrf();
@@ -763,7 +796,16 @@ echo json_encode($result);
 
                 $f3->set('form', $form);
 
-                $f3->set('snippets', (array) $this->snippet->findAll());
+                // snippets helper
+                $snippets = $this->snippet->findAll();
+                $f3->set('getsnippets', function($type = null) use ($snippets) {
+                    $return = [];
+                    foreach ($snippets as $row) {
+                        if ($row->type != $type) { continue; }
+                        $return[] = $row;
+                    }
+                    return $return;
+                });
 
                 //
                 $this->set_csrf();
@@ -829,7 +871,16 @@ echo json_encode($result);
 
                 $f3->set('form', $form);
 
-                $f3->set('snippets', (array) $this->snippet->findAll());
+                // snippets helper
+                $snippets = $this->snippet->findAll();
+                $f3->set('getsnippets', function ($type = null) use ($snippets) {
+                    $return = [];
+                    foreach ($snippets as $row) {
+                        if ($row->type != $type) { continue; }
+                        $return[] = $row;
+                    }
+                    return $return;
+                });
 
                 //
                 $this->set_csrf();

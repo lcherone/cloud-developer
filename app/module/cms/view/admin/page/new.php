@@ -54,9 +54,9 @@
                                 <td>
                                     <div class="input-group col-xs-10">
                                         <input type="text" class="form-control" id="input-slug" name="slug" value="<?= (!empty($form['values']['slug']) ? htmlentities($form['values']['slug']) : '') ?>" placeholder="Enter page slug... e.g: /my-page">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button" href="javascript:;" data-type="popup" data-url="<?= (!empty($form['values']['slug']) ? htmlentities($form['values']['slug']) : '') ?>" data-name="<?= (!empty($form['values']['title']) ? htmlentities($form['values']['title']) : '') ?>"><i class="fa fa-external-link"></i> Open</button>
-                                        </span>
+                                        <!--<span class="input-group-btn">-->
+                                        <!--    <button class="btn btn-default" type="button" href="javascript:;" data-type="popup" data-url="<?= (!empty($form['values']['slug']) ? htmlentities($form['values']['slug']) : '') ?>" data-name="<?= (!empty($form['values']['title']) ? htmlentities($form['values']['title']) : '') ?>"><i class="fa fa-external-link"></i> Open</button>-->
+                                        <!--</span>-->
                                     </div>
                                     <?php if (!empty($form['errors']['slug'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
                                     <?php if (!empty($form['errors']['slug'])): ?><span class="help-block"><?= $form['errors']['slug'] ?></span><?php endif ?>
@@ -134,7 +134,7 @@
                 <div class="panel-heading">
                     <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> Before Load
                     <div class="btn-group pull-right">
-                        <?php if (!empty($snippets)): ?>
+                        <?php $snippets = $getsnippets('beforeload'); if (!empty($snippets)): ?>
                         <a href="#" role="button" class="btn btn-link btn-xs label-btn" aria-disabled="true">Snippets:</a>
                         <?php foreach ($snippets as $row): if ($row->type != 'beforeload') { continue; } ?>
                         <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>
@@ -161,7 +161,7 @@
                 <div class="panel-heading">
                     <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> Body
                     <div class="btn-group pull-right">
-                        <?php if (!empty($snippets)): ?>
+                        <?php $snippets = $getsnippets('body'); if (!empty($snippets)): ?>
                         <a href="#" role="button" class="btn btn-link btn-xs label-btn" aria-disabled="true">Snippets:</a>
                         <?php foreach ($snippets as $row): if ($row->type != 'body') { continue; } ?>
                         <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>
@@ -181,14 +181,41 @@
             </div>
         </div>
     </div>
-
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> CSS
+                    <div class="btn-group pull-right">
+                        <?php $snippets = $getsnippets('css'); if (!empty($snippets)): ?>
+                        <a href="#" role="button" class="btn btn-link btn-xs label-btn" aria-disabled="true">Snippets:</a>
+                        <?php foreach ($snippets as $row): if ($row->type != 'css') { continue; } ?>
+                        <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>
+                        <?php endforeach ?>
+                        <?php endif ?>
+                    </div>
+                    </h3>
+                </div>
+                <div class="panel-body nopadding">
+                    <div class="">
+                        <textarea class="form-control form-textarea" rows="10" id="input-css" name="css"><?= (!empty($form['values']['css']) ? $form['values']['css'] : '') ?></textarea>
+                        <div id="css" style="position: relative;height: 380px;width: 100%"></div>
+                        <?php if (!empty($form['errors']['css'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
+                        <?php if (!empty($form['errors']['css'])): ?><span class="help-block"><?= $form['errors']['css'] ?></span><?php endif ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> Javascript
                     <div class="btn-group pull-right">
-                        <?php if (!empty($snippets)): ?>
+                        <?php $snippets = $getsnippets('javascript'); if (!empty($snippets)): ?>
                         <a href="#" role="button" class="btn btn-link btn-xs label-btn" aria-disabled="true">Snippets:</a>
                         <?php foreach ($snippets as $row): if ($row->type != 'javascript') { continue; } ?>
                         <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>
@@ -208,6 +235,7 @@
             </div>
         </div>
     </div>
+
 </form>
 
 <!--<div class="row">-->
@@ -226,6 +254,23 @@
 <?php ob_start() ?>
 <script>
     $(document).ready(function() {
+        
+        var textareaCSS = $('textarea[name="css"]').hide(),
+            editorCSS = ace.edit("css"),
+            editorSessionCSS = editorCSS.getSession();
+
+        editorCSS.setTheme("ace/theme/eclipse");
+        editorCSS.setOptions({
+            minLines: 20,
+            maxLines: Infinity
+        });
+
+        editorSessionCSS.setUseWorker(false);
+        editorSessionCSS.setMode("ace/mode/php");
+        editorSessionCSS.setValue(textareaCSS.val());
+        editorSessionCSS.on('change', function() {
+            textareaCSS.val(editorSessionCSS.getValue());
+        });
 
         var textareaJS = $('textarea[name="javascript"]').hide(),
             editorJS = ace.edit("javascript"),
@@ -304,7 +349,7 @@
                     }
                     
                     if (type == 'css') {
-                        editorSession.insert(editor.getCursorPosition(), data);
+                        editorSession.insert(editorCSS.getCursorPosition(), data);
                     }
                 }
             });

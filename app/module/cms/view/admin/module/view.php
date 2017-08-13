@@ -72,7 +72,7 @@
                 <div class="panel-heading">
                     <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> Before Load
                     <div class="btn-group pull-right">
-                        <?php if (!empty($snippets)): ?>
+                        <?php $snippets = $getsnippets('beforeload'); if (!empty($snippets)): ?>
                         <a href="#" role="button" class="btn btn-link btn-xs label-btn" aria-disabled="true">Snippets:</a>
                         <?php foreach ($snippets as $row): if ($row->type != 'beforeload') { continue; } ?>
                         <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>

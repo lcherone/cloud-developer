@@ -38,6 +38,7 @@ Features
 
  - Templates are the final view before outputting, so it's the main HTML document wrapper around your body content, which has its HTML head section and the loading of assets, general layout and menu links.
  - Direct access to the template.php files and the themes assets organised in a simple folder structure.
+ - Clone a template.
 
 **Tasks** 
 
@@ -96,7 +97,7 @@ Try debugging it first then open an issue or PR. I am pretty sure it won't work 
 Cron tasks
 ---
 
-You need to setup a cronjob to drives the task agent:
+You need to setup a cronjob to drive the task agent:
 
 `* * * * * cd /var/www/html/tasks && php run.php >> /dev/null 2>&1`
 

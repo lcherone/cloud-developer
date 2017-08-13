@@ -136,7 +136,6 @@ $formStyle = [
     </div>
 
     <div class="timeline">
-        <!-- Line -->
         <div class="line text-muted"></div>
         
         <?php if (!empty($objects)): ?>
@@ -145,7 +144,14 @@ $formStyle = [
                 <i class="fa fa-angle-down"></i>
             </div>
             <div class="panel-heading">
-                <h2 class="panel-title">Load Objects</h2>
+                <h2 class="panel-title">
+                    Load Objects
+                    <div class="panel-buttons text-right">
+                        <div class="btn-group-xs">
+                            <a href="/admin/objects/new" class="btn btn-xs btn-primary ajax-link"><i class="fa fa-plus"></i> New Object</a>
+                        </div>
+                    </div>
+                </h2>
             </div>
             <div class="panel-body nopadding">
                 <div class="table-responsive">
@@ -180,16 +186,19 @@ $formStyle = [
             </div>
             <div class="panel-heading">
                 <h2 class="panel-title">
-                    Load Module Beforeload
+                    Module Before Load
                     <div class="panel-buttons text-right">
                         <div class="btn-group-xs">
-                            <a href="#" class="btn btn-default show-code"><i class="fa fa-eye"></i> Show Code</a>
+                            <button type="button" class="btn btn-default show-code"><i class="fa fa-eye"></i> Show Code</button>
                             <a href="/admin/module/view/<?= $form['values']->module->id ?>" class="btn btn-primary ajax-link"><i class="fa fa-pencil"></i> Edit Module</a>
                         </div>
                     </div>
                 </h2>
             </div>
-            <div class="panel-body hidden"></div>
+            <div class="panel-body nopadding hidden modulebeforeload-code">
+                <textarea class="form-control form-textarea" rows="10" id="modulebeforeload" name="modulebeforeload"><?= $form['values']->module->beforeload ?></textarea>
+                <div id="modulebeforeload" style="position: relative;width: 100%"></div>
+            </div>
         </article>
         <?php endif ?>
         <article class="panel panel-default">
@@ -199,7 +208,7 @@ $formStyle = [
             <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> Before Load
                 <div class="btn-group pull-right">
-                    <?php if (!empty($snippets)): ?>
+                    <?php $snippets = $getsnippets('beforeload'); if (!empty($snippets)): ?>
                     <a href="#" role="button" class="btn btn-link btn-xs label-btn" aria-disabled="true">Snippets:</a>
                     <?php foreach ($snippets as $row): if ($row->type != 'beforeload') { continue; } ?>
                     <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>
@@ -225,7 +234,7 @@ $formStyle = [
             <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> Body
                 <div class="btn-group pull-right">
-                    <?php if (!empty($snippets)): ?>
+                    <?php $snippets = $getsnippets('body'); if (!empty($snippets)): ?>
                     <a href="#" role="button" class="btn btn-link btn-xs label-btn" aria-disabled="true">Snippets:</a>
                     <?php foreach ($snippets as $row): if ($row->type != 'body') { continue; } ?>
                     <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>
@@ -249,9 +258,35 @@ $formStyle = [
                 <i class="fa fa-angle-down"></i>
             </div>
             <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> CSS
+                <div class="btn-group pull-right">
+                    <?php $snippets = $getsnippets('css'); if (!empty($snippets)): ?>
+                    <a href="#" role="button" class="btn btn-link btn-xs label-btn" aria-disabled="true">Snippets:</a>
+                    <?php foreach ($snippets as $row): if ($row->type != 'css') { continue; } ?>
+                    <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>
+                    <?php endforeach ?>
+                    <?php endif ?>
+                </div>
+                </h3>
+            </div>
+            <div class="panel-body nopadding">
+                <div class="">
+                    <textarea class="form-control form-textarea" rows="10" id="input-css" name="css"><?= (!empty($form['values']['css']) ? $form['values']['css'] : '') ?></textarea>
+                    <div id="css" style="position: relative;height: 380px;width: 100%"></div>
+    
+                    <?php if (!empty($form['errors']['css'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
+                    <?php if (!empty($form['errors']['css'])): ?><span class="help-block"><?= $form['errors']['css'] ?></span><?php endif ?>
+                </div>
+            </div>
+        </article>
+        <article class="panel panel-default">
+            <div class="panel-heading icon">
+                <i class="fa fa-angle-down"></i>
+            </div>
+            <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> Javascript
                 <div class="btn-group pull-right">
-                    <?php if (!empty($snippets)): ?>
+                    <?php $snippets = $getsnippets('javascript'); if (!empty($snippets)): ?>
                     <a href="#" role="button" class="btn btn-link btn-xs label-btn" aria-disabled="true">Snippets:</a>
                     <?php foreach ($snippets as $row): if ($row->type != 'javascript') { continue; } ?>
                     <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>
@@ -276,7 +311,59 @@ $formStyle = [
 <?php ob_start() ?>
 <script>
     $(document).ready(function() {
+        
+        //
+        var textareaCSS = $('textarea[name="css"]').hide(),
+            editorCSS = ace.edit("css"),
+            editorSessionCSS = editorCSS.getSession();
 
+        editorCSS.setTheme("ace/theme/eclipse");
+        editorCSS.setOptions({
+            minLines: 20,
+            maxLines: Infinity
+        });
+
+        editorSessionCSS.setUseWorker(false);
+        editorSessionCSS.setMode("ace/mode/php");
+        editorSessionCSS.setValue(textareaCSS.val());
+        editorSessionCSS.on('change', function() {
+            textareaCSS.val(editorSessionCSS.getValue());
+        });
+        
+        //
+        if ($('textarea[name="modulebeforeload"]').length != 0) {
+            var textareaMBL = $('textarea[name="modulebeforeload"]').hide(),
+                editorMBL = ace.edit("modulebeforeload"),
+                editorSessionMBL = editorMBL.getSession();
+    
+            editorMBL.setTheme("ace/theme/eclipse");
+            editorMBL.setReadOnly(true);
+            editorMBL.setOptions({
+                minLines: 20,
+                maxLines: Infinity
+            });
+    
+            editorSessionMBL.setUseWorker(false);
+            editorSessionMBL.setMode("ace/mode/php");
+            editorSessionMBL.setValue(textareaMBL.val());
+            editorSessionMBL.on('change', function() {
+                textareaMBL.val(editorSessionMBL.getValue());
+            });
+        }
+        
+        $('.show-code').on('click', function() {
+            var btn   = $(this);
+            var panel = $('.modulebeforeload-code');
+            
+            if (panel.hasClass('hidden')) {
+                btn.html('<i class="fa fa-eye-slash"></i> Hide Code');
+                panel.removeClass('hidden');
+            } else {
+                btn.html('<i class="fa fa-eye"></i> Show Code');
+                panel.addClass('hidden');
+            }
+        });
+        
         //
         var textareaJS = $('textarea[name="javascript"]').hide(),
             editorJS = ace.edit("javascript"),
@@ -352,7 +439,7 @@ $formStyle = [
                     }
                     
                     if (type == 'css') {
-                        editorSession.insert(editor.getCursorPosition(), data);
+                        editorSessionCSS.insert(editor.getCursorPosition(), data);
                     }
                 }
             });
