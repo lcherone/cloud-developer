@@ -32,11 +32,12 @@ class Admin extends \Framework\Controller
         $f3->set('tasks', (array) $this->tasks->findAll());
         $f3->set('pages', (array) $this->page->findAll());
         $f3->set('menus', (array) $this->menu->findAll());
-        $f3->set('templates', (array) $this->template->findAll());
-        $f3->set('snippets', (array) $this->snippet->findAll());
         $f3->set('modules', (array) $this->module->findAll());
         $f3->set('objects', (array) $this->objects->findAll('ORDER by priority ASC'));
-
+        $f3->set('snippets', (array) $this->snippet->findAll());
+        $f3->set('templates', (array) $this->template->findAll());
+        $f3->set('tasksource', (array) $this->tasksource->findAll());
+        
         // load local plinker server endpoint
         $server =  $this->servers->load(1);
 
@@ -114,9 +115,6 @@ echo json_encode($result);
             }
         };
         $f3->set('getTaskResult', $getTaskResult);
-
-        //
-        $f3->set('tasks', $tasks);
 
         $f3->mset([
             'template' => 'app/module/cms/view/admin.php',
@@ -918,6 +916,10 @@ echo json_encode($result);
                             mkdir('tmp/template/'.$template->id.'/dist', 0755, true);
                         }
                         file_put_contents('tmp/template/'.$template->id.'/template.php', $form['values']['source']);
+                        
+                        $template = $template->fresh();
+                        
+                        $f3->reroute('/admin/template/edit/'.$template->id.'?c');
 
                         // success
                         $form['errors']['success'] = 'Template created.';
@@ -932,7 +934,7 @@ echo json_encode($result);
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
                     'page' => [
-                        'title' => 'Admin - Template - Create',
+                        'title' => 'Admin - Templates - Create',
                         'body' => $this->view->render('app/module/cms/view/admin/template/create.php')
                     ]
                 ]);
@@ -993,6 +995,10 @@ echo json_encode($result);
                         $form['errors']['success'] = 'Template updated.';
                     }
                 }
+                
+                if (isset($_GET['c'])) {
+                    $form['errors']['success'] = 'Template created.';
+                }
 
                 $f3->set('form', $form);
 
@@ -1002,7 +1008,7 @@ echo json_encode($result);
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
                     'page' => [
-                        'title' => 'Admin - Template - Edit',
+                        'title' => 'Admin - Templates - Edit',
                         'body' => $this->view->render('app/module/cms/view/admin/template/edit.php')
                     ]
                 ]);
@@ -1171,6 +1177,9 @@ echo json_encode($result);
              */
             case "delete": {
                 $template = $this->template->load($params['sub_action_id']);
+                
+                \utilphp\util::rmdir('/var/www/html/tmp/template/'.(int) $params['sub_action_id']);
+                
                 $this->template->trash($template);
                 $f3->reroute('/admin/template');
             } break;
@@ -2030,9 +2039,14 @@ echo json_encode($result);
 
                     // alls good
                     if (empty($form['errors'])) {
+                        
+                        //
+                        $task_requested = false;
+                        
+                        //
                         foreach ($form['values'] as $key => $value) {
                             // update composer file
-                            if ($key == 'composer') {
+                            if ($key == 'composer' && $value != file_get_contents('./composer.json')) {
                                 chmod('./composer.json', 0664);
                                 file_put_contents('./composer.json', $value);
 
@@ -2058,6 +2072,9 @@ echo json_encode($result);
                                 } catch (\Exception $e) {
 
                                 }
+                                
+                                //
+                                $task_requested = true;
                             }
                             // everything else
                             else {
@@ -2073,7 +2090,7 @@ echo json_encode($result);
                         $settings = $this->settings->findAll();
                         $form = [
                             'errors' => [
-                                'success' => 'Settings updated.'
+                                'success' => !$task_requested ? 'Settings updated.' : 'Settings updated, a background task will now run composer update.'
                             ],
                             'values' => $settings
                         ];
@@ -2083,7 +2100,7 @@ echo json_encode($result);
                 try {
                     $composerTask = $tasks->get('Composer Update');
                     $form['values']['composer_result'] = $tasks->getTasksLog($composerTask->id);
-                    $form['values']['composer_result'] = array_values($form['values']['composer_result'])[0]->result;
+                    $form['values']['composer_result'] = array_values($form['values']['composer_result'])[0];
                 } catch (\Exception $e) {
 
                 }

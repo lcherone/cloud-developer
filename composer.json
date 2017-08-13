@@ -17,7 +17,7 @@
     },
     "require": {
         "bcosca/fatfree-core": "^3.6",
-        "brandonwamboldt/utilphp": "1.0.*",
+        "brandonwamboldt/utilphp": "1.1.*",
         "gabordemooij/redbean": ">=4.2",
         "guzzlehttp/guzzle": ">=6.2.1",
         "h4cc/wkhtmltoimage-amd64": "0.12.x",

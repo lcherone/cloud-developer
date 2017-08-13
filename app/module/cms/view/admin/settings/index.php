@@ -97,9 +97,11 @@
                     <?php if (!empty($form['errors']['composer'])): ?><span class="help-block"><?= $form['errors']['composer'] ?></span><?php endif ?>
                 </div>
                 <div class="panel-footer nopadding">
-                    <?php if (!empty($form['values']['composer_result'])): ?>
                     <h5 style="padding-left:7px">Composer Task Output</h5>
-                    <pre style="padding:7px 10px;font-size:90%"><?= $form['values']['composer_result'] ?></pre>
+                    <?php if (!empty($form['values']['composer_result']->result)): ?>
+                    <pre style="padding:7px 10px;font-size:90%"><?= $form['values']['composer_result']->result ?></pre>
+                    <?php elseif (empty($form['values']['composer_result']->result) || empty($form['values']['composer_result']->completed)): ?>
+                    <div style="padding:7px 10px">Composer update task will run shortly, <a href="/admin/settings">click here to reload</a>.</div>
                     <?php endif ?>
                 </div>
             </div>

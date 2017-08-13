@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Admin <small> - Template - Create</small>
+            Templates <small> - Create</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="/admin/template"><i class="fa fa-columns"></i> Template</a></li>
+            <li><a href="/admin/template"><i class="fa fa-columns"></i> Templates</a></li>
             <li class="active"><i class="fa fa-plus"></i> Create</li>
         </ol>
     </div>
@@ -40,6 +40,9 @@
                                 <td>
                                     <div class="input-group col-xs-10">
                                         <input type="text" class="form-control" id="input-name" name="name" value="<?= (!empty($form['values']['name']) ? htmlentities($form['values']['name']) : '') ?>" placeholder="Enter template name... e.g: Default">
+                                        <!--<span class="input-group-btn">-->
+                                        <!--    <button class="btn btn-success add-row" type="button"><i class="fa fa-plus"></i></button>-->
+                                        <!--</span>-->
                                     </div>
                                     <?php if (!empty($form['errors']['name'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
                                     <?php if (!empty($form['errors']['name'])): ?><span class="help-block"><?= $form['errors']['name'] ?></span><?php endif ?>
@@ -61,7 +64,21 @@
             </div>
         </div>
     </div>
-</form> 
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-code" aria-hidden="true"></i> Code</h3>
+                </div>
+                <div class="panel-body nopadding">
+                    <textarea class="form-control form-textarea" rows="10" id="input-source" name="source"><?= (!empty($form['values']['source']) ? $form['values']['source'] : '') ?></textarea>
+                    <div id="source" style="position: relative;min-height: 800px;width: 100%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>  
 
 <?php ob_start() ?>
 <script>

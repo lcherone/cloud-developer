@@ -118,7 +118,7 @@
                         <i class="fa fa-tasks fa-4x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <span class="label label-default"><?= count($snippets) ?></span>
+                        <span class="label label-default"><?= count($tasksource) ?></span>
                         <h2>Tasks</h2>
                     </div>
                 </div>
@@ -181,8 +181,7 @@
                         <i class="fa fa-cogs fa-4x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <span class="label label-default">&nbsp;</span>
-                        <h2>Settings</h2>
+                        <h2 style="margin-top:21px">Settings</h2>
                     </div>
                 </div>
             </div>
