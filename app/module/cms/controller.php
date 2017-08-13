@@ -260,7 +260,7 @@ class Controller extends \Framework\Controller
         $bypass = ($params['action'] == 'template' && $params['sub_action'] == 'preview');
         
         // check user is logged in
-        if (empty($f3->get('SESSION.user')) && !$bypass) {
+        if (empty($f3->get('SESSION.developer')) && !$bypass) {
             if ($params['action'] != 'sign-in') {
                 $f3->reroute('/admin/sign-in');
             }

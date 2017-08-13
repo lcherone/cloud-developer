@@ -16,7 +16,7 @@
         <?= $f3->decode($css) ?>
     </head>
     <body>
-        <div id="<?= (!empty($_SESSION['user']) ? 'wrapper' : '') ?>">
+        <div id="<?= (!empty($_SESSION['developer']) ? 'wrapper' : '') ?>">
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <div class="navbar-header">
                     <?php if (!empty($_SESSION['user'])): ?>
@@ -30,7 +30,7 @@
                     <a class="navbar-brand" href="/" class="ajax-link"><i class="fa fa-cloud"></i> <?= $meta['name'] ?></a>
                 </div>
 
-                <?php if (!empty($_SESSION['user'])): ?>
+                <?php if (!empty($_SESSION['developer'])): ?>
                 <div class="collapse navbar-collapse navbar-collapse">
                     <ul class="nav navbar-nav side-nav">
                         <li<?= ($PATH == '/admin' ? ' class="active"' : '') ?>><a href="/admin" class="ajax-link"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a></li>

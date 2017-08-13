@@ -51,8 +51,8 @@
                         ?>
                         <li<?= ($PATH == $row->slug ? ' class="active"' : '') ?>><a href="<?= $row->slug ?>"><?= (!empty($row->icon) ? '<i class="'.$row->icon.'"></i> ' : '') ?><?= $row->title ?></a></li>
                         <?php endforeach ?>
-                        <?php if (!empty($_SESSION['user'])): ?>
-                        <li<?= ($PATH == '/admin' ? ' class="active"' : '') ?>><a href="/admin"><i class="fa fa-user-secret"></i> Admin</a></li>
+                        <?php if (!empty($_SESSION['developer'])): ?>
+                        <li<?= ($PATH == '/admin' ? ' class="active"' : '') ?>><a href="/admin"><i class="fa fa-user-secret"></i> Developer</a></li>
                         <?php endif ?>
                     </ul>
                 </div>

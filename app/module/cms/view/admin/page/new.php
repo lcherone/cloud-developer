@@ -101,7 +101,7 @@
                                     <div class="input-group col-xs-10">
                                         <select class="form-control" name="template_id" id="input-template_id">
                                             <?php foreach ($templates as $row): ?>
-                                            <option value="<?= $row->id ?>"><?= $row->title ?></option>
+                                            <option value="<?= $row->id ?>"<?= ($form['values']['template_id'] == $row->id ? ' selected' : '') ?>><?= $row->name ?></option>
                                             <?php endforeach ?>
                                         </select>
                                     </div>

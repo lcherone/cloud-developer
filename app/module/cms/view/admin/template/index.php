@@ -50,7 +50,12 @@
                             <tr>
                                 <td><a href="/admin/template/edit/<?= $row->id ?>"><?= $row->name ?></a></td>
                                 <td><?= count($row->ownPage) ?></td>
-                                <td><a href="/admin/template/delete/<?= $row->id ?>" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a></td>
+                                <td>
+                                    <div class="btn-group" style="display:flex">
+                                        <a href="/admin/template/clone/<?= $row->id ?>" title="Clone" class="btn btn-xs btn-info"><i class="fa fa-code-fork"></i></a>
+                                        <a href="/admin/template/delete/<?= $row->id ?>" title="Remove" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                                    </div>
+                                </td>
                             </tr>
                             <?php endforeach ?>
                         </tbody>

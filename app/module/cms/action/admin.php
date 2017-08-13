@@ -192,7 +192,7 @@ echo json_encode($result);
                     $user = $user->fresh();
 
                     // update user session
-                    $f3->set('SESSION.user', [
+                    $f3->set('SESSION.developer', [
                         'id' => $user->id,
                         'username' => $user->username
                     ]);
@@ -947,6 +947,47 @@ echo json_encode($result);
                     ]
                 ]);
             } break;
+            
+            /**
+             * 
+             */
+            case "copy":
+            case "clone": {
+                // helper folder copy
+                $copy_dir = function ($src, $dst) use (&$recurse_copy) { 
+                    `cp -ar {$src} {$dst}`;
+                };
+                
+                // get src template
+                $srcTemplate = $this->template->load($params['sub_action_id']);
+                
+                if (empty($srcTemplate)) {
+                    $f3->error(404);
+                }
+                
+                // create new template bean
+                $destTemplate = $this->template->create(['name' => 'Cloned - '.$srcTemplate->name]);
+                
+                // unset src id
+                unset($srcTemplate->id);
+                unset($srcTemplate->name);
+                
+                // import into new bean
+                $destTemplate->import($srcTemplate);
+                
+                // save
+                $this->template->store($destTemplate);
+                
+                // reload bean
+                $destTemplate = $destTemplate->fresh();
+                
+                // do actual copy
+                $src = 'tmp/template/'.(int) $params['sub_action_id'];
+                $dst = 'tmp/template/'.(int) $destTemplate->id;
+                `cp -ar {$src} {$dst}`;
+
+                $f3->reroute('/admin/template/edit/'.$destTemplate->id.'?cp');
+            } break;
 
             /**
              *
@@ -1006,6 +1047,10 @@ echo json_encode($result);
                 
                 if (isset($_GET['c'])) {
                     $form['errors']['success'] = 'Template created.';
+                }
+                
+                if (isset($_GET['cp'])) {
+                    $form['errors']['success'] = 'Template cloned.';
                 }
 
                 $f3->set('form', $form);
