@@ -48,7 +48,7 @@ main() {
     fi
     
     # Database Database
-    DBNAME=$(whiptail --inputbox "Enter database name:" 8 70 "app" --title "$TITLE" 3>&1 1>&2 2>&3)
+    DBNAME=$(whiptail --inputbox "Enter database name:" 8 70 "" --title "$TITLE" 3>&1 1>&2 2>&3)
 
     exitstatus=$?
     if [ $exitstatus = 1 ]; then
@@ -56,7 +56,7 @@ main() {
     fi
     
     # Database User
-    DBUSER=$(whiptail --inputbox "Enter database username:" 8 70 "app" --title "$TITLE" 3>&1 1>&2 2>&3)
+    DBUSER=$(whiptail --inputbox "Enter database username:" 8 70 "" --title "$TITLE" 3>&1 1>&2 2>&3)
 
     exitstatus=$?
     if [ $exitstatus = 1 ]; then
@@ -64,17 +64,17 @@ main() {
     fi
     
     # Database Password
-    DBPASS=$(whiptail --inputbox "Enter database password:" 8 70 "app" --title "$TITLE" 3>&1 1>&2 2>&3)
+    DBPASS=$(whiptail --inputbox "Enter database password:" 8 70 "" --title "$TITLE" 3>&1 1>&2 2>&3)
 
     exitstatus=$?
     if [ $exitstatus = 1 ]; then
         warn
     fi
     
-    whiptail --title "$TITLE" --infobox "Generating plinker private key" 0 0
+    #whiptail --title "$TITLE" --infobox "Generating plinker private key." 0 0
     PLINKER_KEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 
-    whiptail --title "$TITLE" --infobox "Writing ./app/config.ini file." 0 0
+    #whiptail --title "$TITLE" --infobox "Writing ./app/config.ini file." 0 0
     echo "
 [globals]
 
@@ -101,9 +101,8 @@ AUTOLOAD=\"app/\"
 
 " > `pwd`/app/config.ini
 
-    whiptail --title "$TITLE" --infobox "Writing ./bin/backup.sh file." 0 0
-    echo "
-#!/bin/bash
+    #whiptail --title "$TITLE" --infobox "Writing ./bin/backup.sh file." 0 0
+    echo "#!/bin/bash
 
 #
 ## Database Backup script
@@ -133,12 +132,12 @@ date=\$(date +\"%d-%b-%Y\")
     # With the idea.. in development backup every 5 mins, with the latest 
     #                 and then copy it to the daily if does not exist.
     
-    mysqldump --user=\$user --password=\$password --host=\$host \$db_name | gzip > `pwd`/backups/adminer.sql.gz
+    mysqldump --user=\$user --password=\$password --host=\$host \$db_name | gzip > `pwd`/backups/current.sql.gz
 
     # Check if already backed up today
-    if [ ! -f /var/www/html/backups/\$date.sql.gz ]; then
+    if [ ! -f `pwd`/backups/\$date.sql.gz ]; then
         # Dump database into SQL file
-        cp `pwd`/backups/adminer.sql.gz /var/www/html/backups/\$date.sql.gz
+        cp `pwd`/backups/current.sql.gz /var/www/html/backups/\$date.sql.gz
     fi
 
     # Delete files older than 7 days
@@ -150,15 +149,17 @@ date=\$(date +\"%d-%b-%Y\")
 " > `pwd`/bin/backup.sh
 
     #
-    whiptail --title "$TITLE" --infobox "Changing file ownership $USER:$USER" 0 0
+    #whiptail --title "$TITLE" --infobox "Changing file ownership $USER:$USER" 0 0
     chown $USER:$USER `pwd`/ -R
     
     #
-    whiptail --title "$TITLE" --infobox "Adding CRON task" 0 0
+    #whiptail --title "$TITLE" --infobox "Adding CRON task" 0 0
     crontab -l | { cat; echo "\n* * * * * cd `pwd`/tasks && /usr/bin/php `pwd`/tasks/run.php >/dev/null 2>&1"; } | crontab -
     crontab -l | { cat; echo "\n*/5 * * * * cd `pwd`/bin && bash backup.sh"; } | crontab -
     
     whiptail --title "$TITLE" --msgbox "Setup complete!" 0 0
+    
+    exit
 }
 
 main
