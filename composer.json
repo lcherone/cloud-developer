@@ -46,15 +46,7 @@
         }
     },
     "scripts": {
-       "_post-update-cmd": [
-            "bash ./bin/minify_assets.sh",
-            "bash ./bin/fix_permissions.sh"
-        ],
-        "_post-install-cmd": [
-            "bash ./bin/minify_assets.sh",
-            "bash ./bin/fix_permissions.sh"
-        ],
-        "_setup": "bash ./bin/setup.sh",
-        "_build": "bash ./bin/minify_assets.sh"
+        "post-create-project-cmd": "bash ./bin/setup.sh",
+        "backup": "bash ./bin/backup.sh"
     }
 }
