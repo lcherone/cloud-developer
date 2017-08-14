@@ -262,6 +262,24 @@ class Controller extends \Framework\Controller
             eval('?>'.$page->css);
             $f3->set('css', $f3->get('css').ob_get_clean());
         }
+        
+        // inject additional js for 
+        if (!empty($f3->get('SESSION.developer'))) {
+            ob_start();
+            ?>
+            <script>
+            // developer only - cross tab live content preview
+            $(document).ready(function() {
+                if ($('.ajax-container').length > 0) {
+                    $(window).bind('storage', function(e) {
+                        $('.ajax-container').html($('<div />').html(window.localStorage.getItem('preview-body')));
+                    });
+                }
+            });
+            </script>
+            <?php
+            $f3->set('javascript', $f3->get('javascript').ob_get_clean());
+        }
 
         //
         $f3->mset([

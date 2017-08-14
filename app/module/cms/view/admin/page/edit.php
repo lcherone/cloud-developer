@@ -121,7 +121,8 @@ $formStyle = [
                                 <td class="text-right"></td>
                                 <td>
                                     <div class="input-group col-xs-10">
-                                        <button type="submit" class="btn btn-primary">Save</button> <span class="text-muted" style="margin-left:15px"><i class="fa fa-lightbulb-o" aria-hidden="true"></i> Tip: You can also use Ctrl-s to save your changes.</span>
+                                        <a href="#" role="button" class="btn btn-link btn-xs label-btn hidden" id="page-saved" aria-disabled="true"><span class="text-success">File saved!</span></a>
+                                        <button type="submit" class="btn btn-primary save-page">Save</button> <span class="text-muted" style="margin-left:15px"><i class="fa fa-lightbulb-o" aria-hidden="true"></i> Tip: You can also use Ctrl-s to save your changes.</span>
                                     </div>
                                     <?php if (!empty($form['errors']['template_id'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
                                     <?php if (!empty($form['errors']['template_id'])): ?><span class="help-block"><?= $form['errors']['template_id'] ?></span><?php endif ?>
@@ -410,6 +411,7 @@ $formStyle = [
         editorSession.setMode("ace/mode/php");
         editorSession.setValue(textarea.val());
         editorSession.on('change', function() {
+            window.localStorage.setItem('preview-body', editorSession.getValue());
             textarea.val(editorSession.getValue());
         });
         
@@ -439,6 +441,24 @@ $formStyle = [
                 }
             });
         });
+        
+        // $('button.save-page').on('click', function(e) {
+        //             e.preventDefault();
+
+        //             //$.post('/admin/template/file/' + options.route_id + '/'+ file + '?save=1', { data: editor.getSession().getValue() },
+        //             //function(data, status) {
+        //                 //$('#template-preview').attr("src", $('#template-preview').attr("src"));
+        //                 $('#page-saved').hide().removeClass('hidden').fadeIn(300, function(){
+        //                     var elm = $(this);
+        //                     setTimeout(function(){ 
+        //                         elm.fadeOut(1000, function(){
+        //                             elm.addClass('hidden');
+        //                         });
+        //                     }, 1700);
+        //                 });
+        //             //});
+        //         });
+
 
         $(window).bind('keydown', function(event) {
             if (event.ctrlKey || event.metaKey) {
