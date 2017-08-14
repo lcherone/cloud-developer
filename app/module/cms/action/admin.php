@@ -188,6 +188,9 @@ echo json_encode($result);
                         'logins' => $user->logins+1,
                         'last_login' => date_create(null, timezone_open($f3->get('TZ')))->format('Y-m-d H:i:s')
                     ]);
+                    
+                    // store
+                    $this->user->store($user);
 
                     $user = $user->fresh();
 
@@ -880,6 +883,17 @@ echo json_encode($result);
                         $return[] = $row;
                     }
                     return $return;
+                });
+                
+                // helper - visibility name
+                $f3->set('visibilityname', function ($key = null) {
+                    $n = [
+                        1 => 'Always',
+                        2 => 'When not signed in',
+                        3 => 'When signed in',
+                        4 => 'When developer',
+                    ];
+                    return (isset($n[$key]) ? $n[$key] : '');
                 });
 
                 //

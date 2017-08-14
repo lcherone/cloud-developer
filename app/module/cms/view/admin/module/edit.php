@@ -67,6 +67,17 @@
             	select.append('<option value="fa fa-' + icon.id + '"' + (selected === 'fa fa-' + icon.id ? ' selected' : '') + '></option>');
             });
         });
+        
+        $(window).bind('keydown', function(event) {
+            if (event.ctrlKey || event.metaKey) {
+                switch (String.fromCharCode(event.which).toLowerCase()) {
+                    case 's':
+                        event.preventDefault();
+                        $('[type="submit"]').trigger('click');
+                    break;
+                }
+            }
+        });
 
         // load.script('/js/module/tasks.js', function() {
         //     nodes.init();

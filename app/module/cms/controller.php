@@ -10,14 +10,18 @@ class Controller extends \Framework\Controller
     {
         parent::__construct();
         
+        // load core models
         $this->user     = new \Framework\Model('user');
         $this->page     = new \Framework\Model('page');
         $this->menu     = new \Framework\Model('menu');
+        $this->tasks    = new \Framework\Model('tasks');
         $this->module   = new \Framework\Model('module');
         $this->servers  = new \Framework\Model('servers');
         $this->objects  = new \Framework\Model('objects');
+        $this->snippet  = new \Framework\Model('snippet');
         $this->template = new \Framework\Model('template');
         $this->settings = new \Framework\Model('settings');
+        $this->tasksource = new \Framework\Model('tasksource');
     }
 
     /**
@@ -124,15 +128,24 @@ class Controller extends \Framework\Controller
             $page->module = $module;
  
         } else {
-            // create page (wiki style)
+            // get page by path
             $page = $this->page->findOne('site = ? AND slug = ?', [
                 $_SERVER['HTTP_HOST'],
                 $f3->get('PATH')
             ]);
             
-            // must be found
+            // page not found
             if (empty($page)) {
-                $f3->error(404);
+                // second attempt - get page by dirname(path)
+                $page = $this->page->findOne('site = ? AND slug = ?', [
+                    $_SERVER['HTTP_HOST'],
+                    dirname($f3->get('PATH'))
+                ]);
+
+                // must be found
+                if (empty($page)) {
+                    $f3->error(404);
+                }
             }
         }
         
@@ -209,7 +222,7 @@ class Controller extends \Framework\Controller
         $f3->set('menus', (array) $this->menu->findAll());
 
         // execute all object code
-        foreach ((array) $this->objects->findAll('ORDER BY priority DESC, id DESC') as $row) {
+        foreach ((array) $this->objects->findAll('ORDER BY priority ASC, id ASC') as $row) {
             ob_start();
             eval('?>'.$row->source);
             $page->body = ob_get_clean().$page->body;
@@ -239,6 +252,13 @@ class Controller extends \Framework\Controller
             ob_start();
             eval('?>'.$page->javascript);
             $f3->set('javascript', $f3->get('javascript').ob_get_clean());
+        }
+
+        // execute page css
+        if (!empty($page->css)) {
+            ob_start();
+            eval('?>'.$page->css);
+            $f3->set('css', $f3->get('css').ob_get_clean());
         }
 
         //

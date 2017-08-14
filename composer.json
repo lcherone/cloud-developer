@@ -16,6 +16,8 @@
         "sort-packages": true
     },
     "require": {
+        "owasp/phprbac": "2.0.*@dev",
+        "hashids/hashids": "^1.0",
         "bcosca/fatfree-core": "^3.6",
         "brandonwamboldt/utilphp": "1.1.*",
         "gabordemooij/redbean": ">=4.2",
