@@ -149,10 +149,8 @@ echo json_encode($result);
             
             // check csrf
             if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                die('Invalid CSRF token!');
+                $form['errors']['global'] = 'Invalid CSRF token, please try again.';
             }
-            // expire it
-            $f3->set('SESSION.csrf', '');
 
             $form = [
                 'errors' => [],
@@ -265,10 +263,8 @@ echo json_encode($result);
 
                     // check csrf
                     if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                        $form['errors']['global'] = 'Invalid CSRF token.';
+                        $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
-                    // expire csrf
-                    $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
                     // check title
@@ -352,7 +348,6 @@ echo json_encode($result);
                     return $return;
                 });
 
-
                 //
                 $this->set_csrf();
 
@@ -381,10 +376,8 @@ echo json_encode($result);
 
                     // check csrf
                     if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                        $form['errors']['global'] = 'Invalid CSRF token.';
+                        $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
-                    // expire csrf
-                    $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
                     // check title
@@ -568,10 +561,8 @@ echo json_encode($result);
 
                     // check csrf
                     if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                        $form['errors']['global'] = 'Invalid CSRF token.';
+                        $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
-                    // expire csrf
-                    $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
                     // check title
@@ -643,10 +634,8 @@ echo json_encode($result);
 
                     // check csrf
                     if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                        $form['errors']['global'] = 'Invalid CSRF token.';
+                        $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
-                    // expire csrf
-                    $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
                     // check title
@@ -759,10 +748,8 @@ echo json_encode($result);
 
                     // check csrf
                     if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                        $form['errors']['global'] = 'Invalid CSRF token.';
+                        $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
-                    // expire csrf
-                    $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
                     // check title
@@ -837,10 +824,8 @@ echo json_encode($result);
 
                     // check csrf
                     if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                        $form['errors']['global'] = 'Invalid CSRF token.';
+                        $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
-                    // expire csrf
-                    $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
                     // check name
@@ -916,10 +901,8 @@ echo json_encode($result);
 
                     // check csrf
                     if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                        $form['errors']['global'] = 'Invalid CSRF token.';
+                        $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
-                    // expire csrf
-                    $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
                     // check name
@@ -1031,10 +1014,8 @@ echo json_encode($result);
 
                     // check csrf
                     if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                        $form['errors']['global'] = 'Invalid CSRF token.';
+                        $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
-                    // expire csrf
-                    $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
                     // check name
@@ -1074,6 +1055,18 @@ echo json_encode($result);
                 }
 
                 $f3->set('form', $form);
+                
+                // snippets helper
+                $snippets = $this->snippet->findAll();
+                $f3->set('getsnippets', function($type = null) use ($snippets) {
+                    $return = [];
+                    foreach ($snippets as $row) {
+                        if ($row->type != $type) { continue; }
+                        $return[] = $row;
+                    }
+                    return $return;
+                });
+
 
                 //
                 $this->set_csrf();
@@ -1144,10 +1137,8 @@ echo json_encode($result);
 
                     // check csrf
                     if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                        $form['errors']['global'] = 'Invalid CSRF token.';
+                        $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
-                    // expire csrf
-                    $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
                     // check name
@@ -1196,6 +1187,17 @@ echo json_encode($result);
 
                 //
                 $this->set_csrf();
+                
+                // snippets helper
+                $snippets = $this->snippet->findAll();
+                $f3->set('getsnippets', function($type = null) use ($snippets) {
+                    $return = [];
+                    foreach ($snippets as $row) {
+                        if ($row->type != $type) { continue; }
+                        $return[] = $row;
+                    }
+                    return $return;
+                });
 
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
@@ -1439,10 +1441,8 @@ echo json_encode($result);
 
                     // check csrf
                     if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                        $form['errors']['global'] = 'Invalid CSRF token.';
+                        $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
-                    // expire csrf
-                    $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
                     $form = [
@@ -1530,10 +1530,8 @@ echo json_encode($result);
 
                     // check csrf
                     if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                        $form['errors']['global'] = 'Invalid CSRF token.';
+                        $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
-                    // expire csrf
-                    $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
                     // type
@@ -1798,10 +1796,8 @@ echo json_encode($result);
 
                     // check csrf
                     if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                        $form['errors']['global'] = 'Invalid CSRF token.';
+                        $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
-                    // expire csrf
-                    $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
                     // check title
@@ -1865,10 +1861,8 @@ echo json_encode($result);
 
                     // check csrf
                     if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                        $form['errors']['global'] = 'Invalid CSRF token.';
+                        $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
-                    // expire csrf
-                    $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
                     // check title
@@ -1983,10 +1977,8 @@ echo json_encode($result);
 
                     // check csrf
                     if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                        $form['errors']['global'] = 'Invalid CSRF token.';
+                        $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
-                    // expire csrf
-                    $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
                     // check name
@@ -2075,10 +2067,8 @@ echo json_encode($result);
 
                     // check csrf
                     if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                        $form['errors']['global'] = 'Invalid CSRF token.';
+                        $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
-                    // expire csrf
-                    $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
                     // check name
@@ -2251,10 +2241,8 @@ echo json_encode($result);
 
                     // check csrf
                     if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                        $form['errors']['global'] = 'Invalid CSRF token.';
+                        $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
-                    // expire csrf
-                    $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
                     // check title

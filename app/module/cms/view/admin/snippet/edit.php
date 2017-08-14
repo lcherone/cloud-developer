@@ -54,6 +54,7 @@
                                             <option value="body"<?= ($form['values']['type'] == 'body' ? ' selected' : '') ?>>Body</option>
                                             <option value="javascript"<?= ($form['values']['type'] == 'javascript' ? ' selected' : '') ?>>Javascript</option>
                                             <option value="css"<?= ($form['values']['type'] == 'css' ? ' selected' : '') ?>>CSS</option>
+                                            <option value="template"<?= ($form['values']['type'] == 'template' ? ' selected' : '') ?>>Template</option>
                                         </select>
                                     </div>
                                     <?php if (!empty($form['errors']['type'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>

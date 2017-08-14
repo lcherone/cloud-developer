@@ -46,10 +46,19 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php 
+                            $types = [
+                                'css' => 'CSS',
+                                'beforeload' => 'Before Load',
+                                'body' => 'Body',
+                                'javascript' => 'JavaScript',
+                                'template' => 'Template',
+                            ];
+                            ?>
                             <?php foreach ($snippets as $row): ?>
                             <tr>
                                 <td><a href="/admin/snippet/edit/<?= $row->id ?>"><?= $row->title ?></a></td>
-                                <td><?= $row->type ?></td>
+                                <td><?= @$types[$row->type] ?></td>
                                 <td><a href="/admin/snippet/delete/<?= $row->id ?>" class="btn btn-xs btn-danger remove-snippet"><i class="fa fa-times"></i></a></td>
                             </tr>
                             <?php endforeach ?>

@@ -85,6 +85,12 @@
                     <div class="panel-buttons text-right" style="height:22px">
                         <div class="btn-group-xs">
                             <a href="#" role="button" class="btn btn-link btn-xs label-btn hidden" id="file-saved" aria-disabled="true"><span class="text-success">File saved!</span></a>
+                            <?php $snippets = $getsnippets('template'); if (!empty($snippets)): ?>
+                            <a href="#" role="button" class="btn btn-link btn-xs label-btn" aria-disabled="true">Snippets:</a>
+                            <?php foreach ($snippets as $row): if ($row->type != 'template') { continue; } ?>
+                            <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>
+                            <?php endforeach ?>
+                            <?php endif ?>
                             <button type="button" class="btn btn-success save-file" data-file="template.php"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
                         </div>
                     </div>
@@ -299,6 +305,21 @@ try {
                             break;
                         }
                     }
+                });
+                
+                $(document).on('click', '.fetch-snippet', function(){
+                    var id = $(this).data('id');
+                    var type = $(this).data('type');
+                    $.ajax({
+                        type: "GET",
+                        url: '/admin/snippet/get/'+id,
+                        dataType: "text",
+                        success: function(data) {
+                            if (type == 'template') {
+                                editor.getSession().insert(editor.getCursorPosition(), data);
+                            }
+                        }
+                    });
                 });
             };
             
