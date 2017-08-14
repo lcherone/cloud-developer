@@ -5,6 +5,7 @@
 #
 TITLE="Cloud Developer - v0.0.1 - Post Install"
 TERM=vt220
+PWD=$(`pwd`)
 
 warn() {
     #
@@ -72,7 +73,7 @@ main() {
     fi
     
     #whiptail --title "$TITLE" --infobox "Generating plinker private key." 0 0
-    PLINKER_KEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+    PLINKER_KEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1)
 
     #whiptail --title "$TITLE" --infobox "Writing ./app/config.ini file." 0 0
     echo "
@@ -99,7 +100,7 @@ CACHE=false
 DEBUG=3
 AUTOLOAD=\"app/\"
 
-" > `pwd`/app/config.ini
+" > $PWD/app/config.ini
 
     #whiptail --title "$TITLE" --infobox "Writing ./bin/backup.sh file." 0 0
     echo "#!/bin/bash
@@ -124,42 +125,42 @@ date=\$(date +\"%d-%b-%Y\")
 # Wrap logic to catch console output
 {
     ##############################################################
-    # - Start database dump latest
+    # - Start database dump
     #
     # In cron we are doing:
-    # */5 * * * * cd `pwd`/bin && bash backup.sh
+    # */5 * * * * cd $PWD/bin && bash backup.sh
     #
     # With the idea.. in development backup every 5 mins, with the latest 
     #                 and then copy it to the daily if does not exist.
     
-    mysqldump --user=\$user --password=\$password --host=\$host \$db_name | gzip > `pwd`/backups/current.sql.gz
+    mysqldump --user=\$user --password=\$password --host=\$host \$db_name | gzip > $PWD/backups/current.sql.gz
 
     # Check if already backed up today
-    if [ ! -f `pwd`/backups/\$date.sql.gz ]; then
+    if [ ! -f $PWD/backups/\$date.sql.gz ]; then
         # Dump database into SQL file
-        cp `pwd`/backups/current.sql.gz /var/www/html/backups/\$date.sql.gz
+        cp $PWD/backups/current.sql.gz $PWD/backups/\$date.sql.gz
     fi
 
     # Delete files older than 7 days
-    find `pwd`/backups/*.sql.gz -mtime +7 -exec rm {} \;
+    find $PWD/backups/*.sql.gz -mtime +7 -exec rm {} \;
 
     ##############################################################
     
 } &> /dev/null
-" > `pwd`/bin/backup.sh
+" > $PWD/bin/backup.sh
 
     #
     #whiptail --title "$TITLE" --infobox "Changing file ownership $USER:$USER" 0 0
-    chown $USER:$USER `pwd`/ -R
+    chown $USER:$USER $PWD/ -R
     
     #
     #whiptail --title "$TITLE" --infobox "Adding CRON task" 0 0
-    crontab -l | { cat; echo "\n* * * * * cd `pwd`/tasks && /usr/bin/php `pwd`/tasks/run.php >/dev/null 2>&1"; } | crontab -
-    crontab -l | { cat; echo "\n*/5 * * * * cd `pwd`/bin && bash backup.sh"; } | crontab -
+    crontab -l | { cat; echo "\n* * * * * cd $PWD/tasks && /usr/bin/php $PWD/tasks/run.php >/dev/null 2>&1"; } | crontab -
+    crontab -l | { cat; echo "\n*/5 * * * * cd $PWD/bin && bash backup.sh"; } | crontab -
     
     whiptail --title "$TITLE" --msgbox "Setup complete!" 0 0
     
-    exit
+    exit 0;
 }
 
 main
