@@ -3,9 +3,9 @@
 #
 # Project Post Setup Script
 #
-TITLE="Cloud Developer - v0.0.1 - Post Install"
+TITLE="Cloud Developer - v0.0.2 - Post Install"
 TERM=vt220
-PWD=$(`pwd`)
+PWD=$(pwd)
 
 warn() {
     #
@@ -72,13 +72,11 @@ main() {
         warn
     fi
     
-    whiptail --title "$TITLE" --infobox "Generating plinker private key." 0 0
-    PLINKER_KEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1)
-    sleep 1
+    #whiptail --title "$TITLE" --infobox "Generating plinker private key." 0 0
+    PLINKER_KEY=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
 
-    whiptail --title "$TITLE" --infobox "Writing ./app/config.ini file." 0 0
-    echo "
-[globals]
+    #whiptail --title "$TITLE" --infobox "Writing ./app/config.ini file." 0 0
+    echo -e "[globals]
 
 meta.name=\"Cloud Developer\"
 meta.description=\"\"
@@ -103,10 +101,10 @@ AUTOLOAD=\"app/\"
 
 " > $PWD/app/config.ini
 
-    sleep 1
+    #sleep 1
 
-    whiptail --title "$TITLE" --infobox "Writing ./bin/backup.sh file." 0 0
-    echo "#!/bin/bash
+    #whiptail --title "$TITLE" --infobox "Writing ./bin/backup.sh file." 0 0
+    echo -e "#!/bin/bash
 
 #
 ## Database Backup script
@@ -152,18 +150,14 @@ date=\$(date +\"%d-%b-%Y\")
 } &> /dev/null
 " > $PWD/bin/backup.sh
 
-    sleep 1
-
     #
-    whiptail --title "$TITLE" --infobox "Adding CRON task" 0 0
+    #whiptail --title "$TITLE" --infobox "Adding CRON task" 0 0
     crontab -l | { cat; echo "\n* * * * * cd $PWD/tasks && /usr/bin/php $PWD/tasks/run.php >/dev/null 2>&1"; } | crontab -
     crontab -l | { cat; echo "\n*/5 * * * * cd $PWD/bin && bash backup.sh"; } | crontab -
     
-    sleep 1
-    
+    #sleep 1
     whiptail --title "$TITLE" --msgbox "Setup complete!" 0 0
-    
-    exit 0;
+
 }
 
 main

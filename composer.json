@@ -47,6 +47,7 @@
     },
     "scripts": {
         "post-create-project-cmd": "bash ./bin/setup.sh",
+        "setup": "bash ./bin/setup.sh",
         "backup": "bash ./bin/backup.sh"
     }
 }
