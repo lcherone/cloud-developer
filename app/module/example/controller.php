@@ -10,13 +10,18 @@ class Controller extends \Framework\Controller
     {
         parent::__construct();
         
-        $this->module = new \Framework\Model('module');
-        $this->objects = new \Framework\Model('objects');
+        // load core models
+        $this->user     = new \Framework\Model('user');
+        $this->page     = new \Framework\Model('page');
+        $this->menu     = new \Framework\Model('menu');
+        $this->tasks    = new \Framework\Model('tasks');
+        $this->module   = new \Framework\Model('module');
+        $this->servers  = new \Framework\Model('servers');
+        $this->objects  = new \Framework\Model('objects');
+        $this->snippet  = new \Framework\Model('snippet');
         $this->template = new \Framework\Model('template');
         $this->settings = new \Framework\Model('settings');
-        $this->user = new \Framework\Model('user');
-        $this->page = new \Framework\Model('page');
-        $this->menu = new \Framework\Model('menu');
+        $this->tasksource = new \Framework\Model('tasksource');
     }
 
 	/**
@@ -32,14 +37,14 @@ class Controller extends \Framework\Controller
 	    // get site menus
         $f3->set('menus', (array) $this->menu->findAll());
 
+        //
         $f3->mset([
-            'template' => 'app/template/main.php',
+            'template' => 'app/template/template.php',
             'page' => [
-                'title' => 'Example',
+                'title' => 'Example Module',
                 'body' => $this->view->render('app/module/example/view/index.php')
             ]
         ]);
-        
 	}
 
 }

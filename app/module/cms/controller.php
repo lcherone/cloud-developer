@@ -212,7 +212,9 @@ class Controller extends \Framework\Controller
 ';
         }
         
-        $_SESSION['template_id'] = (int) $page->template_id;
+        //
+        $_SESSION['template_path'] = 'tmp/template/';
+        $_SESSION['template_id']   = (int) $page->template_id;
         
         $page->views = (int) $page->views+1;
         
@@ -285,6 +287,10 @@ class Controller extends \Framework\Controller
                 $f3->reroute('/admin/sign-in');
             }
         }
+        
+        //
+        $_SESSION['template_path'] = 'app/template/';
+        $_SESSION['template_id'] = null;
         
         $action = str_replace('-', '_', strtolower($params['action']));
         $this->action = new Action\Admin();

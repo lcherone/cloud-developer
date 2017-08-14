@@ -54,13 +54,18 @@
                             <?php $line_count = 0; foreach ($pages as $row): ?>
                             <tr>
                                 <td><a href="/admin/page/edit/<?= $row->id ?>"><?= (!empty($row->title) ? $row->title : '-') ?></a></td>
-                                <td><a href="/admin/template/edit/<?= $row->template->id ?>"><?= $row->template->title ?></a></td>
+                                <td><a href="/admin/template/edit/<?= $row->template->id ?>"><?= $row->template->name ?></a></td>
                                 <td><a href="/admin/module/view/<?= $row->module->id ?>"><?= $row->module->name ?></a></td>
                                 <td><a href="javascript:;" data-type="popup" data-url="<?= htmlentities($row->slug) ?>" data-name="<?= htmlentities($row->slug) ?>"><?= htmlentities($row->slug) ?></a></td>
                                 <td><?= (int) $row->line_count ?></td>
                                 <td><?= (int) $row->views ?></td>
                                 <td><?= $visibilityname($row->visibility) ?></td>
-                                <td><a href="/admin/page/delete/<?= $row->id ?>" class="btn btn-xs btn-danger remove-page"><i class="fa fa-times"></i></a></td>
+                                <td>
+                                    <div class="btn-group" style="display:flex">
+                                        <a href="/admin/page/hide/<?= $row->id ?>" class="btn btn-xs btn-default hide-page"><i class="fa fa-eye"></i></a>
+                                        <a href="/admin/page/delete/<?= $row->id ?>" class="btn btn-xs btn-danger remove-page"><i class="fa fa-times"></i></a>
+                                    </div>
+                                </td>
                             </tr>
                             <?php $line_count = $line_count + (int) $row->line_count; endforeach ?>
                         </tbody>

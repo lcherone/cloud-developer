@@ -51,7 +51,7 @@
                                 <td class="text-right"></td>
                                 <td>
                                     <div class="input-group col-xs-10">
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="submit" class="btn btn-primary save-details">Save</button>
                                     </div>
                                 </td>
                             </tr>
@@ -150,13 +150,9 @@ try {
         var template = (function() {
 
             var init = function(options) {
-                
-                //if (options.files.length > 0) {
-                    Dropzone.autoDiscover = false;
-                    var myDropzone = new Dropzone("form.dropzone", { url: "/admin/template/upload-file/<?= $f3->get('PARAMS.sub_action_id') ?>"});
-                //} else {
-                //    $('#fileList').parent().hide();
-                //}
+
+                Dropzone.autoDiscover = false;
+                var myDropzone = new Dropzone("form.dropzone", { url: "/admin/template/upload-file/<?= $f3->get('PARAMS.sub_action_id') ?>"});
 
                 var textarea = $('textarea[name="source"]').hide();
                 var editor = ace.edit("source");
@@ -168,8 +164,10 @@ try {
                 });
                 editor.getSession().setMode("ace/mode/php");
 
+                var whichForm = 'save-details';
                 editor.getSession().setValue(textarea.val());
                 editor.getSession().on('change', function() {
+                    whichForm = 'save-file';
                     textarea.val(editor.getSession().getValue());
                 });
 
@@ -289,8 +287,19 @@ try {
                 });
 
                 $('.fmBreadCrumbs').first('li').html('/var/www/html');
+                
+                $(window).bind('keydown', function(event) {
+                    if (event.ctrlKey || event.metaKey) {
+                        switch (String.fromCharCode(event.which).toLowerCase()) {
+                            case 's':
+                                event.preventDefault();
+                                $('.'+whichForm).trigger('click');
+                            break;
+                        }
+                    }
+                });
             };
-
+            
             return {
                 init: init
             };

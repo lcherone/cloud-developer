@@ -488,6 +488,38 @@ echo json_encode($result);
             } break;
 
             /**
+             * Hides page, which is complete.
+             */
+            case "hide": {
+                $page = $this->page->load($params['sub_action_id']);
+                
+                if (empty($page)) {
+                    $f3->reroute('/admin/page');
+                }
+                
+                $page->hide = 1;
+                
+                $this->page->store($page);
+                $f3->reroute('/admin/page');
+            } break;
+
+            /**
+             * Hides page, which is complete.
+             */
+            case "unhide": {
+                $page = $this->page->load($params['sub_action_id']);
+                
+                if (empty($page)) {
+                    $f3->reroute('/admin/page');
+                }
+                
+                $page->hide = 0;
+                
+                $this->page->store($page);
+                $f3->reroute('/admin/page');
+            } break;
+
+            /**
              *
              */
             default: {
@@ -1180,12 +1212,13 @@ echo json_encode($result);
             case "preview": {
 
                 $pdf_pages = [
-                    'http://c9-cloud.free.lxd.systems/admin/template/preview/'.$params['sub_action_id']."?display=". (int) $params['sub_action_id'],
+                    'http://c9-cloud.free.lxd.systems/admin/template/preview/'.$params['sub_action_id']."?raw",
                 ];
 
-                if (isset($_GET['display'])) {
-                    $template = $this->template->load($_GET['display']);
+                if (isset($_GET['raw'])) {
+                    $template = $this->template->load($params['sub_action_id']);
 
+                    $_SESSION['template_path'] = 'tmp/template/';
                     $_SESSION['template_id'] = (int) $template->id;
 
                     // get site settings

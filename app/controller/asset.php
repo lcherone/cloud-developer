@@ -16,6 +16,37 @@ class Asset extends \Prefab
         
         // set framework into view scope
         $this->f3->set('f3', $this->f3);
+        
+        // helper - get active template path from session
+        $this->f3->set('getAssetPath', function($params = [], $type = 'css') {
+            //
+            if (isset($_SESSION['template_path'])) {
+                //
+                if (isset($_SESSION['template_id']) && is_numeric($_SESSION['template_id'])) {
+                    $template = $_SESSION['template_path'].$_SESSION['template_id'].'/'.$type.'/'.basename($params['filename']);
+                } 
+                //
+                else {
+                    $template = 'app/template/'.$type.'/'.basename($params['filename']);
+                }
+                
+                // force to default
+                if (isset($_GET['default'])) {
+                    $template = 'app/template/'.$type.'/'.basename($params['filename']);
+                }
+            } 
+            //
+            else {
+                $template = 'app/template/'.$type.'/'.basename($params['filename']);
+            }
+            
+            // check exists
+            if (!file_exists($template)) {
+                $template = '';
+            }
+            
+            return $template;
+        });
     }
     
 	/**
@@ -23,13 +54,8 @@ class Asset extends \Prefab
      */
     public function css(\Base $f3, $params)
     {
-        if (isset($_SESSION['template_id']) && !empty($_GET['default'])) {
-            $template = 'tmp/template/'.$_SESSION['template_id'].'/css/'.basename($params['filename']);
-        } else {
-            $template = 'app/template/css/'.basename($params['filename']);
-        }
-        exit(\Web::instance()->minify(
-            $template
+        exit( \Web::instance()->send(
+            $this->f3->get('getAssetPath')($params, 'css'), 'text/css', 1024, false
         ));
     }
 
@@ -38,13 +64,8 @@ class Asset extends \Prefab
      */
     public function js(\Base $f3, $params)
     {
-        if (isset($_SESSION['template_id']) && !empty($_GET['default'])) {
-            $template = 'tmp/template/'.$_SESSION['template_id'].'/js/'.basename($params['filename']);
-        } else {
-            $template = 'app/template/js/'.basename($params['filename']);
-        }
-        exit(\Web::instance()->minify(
-            $template
+        exit( \Web::instance()->send(
+            $this->f3->get('getAssetPath')($params, 'js'), null, 1024, false
         ));
     }
 
@@ -53,13 +74,8 @@ class Asset extends \Prefab
      */
     public function dist(\Base $f3, $params)
     {
-        if (isset($_SESSION['template_id']) && !empty($_GET['default'])) {
-            $template = 'tmp/template/'.$_SESSION['template_id'].'/dist/'.basename($params['filename']);
-        } else {
-            $template = 'app/template/dist/'.basename($params['filename']);
-        }
         exit( \Web::instance()->send(
-            $template, null, 1024, false
+            $this->f3->get('getAssetPath')($params, 'dist'), null, 1024, false
         ));
     }
 
@@ -68,14 +84,8 @@ class Asset extends \Prefab
      */
     public function img(\Base $f3, $params)
     {
-        if (isset($_SESSION['template_id']) && !empty($_GET['default'])) {
-            $template = 'tmp/template/'.$_SESSION['template_id'].'/img/'.basename($params['filename']);
-        } else {
-            $template = 'app/template/img/'.basename($params['filename']);
-        }
-
         exit( \Web::instance()->send(
-            $template, null, 1024, false
+            $this->f3->get('getAssetPath')($params, 'img'), null, 1024, false
         ));
     }
 
