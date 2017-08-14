@@ -3,6 +3,15 @@ Cloud Developer (PHP)
 
 This fun little weekend project is a "Code" CMS! With it, you can code and build a system directly within it.
 
+::Installing::
+---
+
+If you're brave enough, then run the following composer command to install the project.
+
+`composer create-project lcherone/plinkerui --stability dev`
+
+Then complete the post install setup.
+
 ::Features::
 ----
 
@@ -58,15 +67,6 @@ This fun little weekend project is a "Code" CMS! With it, you can code and build
 ---
 
 <img src="https://cherone.co.uk/files/screens/cloud-developer/1.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/2.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/3.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/18.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/5.png" width="800"><img src="https://cherone.co.uk/files/screens/cloud-developer/6.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/7.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/8.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/9.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/10.png" width="800"><img src="https://cherone.co.uk/files/screens/cloud-developer/12.png" width="800"><img src="https://cherone.co.uk/files/screens/cloud-developer/13.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/16.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/14.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/15.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/17.png" width="800">
-
-::Installing::
----
-
-If you're brave enough, then run the following composer command to install the project.
-
-`composer create-project lcherone/plinkerui --stability dev`
-
-Then complete the post install setup.
 
 ::Database::
 ---
