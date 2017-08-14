@@ -8,7 +8,7 @@ This fun little weekend project is a "Code" CMS! With it, you can code and build
 
 If you're brave enough, then run the following composer command to install the project.
 
-`composer create-project lcherone/cloud-developer --stability dev`
+`composer create-project lcherone/cloud-developer .`
 
 Then complete the post install setup.
 
