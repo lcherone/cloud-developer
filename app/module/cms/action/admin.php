@@ -1212,10 +1212,10 @@ echo json_encode($result);
             case "preview": {
 
                 $pdf_pages = [
-                    'http://c9-cloud.free.lxd.systems/admin/template/preview/'.$params['sub_action_id']."?raw",
+                    'http://c9-cloud.free.lxd.systems/admin/template/preview/'.$params['sub_action_id']."?html",
                 ];
 
-                if (isset($_GET['raw'])) {
+                if (isset($_GET['html'])) {
                     $template = $this->template->load($params['sub_action_id']);
 
                     $_SESSION['template_path'] = 'tmp/template/';
@@ -1247,7 +1247,17 @@ echo json_encode($result);
                                 </div>
                             </div>
                             <p>Your <code>'.htmlentities('<?= $f3->decode($page[\'body\']) ?>').'</code> contents will go here.</p>
-                            '
+                            <script>
+                            window.onload = function() {
+                                var anchors = document.getElementsByTagName("a");
+                                for (var i = 0; i < anchors.length; i++) {
+                                    anchors[i].onclick = function() {
+                                        //alert(\'Links are disabled in preview.\');
+                                        return false;
+                                    };
+                                }
+                            };
+                            </script>'
                         ]
                     ]);
 

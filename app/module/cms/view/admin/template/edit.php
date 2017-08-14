@@ -67,8 +67,11 @@
                 <div class="panel-heading">
                     <h3 class="panel-title"><i class="fa fa-eye fa-fw"></i> Preview</h3>
                 </div>
-                <div class="panel-body">
-                    <img src="/admin/template/preview/<?= $f3->get('PARAMS.sub_action_id') ?>" alt="" class="img-responsive" style="margin: 0 auto;">
+                <div class="panel-body nopadding" style="height:350px">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" id="template-preview" src="/admin/template/preview/<?= $f3->get('PARAMS.sub_action_id') ?>?html"></iframe>
+                    </div>
+                    <!--<img src="/admin/template/preview/<?= $f3->get('PARAMS.sub_action_id') ?>" alt="" class="img-responsive" style="margin: 0 auto;">-->
                 </div>
             </div>
         </div>
@@ -89,13 +92,13 @@
                 <div class="panel-body nopadding">
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 nopadding">
                         <div class="row" style="padding:5px;background:#f5f5f5;margin-left:0px;margin-right:0px">
-                            <div class="col-xs-12 col-sm-3">
-                                <button style="margin-left:-15px" type="button" class="btn btn-xs btn-danger remove-file hidden"><i class="fa fa-trash" aria-hidden="true"></i> Delete File</button>
+                            <div class="col-xs-12 col-sm-3 nopadding">
+                                <button type="button" class="btn btn-xs btn-danger remove-file hidden"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
                             </div>
-                            <div class="col-xs-12 col-sm-9 text-right">
-                                <form class="form-inline" style="margin-right:-15px">
+                            <div class="col-xs-12 col-sm-9 nopadding text-right">
+                                <form class="form-inline" style="margin-right:-20px">
                                     <div class="input-group">
-                                        <input type="text" class="form-control input-xs" id="new-file-name" value="" placeholder="Enter filename and extension&hellip;" >
+                                        <input type="text" class="form-control input-xs" id="new-file-name" value="" placeholder="Enter filename.ext&hellip;" >
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-xs btn-success new-file"><i class="fa fa-file" aria-hidden="true"></i> New File</button>
                                         </span>
@@ -108,7 +111,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-8 col-md-8 col-lg-10 nopadding">
                         <textarea class="form-control form-textarea" rows="10" id="input-source" name="source"><?= (!empty($form['values']['source']) ? $form['values']['source'] : '') ?></textarea>
-                        <div id="source" style="position: relative;min-height: 800px;width: 100%"></div>
+                        <div id="source" style="position: relative;min-height: 750px;width: 100%"></div>
                     </div>
                 </div>
             </div>
@@ -258,10 +261,9 @@ try {
                         file = file.substr(1);
                     }
 
-                    $.post('/admin/template/file/' + options.route_id + '/'+ file + '?save=1', {
-                        data: editor.getSession().getValue()
-                    },
-                           function(data, status) {
+                    $.post('/admin/template/file/' + options.route_id + '/'+ file + '?save=1', { data: editor.getSession().getValue() },
+                    function(data, status) {
+                        $('#template-preview').attr("src", $('#template-preview').attr("src"));
                         $('#file-saved').hide().removeClass('hidden').fadeIn(300, function(){
                             var elm = $(this);
                             setTimeout(function(){ 
