@@ -557,6 +557,23 @@ echo json_encode($result);
                 }
 
                 $f3->set('form', $form);
+                
+                // helper function pick out object based on priority
+                $menus = $this->menu->findAll();
+                $f3->set('helper.getMenuNameByOrder', function($order = null) use ($menus) {
+                    $matched = [];
+                    foreach ($menus as $row) {
+                        if ($row->order == $order) {
+                            $matched[] = $row->title;
+                        }
+                    }
+                    
+                    if (empty($matched)) {
+                        return;
+                    } else {
+                        return ' ('.implode(', ', $matched).')';
+                    }
+                });
 
                 //
                 $this->set_csrf();
@@ -614,6 +631,23 @@ echo json_encode($result);
                 }
 
                 $f3->set('form', $form);
+                
+                // helper function pick out object based on priority
+                $menus = $this->menu->findAll();
+                $f3->set('helper.getMenuNameByOrder', function($order = null) use ($menus) {
+                    $matched = [];
+                    foreach ($menus as $row) {
+                        if ($row->order == $order) {
+                            $matched[] = $row->title;
+                        }
+                    }
+                    
+                    if (empty($matched)) {
+                        return;
+                    } else {
+                        return ' ('.implode(', ', $matched).')';
+                    }
+                });
 
                 //
                 $this->set_csrf();
@@ -640,7 +674,7 @@ echo json_encode($result);
              *
              */
             default: {
-                $f3->set('menus', (array) $this->menu->findAll());
+                $f3->set('menus', (array) $this->menu->findAll('ORDER BY `order` ASC, id ASC'));
                 
                 // helper - visibility name
                 $f3->set('visibilityname', function ($key = null) {
@@ -1904,9 +1938,9 @@ echo json_encode($result);
                     $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
-                    // check title
-                    if (empty($form['values']['title'])) {
-                        $form['errors']['title'] = 'Title is a required field.';
+                    // check name
+                    if (empty($form['values']['name'])) {
+                        $form['errors']['name'] = 'Name is a required field.';
                     }
 
                     // check source
@@ -1954,7 +1988,7 @@ echo json_encode($result);
                     $matched = [];
                     foreach ($objects as $row) {
                         if ($row->priority == $priority) {
-                            $matched[] = $row->title;
+                            $matched[] = $row->name;
                         }
                     }
                     
@@ -1996,9 +2030,9 @@ echo json_encode($result);
                     $f3->set('SESSION.csrf', '');
                     unset($form['values']['csrf']);
 
-                    // check title
-                    if (empty($form['values']['title'])) {
-                        $form['errors']['title'] = 'Title is a required field.';
+                    // check name
+                    if (empty($form['values']['name'])) {
+                        $form['errors']['name'] = 'Name is a required field.';
                     }
 
                     // check source
@@ -2040,7 +2074,7 @@ echo json_encode($result);
                     $matched = [];
                     foreach ($objects as $row) {
                         if ($row->priority == $priority) {
-                            $matched[] = $row->title;
+                            $matched[] = $row->name;
                         }
                     }
                     

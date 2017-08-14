@@ -66,6 +66,20 @@
                                     <?php if (!empty($form['errors']['slug'])): ?><span class="help-block"><?= $form['errors']['slug'] ?></span><?php endif ?>
                                 </td>
                             </tr>
+                            <tr class="form-group<?= (!empty($form['errors']['order']) ? ' has-error has-feedback' : '') ?>">
+                                <td class="text-right"><label for="input-order" class="control-label">Order</label></td>
+                                <td>
+                                    <div class="input-group col-xs-10">
+                                        <select class="form-control" id="input-order" name="order">
+                                            <?php foreach (range(1, 100) as $row): ?>
+                                            <option value="<?= $row ?>"<?= ($form['values']['order'] == $row ? ' selected' : '') ?>><?= $row.$helper['getMenuNameByOrder']($row) ?></option>
+                                            <?php endforeach ?>
+                                        </select>
+                                    </div>
+                                    <?php if (!empty($form['errors']['order'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
+                                    <?php if (!empty($form['errors']['order'])): ?><span class="help-block"><?= $form['errors']['order'] ?></span><?php endif ?>
+                                </td>
+                            </tr>
                             <tr class="form-group<?= (!empty($form['errors']['visibility']) ? ' has-error has-feedback' : '') ?>">
                                 <td class="text-right col-md-2"><label for="input-visibility" class="control-label">Visibility</label></td>
                                 <td>

@@ -35,14 +35,14 @@
                 <div class="panel-body nopadding">
                     <table class="table table-condensed form-table">
                         <tbody>
-                            <tr class="form-group<?= (!empty($form['errors']['title']) ? ' has-error has-feedback' : '') ?>">
-                                <td class="text-right col-md-2"><label for="input-title" class="control-label">Title</label></td>
+                            <tr class="form-group<?= (!empty($form['errors']['name']) ? ' has-error has-feedback' : '') ?>">
+                                <td class="text-right col-md-2"><label for="input-name" class="control-label">Name</label></td>
                                 <td>
                                     <div class="input-group col-xs-10">
-                                        <input type="text" class="form-control" id="input-title" name="title" value="<?= (!empty($form['values']['title']) ? htmlentities($form['values']['title']) : '') ?>" placeholder="Enter title... e.g: Blog">
+                                        <input type="text" class="form-control" id="input-name" name="name" value="<?= (!empty($form['values']['name']) ? htmlentities($form['values']['name']) : '') ?>" placeholder="Enter object name... e.g: Blog">
                                     </div>
-                                    <?php if (!empty($form['errors']['title'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
-                                    <?php if (!empty($form['errors']['title'])): ?><span class="help-block"><?= $form['errors']['title'] ?></span><?php endif ?>
+                                    <?php if (!empty($form['errors']['name'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
+                                    <?php if (!empty($form['errors']['name'])): ?><span class="help-block"><?= $form['errors']['name'] ?></span><?php endif ?>
                                 </td>
                             </tr>
                             <tr class="form-group<?= (!empty($form['errors']['priority']) ? ' has-error has-feedback' : '') ?>">

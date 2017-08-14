@@ -219,7 +219,7 @@ class Controller extends \Framework\Controller
         $this->page->store($page);
 
         // get menus
-        $f3->set('menus', (array) $this->menu->findAll());
+        $f3->set('menus', (array) $this->menu->findAll('ORDER BY `order` ASC, id ASC'));
 
         // execute all object code
         foreach ((array) $this->objects->findAll('ORDER BY priority ASC, id ASC') as $row) {

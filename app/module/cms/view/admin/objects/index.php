@@ -40,7 +40,7 @@
                     <table class="table table-condensed table-hover">
                         <thead>
                             <tr>
-                                <th>Title</th>
+                                <th>Name</th>
                                 <th>Lines</th>
                                 <th>Priority</th>
                                 <th style="width:1%"></th>
@@ -49,7 +49,7 @@
                         <tbody>
                             <?php foreach ($objects as $row): ?>
                             <tr>
-                                <td><a href="/admin/objects/edit/<?= $row->id ?>"><?= $row->title ?></a></td>
+                                <td><a href="/admin/objects/edit/<?= $row->id ?>"><?= $row->name ?></a></td>
                                 <td><?= (int) $row->line_count ?></td>
                                 <td><?= (int) $row->priority ?></td>
                                 <td><a href="/admin/objects/delete/<?= $row->id ?>" class="btn btn-xs btn-danger remove-object"><i class="fa fa-times"></i></a></td>
