@@ -1248,7 +1248,11 @@ echo json_encode($result);
                                     </ol>
                                 </div>
                             </div>
-                            <p>Your <code>'.htmlentities('<?= $f3->decode($page[\'body\']) ?>').'</code> contents will go here.</p>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    Your <code>'.htmlentities('<?= $f3->decode($page[\'body\']) ?>').'</code> contents will go here.
+                                </div>
+                            </div>
                             <script>
                             window.onload = function() {
                                 var anchors = document.getElementsByTagName("a");
