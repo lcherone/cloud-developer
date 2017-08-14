@@ -69,7 +69,7 @@
                 </div>
                 <div class="panel-body nopadding">
                     <textarea class="form-control form-textarea" rows="10" id="input-source" name="source"><?= (!empty($form['values']['source']) ? $form['values']['source'] : '') ?></textarea>
-                    <div id="source" style="position: relative;min-height: 800px;width: 100%"></div>
+                    <div id="source" style="position:relative;min-height:750px;width:100%"></div>
                 </div>
             </div>
         </div>

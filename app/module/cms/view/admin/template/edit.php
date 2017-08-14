@@ -65,11 +65,11 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-eye fa-fw"></i> Preview</h3>
+                    <h3 class="panel-title"><i class="fa fa-eye fa-fw"></i> Preview <small>- Links are disabled!</small></h3>
                 </div>
                 <div class="panel-body nopadding" style="height:350px">
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" id="template-preview" src="/admin/template/preview/<?= $f3->get('PARAMS.sub_action_id') ?>?html"></iframe>
+                    <div class="embed-responsive embed-responsive-16by9" style="height:350px">
+                        <iframe class="embed-responsive-item" id="template-preview" src="/admin/template/preview/<?= $f3->get('PARAMS.sub_action_id') ?>?html" style="height:350px" height="350px"></iframe>
                     </div>
                     <!--<img src="/admin/template/preview/<?= $f3->get('PARAMS.sub_action_id') ?>" alt="" class="img-responsive" style="margin: 0 auto;">-->
                 </div>
@@ -111,7 +111,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-8 col-md-8 col-lg-10 nopadding">
                         <textarea class="form-control form-textarea" rows="10" id="input-source" name="source"><?= (!empty($form['values']['source']) ? $form['values']['source'] : '') ?></textarea>
-                        <div id="source" style="position: relative;min-height: 750px;width: 100%"></div>
+                        <div id="source" style="position:relative;min-height:750px;width:100%"></div>
                     </div>
                 </div>
             </div>
