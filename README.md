@@ -1,7 +1,9 @@
 Cloud Developer (PHP)
 =======
 
-This fun little weekend project is a "Code" CMS! With it, you can code and build a system directly within it.
+This fun little weekend project is a "Code" CMS! 
+
+Code your project or system directly though the CMS, inception style!
 
 ::Installing::
 ---
@@ -15,39 +17,47 @@ Then complete the post install setup.
 ::Features::
 ----
 
+**Modules**
+
+ - Modules group together pages which make an overall feature.
+ - Modules are generated and grouped based upon URL path structure.
+ - Each module has a before load which is executed before its pages before-loads, and can be used to initialize models, do checks and set up config variables etc. 
+
+
 **Pages**
 
- - Auto-Generate Pages based upon the URL structure (bit like a wiki), then fill in the blanks.
+ - Auto-Generate pages based upon the URL structure (much like a wiki), then fill in the blanks.
  - Build pages directly using PHP code with full access to the underlying framework (FatFree Framework) and composer libraries.
  - See the flow of the request and easy access of whats being loaded whilst editing pages.
  - Pages contain a before load section, which can be used to handle POST callbacks or anything which you want to happen before rendering.
- - Each page contains also JavaScript section which allows you to abstract out any inline JavaScript. With end-of-document placement.
+ - Apart from the obvious body section, each page also has a CSS and a JavaScript section which allows you to abstract out any inline JavaScript or CSS.
+ - Live Preview whilst editing if you have the page open in a seperate window.
 
-**Modules**
-
- - Modules group together pages which make an overall feature,
- - Each module has a before load which is executed before its pages before load and can be used to initialize models, do checks and set up global configs etc. 
- - Modules are automatically generated and grouped based upon URL structure.
 
 **Menu**
 
- - Menu links can be used in your templates.
+ - Menu links can be used in your templates for umm links.
+ - Menu links also have visibility and ordering.
 
 **Objects**
 
  - Objects are global code blocks or configs which you want to make available to all your modules and pages. This allows you further organise your code and make it reusable.
- -  Objects are initialized before the modules before load action is called.
+ - Objects are initialized before the modules before load action is called.
  - You can also set the load/invoke order by priority.
 
 **Snippets**
 
- - Snippets allow you to create sections of code, which you can easily add to your page simply by clicking a button, which saves time for that repetitive stuff. Snippet buttons are then shown next to each editor for easy selection.
+ - Snippets allow you to create sections of code, which you can easily add to your page simply by clicking a button. Saves time for that repetitive stuff. 
+ - Types are (Before Load, Body, JavaScript, CSS and Template).
+ - Snippet buttons are then shown next to each editor for easy selection.
 
 **Templates**
 
  - Templates are the final view before outputting, so it's the main HTML document wrapper around your body content, which has its HTML head section and the loading of assets, general layout and menu links.
- - Direct access to the template.php files and the themes assets organised in a simple folder structure.
- - Clone a template.
+ - File manager type direct access to the template.php files and the themes assets organised in a simple folder structure.
+ - Standard URLS across templates, `/css/styles.css`, regardless of how many templates you make.
+ - Easily clone a template.
+ - Live Preview (links disabled), which shows overal style and body section.
 
 **Tasks** 
 
@@ -60,7 +70,7 @@ Then complete the post install setup.
 
  - Set the site name and toggle the auto-generate page feature. 
  - Directly manage the `composer.json` file with automatic composer updates which are run by a task.
- - Database backups and restore.
+ - Database backups and restore (On request and by cron job).
 
  
 ::Screens::
@@ -78,13 +88,13 @@ You dont need to import anything.
 ::It dont work!::
 ---
 
-Try debugging it first then open an issue or PR. I am 100% sure it won't work with < PHP 5.6 or on windows, not tested on mac.. let me know how you get on. Works fine on Ubuntu ;p
+Try debugging it first then open an issue. I am 100% sure it won't work on windows or < PHP 5.6, not tested on anything other then Ubuntu 17.04 LXC container. Let me know how you get on!
 
 
 ::Cron tasks::
 ---
 
-2 cron tasks should be added by the setup, there to drive the task agent and to backup:
+2 cron tasks should be added by the setup, there to drive the task agent, and to do backups:
 
 ```
 */5 * * * * cd /var/www/html/bin && bash backup.sh
