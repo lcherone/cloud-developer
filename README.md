@@ -3,7 +3,7 @@ Cloud Developer (PHP)
 
 This fun little weekend project is a "Code" CMS! With it, you can code and build a system directly within it.
 
-Features
+::Features::
 ----
 
 **Pages**
@@ -54,55 +54,45 @@ Features
  - Database backups and restore.
 
  
-**Screens:**
+::Screens::
 ---
 
-<img src="https://cherone.co.uk/files/screens/cloud-developer/1.png" width="800">
-<img src="https://cherone.co.uk/files/screens/cloud-developer/2.png" width="800">
-<img src="https://cherone.co.uk/files/screens/cloud-developer/3.png" width="800">
-<img src="https://cherone.co.uk/files/screens/cloud-developer/18.png" width="800">
-<img src="https://cherone.co.uk/files/screens/cloud-developer/5.png" width="800">
-<img src="https://cherone.co.uk/files/screens/cloud-developer/6.png" width="800">
-<img src="https://cherone.co.uk/files/screens/cloud-developer/7.png" width="800">
-<img src="https://cherone.co.uk/files/screens/cloud-developer/8.png" width="800">
-<img src="https://cherone.co.uk/files/screens/cloud-developer/9.png" width="800">
-<img src="https://cherone.co.uk/files/screens/cloud-developer/10.png" width="800">
-<img src="https://cherone.co.uk/files/screens/cloud-developer/12.png" width="800">
-<img src="https://cherone.co.uk/files/screens/cloud-developer/13.png" width="800">
-<img src="https://cherone.co.uk/files/screens/cloud-developer/16.png" width="800">
-<img src="https://cherone.co.uk/files/screens/cloud-developer/14.png" width="800">
-<img src="https://cherone.co.uk/files/screens/cloud-developer/15.png" width="800">
-<img src="https://cherone.co.uk/files/screens/cloud-developer/17.png" width="800">
+<img src="https://cherone.co.uk/files/screens/cloud-developer/1.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/2.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/3.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/18.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/5.png" width="800"><img src="https://cherone.co.uk/files/screens/cloud-developer/6.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/7.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/8.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/9.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/10.png" width="800"><img src="https://cherone.co.uk/files/screens/cloud-developer/12.png" width="800"><img src="https://cherone.co.uk/files/screens/cloud-developer/13.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/16.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/14.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/15.png" width="400"><img src="https://cherone.co.uk/files/screens/cloud-developer/17.png" width="800">
 
-Installing:
+::Installing::
 ---
 
 If you're brave enough, then run the following composer command to install the project.
 
-{COMPOSER PROJECT COMMAND}
+`composer create-project lcherone/plinkerui --stability dev`
 
+Then complete the post install setup.
 
-Database.
+::Database::
 ---
 
-Edit `./app/config.ini` to match your database. Make sure you have a database created first, then visit the script in your browser to complete the setup.
+Make sure you have a database created first, if not you can edit `./app/config.ini` to suit.
+You dont need to import anything.
 
 
-If it dont work!
+::It dont work!::
 ---
 
-Try debugging it first then open an issue or PR. I am pretty sure it won't work with < PHP 5.6 or on windows, not tested on mac.. let me know how you get on. Works fine on Ubuntu ;p
+Try debugging it first then open an issue or PR. I am 100% sure it won't work with < PHP 5.6 or on windows, not tested on mac.. let me know how you get on. Works fine on Ubuntu ;p
 
 
-Cron tasks
+::Cron tasks::
 ---
 
-You need to setup a cronjob to drive the task agent:
+2 cron tasks should be added by the setup, there to drive the task agent and to backup:
 
-`* * * * * cd /var/www/html/tasks && php run.php >> /dev/null 2>&1`
+```
+*/5 * * * * cd /var/www/html/bin && bash backup.sh
+* * * * * cd /var/www/html/tasks && php run.php >> /dev/null 2>&1
+```
 
 
-Security
+::Security::
 ---
 
 The code you write is executed with `eval()`.. so it's up to you to write secure code. 
@@ -112,16 +102,4 @@ Keep in mind, which ever user you add the above crontab will execute task code! 
 But also feel free to run it as root and be able to create a task which you can reboot the server or 
 clear memory caches or swap space.
 
-It experimental have fun!
-
-
-Requirements
---
-
- - Not shared or windows hosting.
- - LAMP installed, with a database called `app` created.
- - Composer installed globally.
-
-Need `wkhtmltopdf` to generate template previews, were using the `knplabs/knp-snappy` package.
-
-`sudo apt-get install wkhtmltopdf libfontconfig1 libxrender1 -y`
+**Its experimental, have Fun & Happy coding!**
