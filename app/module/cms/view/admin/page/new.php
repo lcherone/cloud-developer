@@ -61,7 +61,7 @@
                                 <td>
                                     <div class="input-group col-xs-10">
                                         <select class="form-control" name="module_id" id="input-module_id">
-                                            <option value="-">-</option>
+                                            <option value="-">- Auto Assign -</option>
                                             <?php foreach ($modules as $row): ?>
                                             <option value="<?= $row->id ?>"<?= ($form['values']['module_id'] == $row->id ? ' selected' : '') ?>><?= $row->name ?></option>
                                             <?php endforeach ?>

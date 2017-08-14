@@ -322,8 +322,12 @@ echo json_encode($result);
                         $page->module = $module;
 
                         $this->page->store($page);
+                        
+                        $page = $page->fresh();
 
                         $form['values']['module_id'] = (int) $module->id;
+                        
+                        $f3->reroute('/admin/page/edit/'.$page->id.'?c');
 
                         // success
                         $form['errors']['success'] = 'Page created.';
@@ -435,6 +439,10 @@ echo json_encode($result);
                         // success
                         $form['errors']['success'] = 'Page updated.';
                     }
+                }
+                
+                if (isset($_GET['c'])) {
+                    $form['errors']['success'] = 'Page created.';
                 }
 
                 // set into form
