@@ -41,9 +41,6 @@
                                 <td>
                                     <div class="input-group col-xs-10">
                                         <input type="text" class="form-control" id="input-title" name="title" value="<?= (!empty($form['values']['title']) ? htmlentities($form['values']['title']) : '') ?>" placeholder="Enter page title... e.g: My Page">
-                                        <!--<span class="input-group-btn">-->
-                                        <!--    <button class="btn btn-success add-row" type="button"><i class="fa fa-plus"></i></button>-->
-                                        <!--</span>-->
                                     </div>
                                     <?php if (!empty($form['errors']['title'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
                                     <?php if (!empty($form['errors']['title'])): ?><span class="help-block"><?= $form['errors']['title'] ?></span><?php endif ?>
@@ -54,9 +51,6 @@
                                 <td>
                                     <div class="input-group col-xs-10">
                                         <input type="text" class="form-control" id="input-slug" name="slug" value="<?= (!empty($form['values']['slug']) ? htmlentities($form['values']['slug']) : '') ?>" placeholder="Enter page slug... e.g: /my-page">
-                                        <!--<span class="input-group-btn">-->
-                                        <!--    <button class="btn btn-default" type="button" href="javascript:;" data-type="popup" data-url="<?= (!empty($form['values']['slug']) ? htmlentities($form['values']['slug']) : '') ?>" data-name="<?= (!empty($form['values']['title']) ? htmlentities($form['values']['title']) : '') ?>"><i class="fa fa-external-link"></i> Open</button>-->
-                                        <!--</span>-->
                                     </div>
                                     <?php if (!empty($form['errors']['slug'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
                                     <?php if (!empty($form['errors']['slug'])): ?><span class="help-block"><?= $form['errors']['slug'] ?></span><?php endif ?>
@@ -72,9 +66,6 @@
                                             <option value="<?= $row->id ?>"<?= ($form['values']['module_id'] == $row->id ? ' selected' : '') ?>><?= $row->name ?></option>
                                             <?php endforeach ?>
                                         </select>
-                                        <!--<span class="input-group-btn">-->
-                                        <!--    <button class="btn btn-success add-row" type="button"><i class="fa fa-plus"></i></button>-->
-                                        <!--</span>-->
                                     </div>
                                     <?php if (!empty($form['errors']['module_id'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
                                     <?php if (!empty($form['errors']['module_id'])): ?><span class="help-block"><?= $form['errors']['module_id'] ?></span><?php endif ?>
@@ -127,7 +118,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -154,7 +144,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -181,7 +170,6 @@
             </div>
         </div>
     </div>
-    
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -208,7 +196,6 @@
             </div>
         </div>
     </div>
-    
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -235,21 +222,7 @@
             </div>
         </div>
     </div>
-
 </form>
-
-<!--<div class="row">-->
-<!--    <div class="col-lg-12">-->
-<!--        <div class="panel panel-default">-->
-<!--            <div class="panel-heading">-->
-<!--                <h3 class="panel-title"><i class="fa fa-info-circle fa-fw"></i> Page Preview <small>(note: PHP and JavaScript is NOT rendered in preview)</small></h3>-->
-<!--            </div>-->
-<!--            <div class="panel-body">-->
-<!--                <div id="page-preview"></div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 
 <?php ob_start() ?>
 <script>
@@ -321,12 +294,10 @@
         editorSession.setValue(textarea.val());
         editorSession.on('change', function() {
             textarea.val(editorSession.getValue());
-
             //console.log('sorry <script> tags wont work on live preview.');
             //$('#page-preview').html($('<div/>').html(editorSession.getValue()).find('script').remove().end().contents());
         });
         //$('#page-preview').html($('<div/>').html(editorSession.getValue()).find('script').remove().end().contents());
-        
         
         $(document).on('click', '.fetch-snippet', function(){
             var id = $(this).data('id');

@@ -41,9 +41,6 @@
                                 <td>
                                     <div class="input-group col-xs-10">
                                         <input type="text" class="form-control" id="input-name" name="name" value="<?= (!empty($form['values']['name']) ? htmlentities($form['values']['name']) : '') ?>" placeholder="Enter module name... e.g: Blog">
-                                        <!--<span class="input-group-btn">-->
-                                        <!--    <button class="btn btn-success add-row" type="button"><i class="fa fa-plus"></i></button>-->
-                                        <!--</span>-->
                                     </div>
                                     <?php if (!empty($form['errors']['name'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
                                     <?php if (!empty($form['errors']['name'])): ?><span class="help-block"><?= $form['errors']['name'] ?></span><?php endif ?>
@@ -65,7 +62,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">

@@ -221,7 +221,6 @@ $formStyle = [
                 <div class="">
                     <textarea class="form-control form-textarea" rows="10" id="input-beforeload" name="beforeload"><?= (!empty($form['values']['beforeload']) ? $form['values']['beforeload'] : '') ?></textarea>
                     <div id="beforeload" style="position: relative;height: 380px;width: 100%"></div>
-    
                     <?php if (!empty($form['errors']['beforeload'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
                     <?php if (!empty($form['errors']['beforeload'])): ?><span class="help-block"><?= $form['errors']['beforeload'] ?></span><?php endif ?>
                 </div>
@@ -247,7 +246,6 @@ $formStyle = [
                 <div class="">
                     <textarea class="form-control form-textarea" rows="10" id="input-body" name="body"><?= (!empty($form['values']['body']) ? $form['values']['body'] : '') ?></textarea>
                     <div id="body" style="position: relative;height: 380px;width: 100%"></div>
-    
                     <?php if (!empty($form['errors']['body'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
                     <?php if (!empty($form['errors']['body'])): ?><span class="help-block"><?= $form['errors']['body'] ?></span><?php endif ?>
                 </div>
@@ -273,7 +271,6 @@ $formStyle = [
                 <div class="">
                     <textarea class="form-control form-textarea" rows="10" id="input-css" name="css"><?= (!empty($form['values']['css']) ? $form['values']['css'] : '') ?></textarea>
                     <div id="css" style="position: relative;height: 380px;width: 100%"></div>
-    
                     <?php if (!empty($form['errors']['css'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
                     <?php if (!empty($form['errors']['css'])): ?><span class="help-block"><?= $form['errors']['css'] ?></span><?php endif ?>
                 </div>
@@ -299,7 +296,6 @@ $formStyle = [
                 <div class="">
                     <textarea class="form-control form-textarea" rows="10" id="input-javascript" name="javascript"><?= (!empty($form['values']['javascript']) ? $form['values']['javascript'] : '') ?></textarea>
                     <div id="javascript" style="position: relative;height: 380px;width: 100%"></div>
-    
                     <?php if (!empty($form['errors']['javascript'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
                     <?php if (!empty($form['errors']['javascript'])): ?><span class="help-block"><?= $form['errors']['javascript'] ?></span><?php endif ?>
                 </div>

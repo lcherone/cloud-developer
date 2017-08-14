@@ -18,10 +18,10 @@
 </div>
 <?php endif ?>
 <?php if (!empty($form['errors']['success'])): ?>
-    <div class="alert alert-success">
-        <a href="#" class="close" data-dismiss="alert">&times;</a>
-        <?= $form['errors']['success'] ?>
-    </div>
+<div class="alert alert-success">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <?= $form['errors']['success'] ?>
+</div>
 <?php endif ?>
 
 <form class="form-horizontal" method="post">
@@ -40,9 +40,6 @@
                                 <td>
                                     <div class="input-group col-xs-10">
                                         <input type="text" class="form-control" id="input-name" name="name" value="<?= (!empty($form['values']['name']) ? htmlentities($form['values']['name']) : '') ?>" placeholder="Enter template name... e.g: Default">
-                                        <!--<span class="input-group-btn">-->
-                                        <!--    <button class="btn btn-success add-row" type="button"><i class="fa fa-plus"></i></button>-->
-                                        <!--</span>-->
                                     </div>
                                     <?php if (!empty($form['errors']['name'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
                                     <?php if (!empty($form['errors']['name'])): ?><span class="help-block"><?= $form['errors']['name'] ?></span><?php endif ?>
@@ -64,7 +61,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-xs-12">
             <div class="panel panel-default">

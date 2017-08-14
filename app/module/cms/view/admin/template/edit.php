@@ -40,9 +40,6 @@
                                 <td>
                                     <div class="input-group col-xs-10">
                                         <input type="text" class="form-control" id="input-name" name="name" value="<?= (!empty($form['values']['name']) ? htmlentities($form['values']['name']) : '') ?>" placeholder="Enter template name... e.g: Default">
-                                        <!--<span class="input-group-btn">-->
-                                        <!--    <button class="btn btn-success add-row" type="button"><i class="fa fa-plus"></i></button>-->
-                                        <!--</span>-->
                                     </div>
                                     <?php if (!empty($form['errors']['name'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
                                     <?php if (!empty($form['errors']['name'])): ?><span class="help-block"><?= $form['errors']['name'] ?></span><?php endif ?>
@@ -64,7 +61,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -77,7 +73,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-xs-12">
             <div class="panel panel-default">
@@ -92,14 +87,11 @@
                     </div>
                 </div>
                 <div class="panel-body nopadding">
-
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 nopadding">
-
                         <div class="row" style="padding:5px;background:#f5f5f5;margin-left:0px;margin-right:0px">
                             <div class="col-xs-12 col-sm-3">
                                 <button style="margin-left:-15px" type="button" class="btn btn-xs btn-danger remove-file hidden"><i class="fa fa-trash" aria-hidden="true"></i> Delete File</button>
                             </div>
-
                             <div class="col-xs-12 col-sm-9 text-right">
                                 <form class="form-inline" style="margin-right:-15px">
                                     <div class="input-group">
@@ -111,9 +103,7 @@
                                 </form>
                             </div>
                         </div>
-
                         <div id="fileList" style="width:100%"></div>
-
                         <form action="/admin/template/upload-file/<?= $f3->get('PARAMS.sub_action_id') ?>" class="dropzone" role="form"></form>
                     </div>
                     <div class="col-xs-12 col-sm-8 col-md-8 col-lg-10 nopadding">
@@ -131,11 +121,6 @@
 $db = new \Framework\Model('servers');
 
 $server =  $db->findOne('id = ?', [1]);
-
-if (empty($server)) {
-    //alert('danger', '<strong>Error:</strong> Node not found.');
-    //$f3->reroute('/servers');
-}
 
 try {
     $error = [];
@@ -316,13 +301,6 @@ try {
             files: <?= $files ?>
         });
 
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        // load.script('/js/module/tasks.js', function() {
-        //     nodes.init();
-        // });
     });
 </script>
 <?php $f3->set('javascript', $f3->get('javascript').ob_get_clean()) ?>
