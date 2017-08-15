@@ -3,9 +3,9 @@ Cloud Developer (PHP)
 
 This fun little weekend project is a "Code" CMS! 
 
-Code your project or system directly though the CMS, inception style!
+Code your project or system directly through the CMS, inception style!
 
-::Installing::
+:: Installing ::
 ---
 
 If you're brave enough, then run the following composer command to install the project.
@@ -14,7 +14,7 @@ If you're brave enough, then run the following composer command to install the p
 
 Then complete the post install setup.
 
-::Features::
+:: Features ::
 ----
 
 **Modules**
@@ -31,7 +31,7 @@ Then complete the post install setup.
  - See the flow of the request and easy access of whats being loaded whilst editing pages.
  - Pages contain a before load section, which can be used to handle POST callbacks or anything which you want to happen before rendering.
  - Apart from the obvious body section, each page also has a CSS and a JavaScript section which allows you to abstract out any inline JavaScript or CSS.
- - Live Preview whilst editing if you have the page open in a seperate window.
+ - Live Preview whilst editing if you have the page open in a separate window.
 
 
 **Menu**
@@ -55,9 +55,9 @@ Then complete the post install setup.
 
  - Templates are the final view before outputting, so it's the main HTML document wrapper around your body content, which has its HTML head section and the loading of assets, general layout and menu links.
  - File manager type direct access to the template.php files and the themes assets organised in a simple folder structure.
- - Standard URLS across templates, `/css/styles.css`, regardless of how many templates you make.
+ - Standard URLs across templates, `/css/styles.css`, regardless of how many templates you make.
  - Easily clone a template.
- - Live Preview (links disabled), which shows overal style and body section.
+ - Live Preview (links disabled), which shows overall style and body section.
 
 **Tasks** 
 
@@ -68,30 +68,30 @@ Then complete the post install setup.
 
 **Settings**
 
- - Set the site name and toggle the auto-generate page feature. 
+ - Set the site name and toggle the auto-generated page feature. 
  - Directly manage the `composer.json` file with automatic composer updates which are run by a task.
  - Database backups and restore (On request and by cron job).
 
  
-::Screens::
+:: Screens ::
 ---
 
 <img src="https://cherone.co.uk/files/screens/cloud-developer/1.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/2.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/3.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/18.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/5.png" width="850"><img src="https://cherone.co.uk/files/screens/cloud-developer/6.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/7.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/8.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/9.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/10.png" width="850"><img src="https://cherone.co.uk/files/screens/cloud-developer/12.png" width="850"><img src="https://cherone.co.uk/files/screens/cloud-developer/13.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/16.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/14.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/15.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/17.png" width="850">
 
-::Database::
+:: Database ::
 ---
 
 Make sure you have a database created first, if not you can edit `./app/config.ini` to suit.
-You dont need to import anything.
+You don't need to import anything.
 
 
-::It dont work!::
+:: It dont work! ::
 ---
 
 Try debugging it first then open an issue. I am 100% sure it won't work on windows or < PHP 5.6, not tested on anything other then Ubuntu 17.04 LXC container. Let me know how you get on!
 
 
-::Cron tasks::
+:: Cron tasks ::
 ---
 
 2 cron tasks should be added by the setup, there to drive the task agent, and to do backups:
@@ -102,7 +102,7 @@ Try debugging it first then open an issue. I am 100% sure it won't work on windo
 ```
 
 
-::Security::
+:: Security ::
 ---
 
 The code you write is executed with `eval()`.. so it's up to you to write secure code. 
@@ -112,4 +112,4 @@ Keep in mind, which ever user you add the above crontab will execute task code! 
 But also feel free to run it as root and be able to create a task which you can reboot the server or 
 clear memory caches or swap space.
 
-**Its experimental, have Fun & Happy coding!**
+**It's experimental, have Fun & Happy coding!**

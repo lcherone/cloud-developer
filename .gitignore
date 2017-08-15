@@ -5,3 +5,4 @@ adminer.php
 tasks/pids/Daemon.pid
 tmp/
 backups/
+app/config.ini
