@@ -263,7 +263,7 @@ class Controller extends \Framework\Controller
             $f3->set('css', $f3->get('css').ob_get_clean());
         }
         
-        // inject additional js for 
+        // inject additional js for live preview 
         if (!empty($f3->get('SESSION.developer'))) {
             ob_start();
             ?>

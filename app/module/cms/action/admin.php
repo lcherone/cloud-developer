@@ -516,7 +516,9 @@ echo json_encode($result);
              *
              */
             default: {
-                $f3->set('pages', (array)$this->page->findAll('ORDER by slug'));
+                
+                $f3->set('pages.active', (array) $this->page->findAll('WHERE (hide = 0 OR hide IS NULL OR hide = "") ORDER by slug'));
+                $f3->set('pages.hidden', (array) $this->page->findAll('WHERE hide = 1 ORDER by slug'));
                 
                 // helper - visibility name
                 $f3->set('visibilityname', function ($key = null) {

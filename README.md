@@ -27,11 +27,12 @@ Then complete the post install setup.
 **Pages**
 
  - Auto-Generate pages based upon the URL structure (much like a wiki), then fill in the blanks.
- - Build pages directly using PHP code with full access to the underlying framework (FatFree Framework) and composer libraries.
+ - Build pages directly using PHP code with full access to the underlying framework (FatFree Framework) and your composer libraries.
  - See the flow of the request and easy access of whats being loaded whilst editing pages.
+ - Each page can have its own template.
  - Pages contain a before load section, which can be used to handle POST callbacks or anything which you want to happen before rendering.
  - Apart from the obvious body section, each page also has a CSS and a JavaScript section which allows you to abstract out any inline JavaScript or CSS.
- - Live Preview whilst editing if you have the page open in a separate window.
+ - **Live Preview** whilst editing if you have the page open in a separate window.
 
 
 **Menu**
@@ -57,7 +58,7 @@ Then complete the post install setup.
  - File manager type direct access to the template.php files and the themes assets organised in a simple folder structure.
  - Standard URLs across templates, `/css/styles.css`, regardless of how many templates you make.
  - Easily clone a template.
- - Live Preview (links disabled), which shows overall style and body section.
+ - **Live Preview** (links disabled), which shows overall style and body section.
 
 **Tasks** 
 
