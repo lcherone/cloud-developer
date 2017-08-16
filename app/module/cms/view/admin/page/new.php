@@ -80,6 +80,7 @@
                                             <option value="2"<?= ($form['values']['visibility'] == '2' ? ' selected' : '') ?>>When not signed in</option>
                                             <option value="3"<?= ($form['values']['visibility'] == '3' ? ' selected' : '') ?>>When signed in</option>
                                             <option value="4"<?= ($form['values']['visibility'] == '4' ? ' selected' : '') ?>>When developer</option>
+                                            <option value="5"<?= ($form['values']['visibility'] == '5' ? ' selected' : '') ?>>Disabled</option>
                                         </select>
                                     </div>
                                     <?php if (!empty($form['errors']['visibility'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>

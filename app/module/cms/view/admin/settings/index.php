@@ -67,6 +67,23 @@
                                     </div>
                                 </td>
                             </tr>
+                            <tr class="form-group<?= (!empty($form['errors']['error_template']) ? ' has-error has-feedback' : '') ?>">
+                                <td class="text-right col-md-2"><label for="input-error_template" class="control-label">Error Page Template</label></td>
+                                <td>
+                                    <div class="input-group col-xs-10">
+                                        <select class="form-control" id="input-error_template" name="error_template">
+                                            <?php $current = $helper['extractValue']('error_template'); ?>
+                                            <?php foreach ($templates as $row): ?>
+                                            <option value="<?= $row->id ?>"<?= ($current  == $row->id ? ' selected' : '') ?>><?= $row->name ?></option>
+                                            <?php endforeach ?>
+                                        </select>
+                                        <?php if (!empty($form['errors']['error_template'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
+                                        <?php if (!empty($form['errors']['error_template'])): ?>
+                                            <span class="help-block"><?= $form['errors']['error_template'] ?></span>
+                                        <?php endif ?>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                         <tfoot>
                             <tr class="form-group">

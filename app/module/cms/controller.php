@@ -117,6 +117,8 @@ class Controller extends \Framework\Controller
                 'slug' => $f3->get('PATH')
             ]);
             
+            $page->hide = 0;
+            
             // fix slug
             $slug = explode('/', '/'.trim($f3->get('PATH'), '/ '));
             
@@ -161,6 +163,10 @@ class Controller extends \Framework\Controller
         // check for admin/developer
         if (empty($f3->get('SESSION.developer')) && $page->visibility == 4) {
             $f3->error(401);
+        }
+        // page is disabled
+        if ($page->visibility == 5) {
+            $f3->error(404);
         }
 
         if (empty($page->template_id)) {
@@ -304,6 +310,11 @@ class Controller extends \Framework\Controller
             if ($params['action'] != 'sign-in') {
                 $f3->reroute('/admin/sign-in');
             }
+        }
+        
+        // get site settings
+        foreach ((array) $this->settings->findAll() as $row) {
+            $f3->set('setting.'.$row->key, $row->value);
         }
         
         //

@@ -530,6 +530,7 @@ echo json_encode($result);
                         2 => 'When not signed in',
                         3 => 'When signed in',
                         4 => 'When developer',
+                        5 => 'Disabled',
                     ];
                     return (isset($n[$key]) ? $n[$key] : '');
                 });
@@ -2366,6 +2367,7 @@ echo json_encode($result);
                 }
 
                 $f3->set('form', $form);
+                $f3->set('templates', (array) $this->template->findAll());
 
                 $f3->set('helper.extractValue', function($key) use ($settings) {
                     foreach ($settings as $row) {
