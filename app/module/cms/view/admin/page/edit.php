@@ -145,15 +145,16 @@ $formStyle = [
             </div>
             <div class="panel-heading">
                 <h2 class="panel-title">
-                    Load Objects
+                    Load Objects (<?= count($objects) ?>)
                     <div class="panel-buttons text-right">
                         <div class="btn-group-xs">
+                            <button type="button" class="btn btn-default toggle-objects-table"><i class="fa fa-eye"></i> Show Objects</button>
                             <a href="/admin/objects/new" class="btn btn-xs btn-primary ajax-link"><i class="fa fa-plus"></i> New Object</a>
                         </div>
                     </div>
                 </h2>
             </div>
-            <div class="panel-body nopadding">
+            <div class="panel-body nopadding hidden objects-table">
                 <div class="table-responsive">
                     <table class="table table-condensed table-hover">
                         <thead>
@@ -356,6 +357,19 @@ $formStyle = [
                 panel.removeClass('hidden');
             } else {
                 btn.html('<i class="fa fa-eye"></i> Show Code');
+                panel.addClass('hidden');
+            }
+        });
+        
+        $('.toggle-objects-table').on('click', function() {
+            var btn   = $(this);
+            var panel = $('.objects-table');
+            
+            if (panel.hasClass('hidden')) {
+                btn.html('<i class="fa fa-eye-slash"></i> Hide Objects');
+                panel.removeClass('hidden');
+            } else {
+                btn.html('<i class="fa fa-eye"></i> Show Objects');
                 panel.addClass('hidden');
             }
         });

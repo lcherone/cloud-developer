@@ -12,13 +12,13 @@ trait RedBean {
     {
         if (!empty($this->task->config['database']['username'])) {
             R::setup(
-                $this->task->config['database']['dsn'],
+                'mysql:host='.$this->task->config['database']['host'].';dbname='.$this->task->config['database']['name'],
                 $this->task->config['database']['username'],
                 $this->task->config['database']['password']
             );  
         } else {
             R::setup(
-                $this->task->config['database']['dsn']
+                'mysql:host='.$this->task->config['database']['host'].';dbname='.$this->task->config['database']['name']
             );
         }
 

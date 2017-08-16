@@ -25,7 +25,7 @@ namespace Framework {
                 
                 R::addDatabase(
                     'connection',
-                    $db['dsn'],
+                    'mysql:host='.$db['host'].';dbname='.$db['name'],
                     $db['username'],
                     $db['password']
                 );

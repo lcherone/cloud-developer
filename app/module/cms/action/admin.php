@@ -107,6 +107,9 @@ echo json_encode($result);
 
         // helper to get task result from systeminformation task
         $getTaskResult = function ($params, $sleeptime = 60) use ($systeminformation, $tasks) {
+            if (empty($systeminformation)) {
+                return [];
+            }
             $result = $systeminformation->withCondition('params = ? LIMIT 1', [json_encode($params)])->ownTasks;
             if (empty($result)) {
                 return $tasks->run('System Information', $params, $sleeptime);
@@ -2102,9 +2105,6 @@ echo json_encode($result);
                         $object->import($form['values']);
                         $this->objects->store($object);
 
-                        // update template file
-                        file_put_contents('tmp/template.'.$object->id.'.php', $form['values']['source']);
-
                         // success
                         $form['errors']['success'] = 'Object updated.';
                     }
@@ -2188,7 +2188,7 @@ echo json_encode($result);
              */
             case "backups": {
                 // create
-                if ($params['sub_action_id'] == 'create') {
+                if ($params['sub_action_id'] == 'new') {
                     
                     $db = $f3->get('db');
                     $date = date_create()->format('Y-m-d_H:i:s');

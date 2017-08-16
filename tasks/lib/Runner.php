@@ -65,7 +65,7 @@ class Runner
      */
     public function daemon($class, $config = [])
     {
-        $this->config = $this->config + $config;
+        $this->config = (array) $this->config + (array) $config;
 
         $pid = new PID('./pids', $class);
 
