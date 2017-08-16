@@ -129,18 +129,18 @@ main() {
         fi
     done
     
-    #whiptail --title "$TITLE" --infobox "Generating plinker private key." 0 0
+    # Generate plinker private key.
     PLINKER_KEY=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
 
-    #whiptail --title "$TITLE" --infobox "Writing ./app/config.ini file." 0 0
+    # Write ./app/config.ini
     write_config $DBHOST $DBNAME $DBUSER $DBPASS $PLINKER_KEY
 
-    #whiptail --title "$TITLE" --infobox "Writing ./bin/backup.sh file." 0 0
+    # Write backup script
     write_backup_script $DBHOST $DBNAME $DBUSER $DBPASS
 
-    #whiptail --title "$TITLE" --infobox "Adding CRON task" 0 0
-    crontab -l | { cat; echo "\n* * * * * cd $PWD/tasks && /usr/bin/php $PWD/tasks/run.php >/dev/null 2>&1"; } | crontab -
-    crontab -l | { cat; echo "\n0 0 * * * cd $PWD/bin && bash backup.sh"; } | crontab -
+    # Write cron jobs
+    crontab -l | { cat; echo -e "* * * * * cd $PWD/tasks && /usr/bin/php $PWD/tasks/run.php >> /dev/null 2>&1"; } | crontab -
+    crontab -l | { cat; echo -e "0 0 * * * cd $PWD/bin && bash backup.sh"; } | crontab -
     
     # fin
     whiptail --title "$TITLE" --msgbox "Setup complete! Visit the script in your browser." 0 0
