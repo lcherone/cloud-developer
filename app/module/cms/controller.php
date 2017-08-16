@@ -117,18 +117,20 @@ class Controller extends \Framework\Controller
                 'slug' => $f3->get('PATH')
             ]);
             
-            $page->hide = 0;
+            // hidden/completed status
+            $page->hide = isset($page->hide) ? (empty($page->hide) ? 0 : 1) : 0;
             
             // fix slug
             $slug = explode('/', '/'.trim($f3->get('PATH'), '/ '));
             
             // define a module and assign it to it
-            $module = $this->module->findOrCreate([
-                'name' => (!empty($slug[1]) && is_string($slug[1]) ? ucfirst($slug[1]) : '-')
-            ]);
-            
-            $page->module = $module;
- 
+            if (empty($page->module_id)) {
+                $module = $this->module->findOrCreate([
+                    'name' => (!empty($slug[1]) && is_string($slug[1]) ? ucfirst($slug[1]) : '-')
+                ]);
+                
+                $page->module = $module;
+            }
         } else {
             // get page by path
             $page = $this->page->findOne('site = ? AND slug = ?', [
