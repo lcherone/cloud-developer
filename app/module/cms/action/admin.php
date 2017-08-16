@@ -2186,6 +2186,47 @@ echo json_encode($result);
             /**
              *
              */
+            case "operations": {
+                // reset
+                if ($params['sub_action_id'] == 'reset') {
+
+                    // remove tables
+                    $this->page->exec('DROP table page');
+                    $this->menu->exec('DROP table menu');
+                    $this->module->exec('DROP table module');
+                    $this->objects->exec('DROP table objects');
+                    $this->snippet->exec('DROP table snippet');
+                    
+                    // delete all tasks - except system and composer
+                    $this->tasksource->exec('DELETE FROM tasksource WHERE (name != "Composer Update" AND name != "System Information")');
+                    $this->tasks->exec('DELETE FROM tasks WHERE (name != "Composer Update" AND name != "System Information")');
+                    
+                    // get all templates - to delete folders - then remove row
+                    foreach ((array) $this->template->findAll() as $row) {
+                        // dont remove default
+                        if ($row->id == 1) {
+                            continue;
+                        }
+                        $template = getcwd().'/tmp/template/'.$row->id;
+                        if (is_dir($template)) {
+                            //
+                            `rm $template -r`;
+                        }
+                        
+                        // trash template row
+                        $this->template->trash($row);
+                    }
+
+                    $f3->reroute('/admin/settings');
+                } else {
+                    $f3->error(404);
+                }
+            } break;
+            
+            
+            /**
+             *
+             */
             case "backups": {
                 // create
                 if ($params['sub_action_id'] == 'new') {

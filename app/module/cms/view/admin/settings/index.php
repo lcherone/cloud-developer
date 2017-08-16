@@ -154,6 +154,40 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-cogs fa-fw"></i> Operations</h3>
+            </div>
+            <div class="panel-body nopadding">
+                <div class="table-responsive">
+                    <table class="table table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>Description</th>
+                                <th style="width:1%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Reset Project</td>
+                                <td>Removes all pages, menu, modules, objects, snippets, tasks (except: System Information and Composer Update), templates (except: Detault).</td>
+                                <td>
+                                    <div class="btn-group" style="display:flex">
+                                        <a href="/admin/settings/operations/reset" class="btn btn-xs btn-danger">Go</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php ob_start() ?>
 <script>
     $(document).ready(function() {
