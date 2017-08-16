@@ -2331,7 +2331,7 @@ echo json_encode($result);
                                     );
                                     $tasks->run('Composer Update', []);
                                 } catch (\Exception $e) {
-
+                                    
                                 }
                                 
                                 //

@@ -142,6 +142,17 @@ main() {
     crontab -l | { cat; echo -e "* * * * * cd $PWD/tasks && /usr/bin/php $PWD/tasks/run.php >> /dev/null 2>&1"; } | crontab -
     crontab -l | { cat; echo -e "0 0 * * * cd $PWD/bin && bash backup.sh"; } | crontab -
     
+    # Add directorys & change ownership
+    mkdir $PWD/tmp
+    mkdir $PWD/backups
+    chown www-data:www-data $PWD/ -R
+    chmod 0775 $PWD/tmp
+    
+    # Run composer dump autoloader
+    { 
+        composer du
+    } &> /dev/null
+    
     # fin
     whiptail --title "$TITLE" --msgbox "Setup complete! Visit the script in your browser." 0 0
 }
