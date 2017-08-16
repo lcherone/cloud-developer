@@ -1,6 +1,6 @@
 {
     "name": "lcherone/cloud-developer",
-    "description": "Cloud developer system.",
+    "description": "Code your project or system directly through the CMS, inception style!",
     "type": "project",
     "license": "MIT",
     "authors": [
@@ -16,29 +16,15 @@
         "sort-packages": true
     },
     "require": {
-        "owasp/phprbac": "2.0.*@dev",
-        "hashids/hashids": "^1.0",
         "bcosca/fatfree-core": "^3.6",
         "brandonwamboldt/utilphp": "1.1.*",
         "gabordemooij/redbean": ">=4.2",
-        "guzzlehttp/guzzle": ">=6.2.1",
-        "h4cc/wkhtmltoimage-amd64": "0.12.x",
-        "h4cc/wkhtmltopdf-amd64": "^0.12.3",
-        "knplabs/knp-snappy": "^0.4.3",
         "league/climate": "@dev",
-        "markstory/mini-asset": "^1.1",
         "monolog/monolog": "^1.19",
-        "natxet/CssMin": "^3.0",
-        "opensaucesystems/lxd": "^0.6.0",
-        "php-http/guzzle6-adapter": "^1.1",
         "plinker/core": ">=v0.1",
-        "plinker/cron": ">=v0.1",
-        "plinker/lxc": ">=v0.1",
-        "plinker/peer": "dev-master",
         "plinker/redbean": ">=v0.1",
         "plinker/system": ">=v1.0.1",
-        "plinker/tasks": "dev-master",
-        "tedivm/jshrink": "^1.1"
+        "plinker/tasks": "dev-master"
     },
     "autoload": {
         "psr-4": {
