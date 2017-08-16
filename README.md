@@ -14,6 +14,8 @@ If you're brave enough, then run the following composer command to install the p
 
 Then complete the post install setup.
 
+![](http://i.imgur.com/mhlCjeC.gif "")
+
 :: Features ::
 ----
 
