@@ -8,11 +8,13 @@ Code your project or system directly through the CMS, inception style!
 :: Installing ::
 ---
 
-If you're brave enough, then run the following composer command to install the project.
+Have a database setup first, you dont need to import anything.
+
+Then run the following composer command to install the project.
 
 `composer create-project lcherone/cloud-developer .`
 
-Then complete the post install setup.
+And then complete the post install setup.
 
 ![](http://i.imgur.com/mhlCjeC.gif "")
 
@@ -25,7 +27,6 @@ Then complete the post install setup.
  - Modules are generated and grouped based upon URL path structure.
  - Each module has a before load which is executed before its pages before-loads, and can be used to initialize models, do checks and set up config variables etc. 
 
-
 **Pages**
 
  - Auto-Generate pages based upon the URL structure (much like a wiki), then fill in the blanks.
@@ -35,7 +36,6 @@ Then complete the post install setup.
  - Pages contain a before load section, which can be used to handle POST callbacks or anything which you want to happen before rendering.
  - Apart from the obvious body section, each page also has a CSS and a JavaScript section which allows you to abstract out any inline JavaScript or CSS.
  - **Live Preview** whilst editing if you have the page open in a separate window.
-
 
 **Menu**
 
@@ -81,17 +81,11 @@ Then complete the post install setup.
 
 <img src="https://cherone.co.uk/files/screens/cloud-developer/1.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/2.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/3.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/18.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/5.png" width="850"><img src="https://cherone.co.uk/files/screens/cloud-developer/6.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/7.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/8.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/9.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/10.png" width="850"><img src="https://cherone.co.uk/files/screens/cloud-developer/12.png" width="850"><img src="https://cherone.co.uk/files/screens/cloud-developer/13.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/16.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/14.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/15.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/17.png" width="850">
 
-:: Database ::
+
+:: Not working? ::
 ---
 
-Make sure you have a database created first, if not you can edit `./app/config.ini` to suit.
-You don't need to import anything.
-
-
-:: It dont work! ::
----
-
-Try debugging it first then open an issue. I am 100% sure it won't work on windows or < PHP 5.6, not tested on anything other then Ubuntu 17.04 LXC container. Let me know how you get on!
+Try debugging it first then open an issue. I am 100% sure it won't work on Windows or < PHP 5.6, not tested on anything other then Ubuntu 17.04 in a LXC container. Let me know how you get on!
 
 
 :: Cron tasks ::
@@ -103,7 +97,6 @@ Try debugging it first then open an issue. I am 100% sure it won't work on windo
 */5 * * * * cd /var/www/html/bin && bash backup.sh
 * * * * * cd /var/www/html/tasks && php run.php >> /dev/null 2>&1
 ```
-
 
 :: Security ::
 ---
