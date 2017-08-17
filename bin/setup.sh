@@ -3,7 +3,7 @@
 #
 # Project Post Setup Script
 #
-TITLE="Cloud Developer - v0.0.2 - Post Install"
+TITLE="Cloud Developer - v0.0.3 - Post Install"
 TERM=vt220
 PWD=$(pwd)
 
@@ -128,6 +128,9 @@ main() {
         fi
     done
     
+    # import database
+    cat $PWD/bin/database.sql | mysql --user=$DBUSER --password=$DBPASS $DBNAME
+    
     # Generate plinker private key.
     PLINKER_KEY=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
 
@@ -145,6 +148,11 @@ main() {
     mkdir $PWD/tmp
     mkdir $PWD/tmp/template
     mkdir $PWD/backups
+    
+    # move starter template
+    cp -R $PWD/app/template/starter/ $PWD/tmp/template/1
+    
+    # fix permissions
     chown www-data:www-data $PWD/ -R
     chmod 0775 $PWD/tmp
     
@@ -152,13 +160,7 @@ main() {
     { 
         composer du
     } &> /dev/null
-    
-    # move starter template
-    cp -R $PWD/app/template/starter/ $PWD/tmp/template/1
 
-    # import database
-    zcat $PWD/bin/database.sql | mysql --user=$DBUSER --password=$DBPASS $DBNAME
-    
     # fin
     whiptail --title "$TITLE" --msgbox "Setup complete! Visit the script in your browser." 0 0
 }
