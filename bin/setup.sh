@@ -72,7 +72,7 @@ date=\$(date +\"%d-%b-%Y\")
     # With the idea.. in development backup every 5 mins, with the latest 
     #                 and then copy it to the daily if does not exist.
     
-    mysqldump --user=\$user --password=\$password --host=\$host \$db_name | gzip > $PWD/backups/current.sql.gz
+    mysqldump --user=\$db_user --password=\$db_pass --host=\$db_host \$db_name | gzip > $PWD/backups/current.sql.gz
 
     # Check if already backed up today
     if [ ! -f $PWD/backups/\$date.sql.gz ]; then
@@ -85,8 +85,7 @@ date=\$(date +\"%d-%b-%Y\")
 
     ##############################################################
     
-} &> /dev/null
-" > $PWD/bin/backup.sh
+} &> /dev/null" > $PWD/bin/backup.sh
 }
 
 main() {
@@ -144,6 +143,7 @@ main() {
     
     # Add directorys & change ownership
     mkdir $PWD/tmp
+    mkdir $PWD/tmp/template
     mkdir $PWD/backups
     chown www-data:www-data $PWD/ -R
     chmod 0775 $PWD/tmp
@@ -152,6 +152,12 @@ main() {
     { 
         composer du
     } &> /dev/null
+    
+    # move starter template
+    cp -R $PWD/app/template/starter/ $PWD/tmp/template/1
+
+    # import database
+    zcat $PWD/bin/database.sql | mysql --user=$DBUSER --password=$DBPASS $DBNAME
     
     # fin
     whiptail --title "$TITLE" --msgbox "Setup complete! Visit the script in your browser." 0 0

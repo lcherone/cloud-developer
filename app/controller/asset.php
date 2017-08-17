@@ -27,17 +27,17 @@ class Asset extends \Prefab
                 }
                 //
                 else {
-                    $template = 'app/template/'.$type.'/'.basename($params['filename']);
+                    $template = 'app/template/default/'.$type.'/'.basename($params['filename']);
                 }
 
                 // force to default
                 if (isset($_GET['default'])) {
-                    $template = 'app/template/'.$type.'/'.basename($params['filename']);
+                    $template = 'app/template/default/'.$type.'/'.basename($params['filename']);
                 }
             }
             //
             else {
-                $template = 'app/template/'.$type.'/'.basename($params['filename']);
+                $template = 'app/template/default/'.$type.'/'.basename($params['filename']);
             }
 
             // check exists

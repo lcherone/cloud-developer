@@ -296,9 +296,9 @@ class Controller extends \Framework\Controller
         // check template exists - fallback to default
         if (!file_exists('tmp/template/'.$page->template_id.'/template.php')) {
             //
-            $_SESSION['template_path'] = 'app/template/';
+            $_SESSION['template_path'] = 'app/template/default/';
             $_SESSION['template_id'] = null;
-            $template = 'app/template/template.php';
+            $template = 'app/template/default/template.php';
         } else {
             $template = 'tmp/template/'.$page->template_id.'/template.php';
         }
@@ -334,7 +334,7 @@ class Controller extends \Framework\Controller
         }
 
         //
-        $_SESSION['template_path'] = 'app/template/';
+        $_SESSION['template_path'] = 'app/template/default/';
         $_SESSION['template_id'] = null;
 
         $action = str_replace('-', '_', strtolower($params['action']));

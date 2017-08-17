@@ -39,7 +39,7 @@ class Controller extends \Framework\Controller
 
         //
         $f3->mset([
-            'template' => 'app/template/template.php',
+            'template' => 'app/template/default/template.php',
             'page' => [
                 'title' => 'Example Module',
                 'body' => $this->view->render('app/module/example/view/index.php')

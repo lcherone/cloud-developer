@@ -1333,7 +1333,7 @@ echo json_encode($result);
                 header('Content-Type: text/plain; charset=utf-8');
 
                 if (isset($_GET['del'])) {
-                    exit(base64_decode($tasks->deleteFile('/var/www/html/tmp/template/'.(int) $params['sub_action_id'].'/'.$path)));
+                    exit(base64_decode($tasks->deleteFile(getcwd().'/tmp/template/'.(int) $params['sub_action_id'].'/'.$path)));
                 } elseif(isset($_GET['save'])) {
                     // if template.php also update database
                     if ($path == 'template.php') {
@@ -1344,9 +1344,9 @@ echo json_encode($result);
                         $this->template->store($template);
                     }
 
-                    exit(base64_decode($tasks->saveFile('/var/www/html/tmp/template/'.(int) $params['sub_action_id'].'/'.$path, base64_encode($_POST['data']))));
+                    exit(base64_decode($tasks->saveFile(getcwd().'/tmp/template/'.(int) $params['sub_action_id'].'/'.$path, base64_encode($_POST['data']))));
                 } else {
-                    exit(base64_decode($tasks->getFile('/var/www/html/tmp/template/'.(int) $params['sub_action_id'].'/'.$path)));
+                    exit(base64_decode($tasks->getFile(getcwd().'/tmp/template/'.(int) $params['sub_action_id'].'/'.$path)));
                 }
 
                 $f3->reroute('/admin/template');
@@ -1373,14 +1373,14 @@ echo json_encode($result);
                 $path = str_replace('/admin/template/upload-file/'.$params['sub_action_id'], '', $params[0]);
 
                 $fileData = '';
-                if (move_uploaded_file($_FILES["file"]["tmp_name"], '/var/www/html/tmp/template/'.(int) $params['sub_action_id'].$path.'/'.basename($_FILES['file']['name']))) {
-                  $fileData = file_get_contents('/var/www/html/tmp/template/'.(int) $params['sub_action_id'].$path.'/'.basename($_FILES['file']['name']));
+                if (move_uploaded_file($_FILES["file"]["tmp_name"], getcwd().'/tmp/template/'.(int) $params['sub_action_id'].$path.'/'.basename($_FILES['file']['name']))) {
+                  $fileData = file_get_contents(getcwd().'/tmp/template/'.(int) $params['sub_action_id'].$path.'/'.basename($_FILES['file']['name']));
                 }
 
                 header('Content-Type: text/plain; charset=utf-8');
 
                 try {
-                    $tasks->saveFile('/var/www/html/tmp/template/'.(int) $params['sub_action_id'].$path.'/'.basename($_FILES['file']['name']), base64_encode($fileData));
+                    $tasks->saveFile(getcwd().'/tmp/template/'.(int) $params['sub_action_id'].$path.'/'.basename($_FILES['file']['name']), base64_encode($fileData));
                 } catch(\Exception $e) {
                     exit('error');
                 }
@@ -1393,7 +1393,7 @@ echo json_encode($result);
             case "delete": {
                 $template = $this->template->load($params['sub_action_id']);
                 
-                \utilphp\util::rmdir('/var/www/html/tmp/template/'.(int) $params['sub_action_id']);
+                \utilphp\util::rmdir(getcwd().'/tmp/template/'.(int) $params['sub_action_id']);
                 
                 $this->template->trash($template);
                 $f3->reroute('/admin/template');
@@ -2234,8 +2234,8 @@ echo json_encode($result);
                     
                     $db = $f3->get('db');
                     $date = date_create()->format('Y-m-d_H:i:s');
-                    
-                    `mysqldump --add-drop-table --user={$db['username']} --password={$db['password']} --host=127.0.0.1 app | gzip > /var/www/html/backups/backup.{$date}.sql.gz &`;
+                    $pwd = getcwd();
+                    `mysqldump --add-drop-table --user={$db['username']} --password={$db['password']} --host=127.0.0.1 app | gzip > {$pwd}/backups/backup.{$date}.sql.gz &`;
                     
                     $f3->reroute('/admin/settings');
                 } 
@@ -2252,12 +2252,13 @@ echo json_encode($result);
                     
                     $db = $f3->get('db');
                     $date = date_create()->format('Y-m-d_H:i:s');
+                    $pwd = getcwd();
                     
                     // backup current
-                    `mysqldump --add-drop-table --user={$db['username']} --password={$db['password']} --host=127.0.0.1 app | gzip > /var/www/html/backups/before.restore.{$date}.sql.gz`;
+                    `mysqldump --add-drop-table --user={$db['username']} --password={$db['password']} --host=127.0.0.1 app | gzip > {$pwd}/backups/before.restore.{$date}.sql.gz`;
                     
                     // restore
-                    `zcat /var/www/html/backups/{$file} | mysql --user={$db['username']} --password={$db['password']} app`;
+                    `zcat {$pwd}/backups/{$file} | mysql --user={$db['username']} --password={$db['password']} app`;
 
                     $f3->reroute('/admin/settings');
                 } else {
@@ -2310,7 +2311,7 @@ echo json_encode($result);
                             if ($key == 'composer' && $value != file_get_contents('./composer.json')) {
                                 chmod('./composer.json', 0664);
                                 file_put_contents('./composer.json', $value);
-
+                                $pwd = getcwd();
                                 try {
                                     // create task
                                     $tasks->create(
@@ -2319,9 +2320,9 @@ echo json_encode($result);
                                         // source
                                         "#!/bin/bash\n\n".
                                         "# Run composer update\n".
-                                        "/usr/local/bin/composer update -d /var/www/html 2>&1\n\n".
+                                        "/usr/local/bin/composer update -d  2>&1\n\n".
                                         "# Change files ownership to www-data user\n".
-                                        "chown www-data:www-data /var/www/html/.* -R",
+                                        "chown www-data:www-data $pwd/.* -R",
                                         // type
                                         'bash',
                                         // description

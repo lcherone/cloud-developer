@@ -141,7 +141,7 @@ try {
         json_decode($server->config, true),
         $server->encrypted // enable encryption [default: true]
     );
-    $files = $tasks->files('/var/www/html/tmp/template/'.(int) $f3->get('PARAMS.sub_action_id'));
+    $files = $tasks->files(getcwd().'/tmp/template/'.(int) $f3->get('PARAMS.sub_action_id'));
 } catch (\Exception $e) {
     $files = '{}';
 }
