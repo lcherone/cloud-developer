@@ -117,7 +117,6 @@ class Controller extends \Framework\Controller
         if (!empty($f3->get('setting.autogenerate'))) {
             // create page (wiki style)
             $page = $this->page->findOrCreate([
-                'site' => $_SERVER['HTTP_HOST'],
                 'slug' => $f3->get('PATH')
             ]);
 
@@ -137,16 +136,14 @@ class Controller extends \Framework\Controller
             }
         } else {
             // get page by path
-            $page = $this->page->findOne('site = ? AND slug = ?', [
-                $_SERVER['HTTP_HOST'],
+            $page = $this->page->findOne('slug = ?', [
                 $f3->get('PATH')
             ]);
 
             // page not found
             if (empty($page)) {
                 // second attempt - get page by dirname(path)
-                $page = $this->page->findOne('site = ? AND slug = ?', [
-                    $_SERVER['HTTP_HOST'],
+                $page = $this->page->findOne('slug = ?', [
                     dirname($f3->get('PATH'))
                 ]);
 
@@ -196,6 +193,10 @@ class Controller extends \Framework\Controller
             if (empty($page->title)) {
                 $page->title = ucwords(str_replace('/', ' - ', trim($f3->get('PATH'), '/ ')));
             }
+            
+            if (empty($page->title)) {
+                $page->title = 'Home';
+            }
 
             $breadcrumb = '<li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>'.PHP_EOL."\t\t\t";
             $breadcrumb .= '<li class="active"><i class="fa fa-folder-o"></i> '.$page->module->name.'</li>'.PHP_EOL."\t\t";
@@ -209,7 +210,7 @@ class Controller extends \Framework\Controller
             $page->body = '<div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            '.$page->title.' <small> - Auto generated.</small>
+            '.$page->title.' <small> - Auto generated page.</small>
         </h1>
         <ol class="breadcrumb">
             '.$breadcrumb.'</ol>

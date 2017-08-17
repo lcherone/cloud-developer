@@ -2320,7 +2320,7 @@ echo json_encode($result);
                                         // source
                                         "#!/bin/bash\n\n".
                                         "# Run composer update\n".
-                                        "/usr/local/bin/composer update -d  2>&1\n\n".
+                                        "/usr/local/bin/composer update -d $pwd 2>&1\n\n".
                                         "# Change files ownership to www-data user\n".
                                         "chown www-data:www-data $pwd/.* -R",
                                         // type

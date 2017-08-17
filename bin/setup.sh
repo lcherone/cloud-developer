@@ -151,6 +151,7 @@ main() {
     
     # move starter template
     cp -R $PWD/app/template/starter/ $PWD/tmp/template/1
+    mkdir $PWD/tmp/template/1/img
     
     # fix permissions
     chown www-data:www-data $PWD/ -R
