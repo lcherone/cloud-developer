@@ -239,6 +239,7 @@ window.app = (function() {
             if (link.parent().is('li')) {
                 link.parent().siblings().removeClass('active');
             }
+            link.parent().addClass('active');
 
             e.preventDefault();
             // stop all timers
