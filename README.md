@@ -77,7 +77,7 @@ And then complete the post install setup.
 :: Quick Overview ::
 ---
 
-<img src="https://cherone.co.uk/files/screens/cloud-developer/quick.flickthrough.gif" width="800">
+![](https://cherone.co.uk/files/screens/cloud-developer/quick.flickthrough.gif "")
 
 :: Not working? ::
 ---
