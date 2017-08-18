@@ -273,13 +273,13 @@
                     </tr>
 
                     <?php
-                    $taskResult = $getTaskResult(['ping', 'phive.free.lxd.systems'], 300);
-                    $result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['ping'] : '-');
+                    //$taskResult = $getTaskResult(['ping', 'phive.free.lxd.systems'], 300);
+                    //$result     = (!empty($taskResult['result']) ? json_decode($taskResult['result'], true)['ping'] : '-');
                     ?>
-                    <tr>
-                        <td>Ping<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>
-                        <td><?= $result ?>ms</td>
-                    </tr>
+                    <!--<tr>-->
+                    <!--    <td>Ping<?= (!empty($taskResult['run_last']) ? '<br><small class="text-muted">'.(empty($taskResult['run_last']) ? '-' : \utilphp\util::human_time_diff(strtotime($taskResult['run_last']))).'</small>' : '') ?></td>-->
+                    <!--    <td><?= $result ?>ms</td>-->
+                    <!--</tr>-->
 
                     <?php
                     $taskResult = $getTaskResult(['distro'], 86400);

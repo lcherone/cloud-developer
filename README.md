@@ -74,11 +74,10 @@ And then complete the post install setup.
  - Database backups and restore (On request and by cron job).
 
  
-:: Screens ::
+:: Quick Overview - You get the idea! ::
 ---
 
-<img src="https://cherone.co.uk/files/screens/cloud-developer/1.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/2.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/3.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/18.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/5.png" width="850"><img src="https://cherone.co.uk/files/screens/cloud-developer/6.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/7.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/8.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/9.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/10.png" width="850"><img src="https://cherone.co.uk/files/screens/cloud-developer/12.png" width="850"><img src="https://cherone.co.uk/files/screens/cloud-developer/13.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/16.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/14.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/15.png" width="425"><img src="https://cherone.co.uk/files/screens/cloud-developer/17.png" width="850">
-
+<img src="http://i.imgur.com/KQAqcLC.gifv" width="800">
 
 :: Not working? ::
 ---
