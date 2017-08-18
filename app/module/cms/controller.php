@@ -337,7 +337,7 @@ class Controller extends \Framework\Controller
         //
         $_SESSION['template_path'] = 'app/template/default/';
         $_SESSION['template_id'] = null;
-
+        
         $action = str_replace('-', '_', strtolower($params['action']));
         $this->action = new Action\Admin();
 
@@ -347,6 +347,11 @@ class Controller extends \Framework\Controller
 
         if (method_exists($this->action, $action)) {
             $this->action->{$action}($f3, $params);
+            
+            // AJAX - Switch to ajax template
+            if (!empty($f3->get('AJAX'))) {
+                $f3->set('template', 'app/module/cms/view/ajax.php');
+            }
         } else {
             $f3->error(404);
         }

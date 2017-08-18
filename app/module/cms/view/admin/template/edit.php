@@ -69,9 +69,8 @@
                 </div>
                 <div class="panel-body nopadding" style="height:350px">
                     <div class="embed-responsive embed-responsive-16by9" style="height:350px">
-                        <iframe class="embed-responsive-item" id="template-preview" src="/admin/template/preview/<?= $f3->get('PARAMS.sub_action_id') ?>?html" style="height:350px" height="350px"></iframe>
+                        <iframe class="embed-responsive-item" id="template-preview" src="" data-src="/admin/template/preview/<?= $f3->get('PARAMS.sub_action_id') ?>" style="height:350px" height="350px"></iframe>
                     </div>
-                    <!--<img src="/admin/template/preview/<?= $f3->get('PARAMS.sub_action_id') ?>" alt="" class="img-responsive" style="margin: 0 auto;">-->
                 </div>
             </div>
         </div>
@@ -81,8 +80,20 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title"><i class="fa fa-files-o" aria-hidden="true"></i> Files</h3>
-
-                    <div class="panel-buttons text-right" style="height:22px">
+                    <div class="panel-form">
+                         <form class="form-inline">
+                                <div class="input-group">
+                                        <span class="input-group-btn">
+                                         <button type="button" class="btn btn-xs btn-danger remove-file hidden"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
+                                        </span>
+                                        <input type="text" class="form-control col-xs-4" style="height:25px" id="new-file-name" value="" placeholder="Enter filename.ext&hellip;" >
+                                        <span class="input-group-btn">
+                                        <button type="button" class="btn btn-xs btn-success new-file"><i class="fa fa-file" aria-hidden="true"></i> New File</button>
+                                        </span>
+                                    </div>
+                                </form>
+                    </div>
+                    <div class="panel-buttons text-right">
                         <div class="btn-group-xs">
                             <a href="#" role="button" class="btn btn-link btn-xs label-btn hidden" id="file-saved" aria-disabled="true"><span class="text-success">File saved!</span></a>
                             <?php $snippets = $getsnippets('template'); if (!empty($snippets)): ?>
@@ -91,27 +102,13 @@
                             <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>
                             <?php endforeach ?>
                             <?php endif ?>
-                            <button type="button" class="btn btn-success save-file" data-file="template.php"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+                            <button type="button" class="btn btn-xs btn-success save-file" data-file="template.php"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
                         </div>
                     </div>
                 </div>
                 <div class="panel-body nopadding">
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 nopadding">
-                        <div class="row" style="padding:5px;background:#f5f5f5;margin-left:0px;margin-right:0px">
-                            <div class="col-xs-12 col-sm-3 nopadding">
-                                <button type="button" class="btn btn-xs btn-danger remove-file hidden"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
-                            </div>
-                            <div class="col-xs-12 col-sm-9 nopadding text-right">
-                                <form class="form-inline" style="margin-right:-20px">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control input-xs" id="new-file-name" value="" placeholder="Enter filename.ext&hellip;" >
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-xs btn-success new-file"><i class="fa fa-file" aria-hidden="true"></i> New File</button>
-                                        </span>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                        
                         <div id="fileList" style="width:100%"></div>
                         <form action="/admin/template/upload-file/<?= $f3->get('PARAMS.sub_action_id') ?>" class="dropzone" role="form"></form>
                     </div>
@@ -159,6 +156,8 @@ try {
         var template = (function() {
 
             var init = function(options) {
+
+                $('iframe#template-preview').attr('src', $('iframe#template-preview').data('src'));    
 
                 Dropzone.autoDiscover = false;
                 var myDropzone = new Dropzone("form.dropzone", { url: "/admin/template/upload-file/<?= $f3->get('PARAMS.sub_action_id') ?>"});

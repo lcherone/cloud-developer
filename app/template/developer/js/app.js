@@ -233,7 +233,7 @@ window.app = (function() {
          * AJAX links event handler
          */
         $(document).find('.ajax-link').unbind('click').on('click', function(e) {
-            return;
+            //return;
             var link = $(this);
             // fix side menu links
             if (link.parent().is('li')) {

@@ -1219,95 +1219,58 @@ echo json_encode($result);
              */
             case "preview": {
 
-                $pdf_pages = [
-                    'http://c9-cloud.free.lxd.systems/admin/template/preview/'.$params['sub_action_id']."?html",
-                ];
+                $template = $this->template->load($params['sub_action_id']);
 
-                if (isset($_GET['html'])) {
-                    $template = $this->template->load($params['sub_action_id']);
+                $_SESSION['template_path'] = 'tmp/template/';
+                $_SESSION['template_id'] = (int) $params['sub_action_id'];
 
-                    $_SESSION['template_path'] = 'tmp/template/';
-                    $_SESSION['template_id'] = (int) $template->id;
-
-                    // get site settings
-                    foreach ((array) $this->settings->findAll() as $row) {
-                        $f3->set('setting.'.$row->key, $row->value);
-                    }
-
-                    // menu links
-                    $f3->set('menus', (array) $this->menu->findAll());
-
-                    //
-                    $f3->mset([
-                        'template' => 'tmp/template/'.$template->id.'/template.php',
-                        'page' => [
-                            'page_id' => '0',
-                            'title' => 'Template Preview',
-                            'body' => '
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <h1 class="page-header">
-                                        Template Preview <small> - Looking good!</small>
-                                    </h1>
-                                    <ol class="breadcrumb">
-                                        <li class="active"><i class="fa fa-dashboard"></i> Dashboard</li>
-                                    </ol>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    Your <code>'.htmlentities('<?= $f3->decode($page[\'body\']) ?>').'</code> contents will go here.
-                                </div>
-                            </div>
-                            <script>
-                            window.onload = function() {
-                                var anchors = document.getElementsByTagName("a");
-                                for (var i = 0; i < anchors.length; i++) {
-                                    anchors[i].onclick = function() {
-                                        //alert(\'Links are disabled in preview.\');
-                                        return false;
-                                    };
-                                }
-                            };
-                            </script>'
-                        ]
-                    ]);
-
-                    return $f3;
-                } else {
-                    // init snappy lib and instance
-                    $snappy = new \Knp\Snappy\Image('vendor/bin/wkhtmltoimage-amd64');
-
-                    // loop over and apply wkhtmltopdf options
-                    foreach ([
-                        //'cookie' => [
-                        //    'callback-token' => hash('sha256', 'x')
-                        //],
-                        //'cache-dir'     => './tmp/',
-                        //'enable-smart-shrinking' => false,
-                        'enable-smart-width'=>true
-                        //'lowquality'    => true,
-                        // 'dpi'           => 1920,
-                        // 'image-dpi'     => 1920,
-                        // 'margin-top'    => 0,
-                        // 'margin-right'  => 0,
-                        // 'margin-bottom' => 0,
-                        // 'margin-left'   => 0,
-                    ] as $margin => $value) {
-                        $snappy->setOption($margin, $value);
-                    }
-
-                    // out string
-                    $out = $snappy->getOutput($pdf_pages);
-
-                    header('Content-Type: image/jpeg');
-                    header('Content-Length: '.strlen($out));
-                    header('Cache-Control: public, must-revalidate, max-age=0');
-                    header('Pragma: public');
-                    header('Expires: Thurs, 24 Mar 1983 00:00:00 GMT');
-                    header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
-                    die($out);
+                // get site settings
+                foreach ((array) $this->settings->findAll() as $row) {
+                    $f3->set('setting.'.$row->key, $row->value);
                 }
+
+                // menu links
+                $f3->set('menus', (array) $this->menu->findAll());
+
+                //
+                $f3->mset([
+                    'template' => 'tmp/template/'.$template->id.'/template.php',
+                    'page' => [
+                        'page_id' => '0',
+                        'title' => 'Template Preview',
+                        'body' => '
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h1 class="page-header">
+                                    Template Preview <small> - Looking good!</small>
+                                </h1>
+                                <ol class="breadcrumb">
+                                    <li class="active"><i class="fa fa-dashboard"></i> Dashboard</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                Your <code>'.htmlentities('<?= $f3->decode($page[\'body\']) ?>').'</code> contents will go here.
+                            </div>
+                            <pre>'.print_r($_SESSION, true).'</pre>
+                        </div>
+                        <script>
+                        window.onload = function() {
+                            var anchors = document.getElementsByTagName("a");
+                            for (var i = 0; i < anchors.length; i++) {
+                                anchors[i].onclick = function() {
+                                    //alert(\'Links are disabled in preview.\');
+                                    return false;
+                                };
+                            }
+                        };
+                        </script>'
+                    ]
+                ]);
+
+                return $f3;
+                
             } break;
 
             /**

@@ -1716,7 +1716,7 @@ fieldset[disabled] .btn-neutral.active {
   font-size: 14px;
   transition: background-color 0.3s ease 0s;
   padding: 7px 18px;
-  height: 40px;
+  /*height: 40px;*/
   -webkit-box-shadow: none;
   box-shadow: none;
 }
@@ -1834,6 +1834,10 @@ fieldset[disabled] .btn-neutral.active {
   border-right: 0 none;
 }
 
+.input-group-btn:first-child>.btn, .input-group-btn:first-child>.btn-group {
+    margin-right: 0px;
+}
+
 .input-group .form-control:last-child,
 .input-group-addon:last-child,
 .input-group-btn:last-child>.dropdown-toggle,
@@ -1877,7 +1881,7 @@ fieldset[disabled] .form-control {
 
 .input-group-btn .btn {
   border-width: 1px;
-  padding: 9px 18px;
+  /*padding: 9px 18px;*/
 }
 
 .input-group-btn .btn-default:not(.btn-fill) {

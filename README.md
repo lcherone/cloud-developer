@@ -1,9 +1,7 @@
 Cloud Developer (PHP)
 =======
 
-This fun little weekend project is a "Code" CMS! 
-
-Code your project or system directly through the CMS, inception style!
+A CMS for coders, build your system directly through the CMS, inception style!
 
 :: Installing ::
 ---
