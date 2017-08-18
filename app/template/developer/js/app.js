@@ -170,6 +170,11 @@ window.app = (function() {
 
         $(document).find('#search-value').unbind('keyup').on('keyup', debounce(function(e) {
             var value = $(this).val();
+            
+            if (value.length < 2) {
+                return false;
+            }
+            
             $.ajax({
                 type: "GET",
                 url: "/admin/search",

@@ -2359,15 +2359,7 @@ echo json_encode($result);
     public function search(\Base $f3, $params)
     {
         $term = $f3->get('GET.term');
-        
-        $highlight = function($match = '', $value = '') {
-            return preg_replace(
-                '/'. preg_quote($match) .'/i',
-                '<span style="background:rgb(253,253,150)">\\0</span>', 
-                $value
-            );
-        };
-        
+
         $results = [
             'menu' => [],
             'module' => [],
@@ -2378,7 +2370,39 @@ echo json_encode($result);
             'template' => []
         ];
         
-        $pages = $this->page->findAll('
+        /**
+         * Menu
+         */
+        $result = $this->menu->findAll('
+            title LIKE ?', [
+            "%".$term."%"
+        ]);
+        if (!empty($result)) {
+            foreach ($result as $row) {
+                $results['menu'][] = $row;
+            }
+        }
+
+        /**
+         * Module
+         */
+        $result = $this->module->findAll('
+            name LIKE ? OR
+            beforeload LIKE ?', [
+            "%".$term."%",
+            "%".$term."%"
+        ]);
+        if (!empty($result)) {
+            foreach ($result as $row) {
+                $row->title = $row->name;
+                $results['module'][] = $row;
+            }
+        }
+        
+        /**
+         * Page
+         */
+        $result = $this->page->findAll('
             title LIKE ? OR 
             body LIKE ? OR 
             beforeload LIKE ? OR
@@ -2390,12 +2414,80 @@ echo json_encode($result);
             "%".$term."%",
             "%".$term."%"
         ]);
-        if (!empty($pages)) {
-            foreach ($pages as $row) {
+        if (!empty($result)) {
+            foreach ($result as $row) {
                 $results['page'][] = $row;
             }
         }
+
+        /**
+         * Object
+         */
+        $result = $this->objects->findAll('
+            name LIKE ? OR
+            source LIKE ?', [
+            "%".$term."%",
+            "%".$term."%"
+        ]);
+        if (!empty($result)) {
+            foreach ($result as $row) {
+                $row->title = $row->name;
+                $row->body = $row->source;
+                $results['object'][] = $row;
+            }
+        }
+
+        /**
+         * Snippet
+         */
+        $result = $this->snippet->findAll('
+            name LIKE ? OR
+            source LIKE ?', [
+            "%".$term."%",
+            "%".$term."%"
+        ]);
+        if (!empty($result)) {
+            foreach ($result as $row) {
+                $row->title = $row->name;
+                $row->body = $row->source;
+                $results['snippet'][] = $row;
+            }
+        }
+
+        /**
+         * Task
+         */
+        $result = $this->tasksource->findAll('
+            name LIKE ? OR
+            source LIKE ?', [
+            "%".$term."%",
+            "%".$term."%"
+        ]);
+        if (!empty($result)) {
+            foreach ($result as $row) {
+                $row->title = $row->name;
+                $row->body = $row->source;
+                $results['task'][] = $row;
+            }
+        }
         
+        /**
+         * Template
+         */
+        $result = $this->template->findAll('
+            name LIKE ? OR
+            source LIKE ?', [
+            "%".$term."%",
+            "%".$term."%"
+        ]);
+        if (!empty($result)) {
+            foreach ($result as $row) {
+                $row->title = $row->name;
+                $row->body = $row->source;
+                $results['template'][] = $row;
+            }
+        }
+
         //
         $this->set_csrf();
 

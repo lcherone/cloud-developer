@@ -43,15 +43,21 @@
                             <?php foreach ((array) $results as $type => $result): ?>
                             <?php foreach ($result as $row): ?>
                             <tr>
-                                <td><?= $row->title ?></td>
+                                <td><a href="/admin/<?= ($type == 'task' ? 'tasks' : ($type == 'object' ? 'objects' : $type)) ?>/<?= ($type == 'task' ? 'view' : 'edit') ?>/<?= $row->id ?>"><?= $row->title ?></a></td>
                                 <td><?= ucfirst($type) ?></td>
-                                <td><button type="button" class="btn btn-xs btn-primary show-code" data-id="<?= $row->id ?>"><i class="fa fa-eye"></i> Show Code</button></td>
+                                <td>
+                                    <?php if (in_array($type, ['page', 'object', 'snippet', 'task', 'template'])): ?>
+                                    <button type="button" class="btn btn-xs btn-primary show-code" data-id="<?= $row->id ?>"><i class="fa fa-eye"></i> Show Code</button>
+                                    <?php endif ?>
+                                </td>
                             </tr>
+                            <?php if (in_array($type, ['page', 'object', 'snippet', 'task', 'template'])): ?>
                             <tr class="hidden" id="code-<?= $row->id ?>">
                                 <td colspan="3" class="nopadding" style="padding:0px">
                                     <textarea class="editor" data-id="<?= $row->id ?>" data-term="<?= $f3->get('GET.term') ?>" id="editor-<?= $row->id ?>"><?= $row->body ?></textarea>
                                 </td>
                             </tr>
+                            <?php endif ?>
                             <?php endforeach ?>
                             <?php endforeach ?>
                         </tbody>
