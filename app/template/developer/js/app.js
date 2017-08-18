@@ -57,7 +57,7 @@ var timers = (function() {
  * Module - app
  */
 
-/* global $, timers, pollTimer */
+/* global $, timers, pollTimer, debounce */
 
 window.app = (function() {
 
@@ -155,9 +155,9 @@ window.app = (function() {
             left = ((width / 2) - (w / 2)) + screenLeft,
             top = ((height / 2) - (h / 2)) + screenTop,
             popupWindow = window.open(url, t, 'toolbar=yes, menubar=yes, scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
-            
-            popupWindow.blur();
-            window.focus();
+
+        popupWindow.blur();
+        window.focus();
         //if (window.focus) {
         //    popupWindow.focus();
         //}
@@ -167,6 +167,23 @@ window.app = (function() {
      * Event handlers
      */
     var events = function() {
+
+        $(document).find('#search-value').unbind('keyup').on('keyup', debounce(function(e) {
+            var value = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "/admin/search",
+                data: {
+                    term: value
+                },
+                success: function(response) {
+                    $('.ajax-container').replaceWith($('<div />').html(response).find('.ajax-container')[0]);
+
+                    // re attach events
+                    events();
+                }
+            });
+        }, 300));
 
         /**
          * Attach on click event to open popup window to data-type="popup" elements

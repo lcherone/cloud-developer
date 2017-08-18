@@ -2353,4 +2353,61 @@ echo json_encode($result);
         }
     }
 
+    /**
+     *
+     */
+    public function search(\Base $f3, $params)
+    {
+        $term = $f3->get('GET.term');
+        
+        $highlight = function($match = '', $value = '') {
+            return preg_replace(
+                '/'. preg_quote($match) .'/i',
+                '<span style="background:rgb(253,253,150)">\\0</span>', 
+                $value
+            );
+        };
+        
+        $results = [
+            'menu' => [],
+            'module' => [],
+            'page' => [],
+            'object' => [],
+            'snippet' => [],
+            'task' => [],
+            'template' => []
+        ];
+        
+        $pages = $this->page->findAll('
+            title LIKE ? OR 
+            body LIKE ? OR 
+            beforeload LIKE ? OR
+            javascript LIKE ? OR 
+            css LIKE ?', [
+            "%".$term."%",
+            "%".$term."%",
+            "%".$term."%",
+            "%".$term."%",
+            "%".$term."%"
+        ]);
+        if (!empty($pages)) {
+            foreach ($pages as $row) {
+                $results['page'][] = $row;
+            }
+        }
+        
+        //
+        $this->set_csrf();
+
+        $f3->set('results', $results);
+
+        $f3->mset([
+            'template' => 'app/module/cms/view/admin.php',
+            'page' => [
+                'title' => 'Admin - Search',
+                'body' => $this->view->render('app/module/cms/view/admin/search/index.php')
+            ]
+        ]);
+    }
+
 }
