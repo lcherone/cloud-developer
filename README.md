@@ -74,10 +74,10 @@ And then complete the post install setup.
  - Database backups and restore (On request and by cron job).
 
  
-:: Quick Overview - You get the idea! ::
+:: Quick Overview ::
 ---
 
-<img src="http://i.imgur.com/KQAqcLC.gifv" width="800">
+<img src="https://cherone.co.uk/files/screens/cloud-developer/quick.flickthrough.gif" width="800">
 
 :: Not working? ::
 ---
