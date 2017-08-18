@@ -31,8 +31,8 @@ class Asset extends \Prefab
                 }
 
                 // force to default
-                if (isset($_GET['default'])) {
-                    $template = 'app/template/default/'.$type.'/'.basename($params['filename']);
+                if (isset($_GET['developer'])) {
+                    $template = 'app/template/developer/'.$type.'/'.basename($params['filename']);
                 }
             }
             //
@@ -97,6 +97,20 @@ class Asset extends \Prefab
     public function img(\Base $f3, $params)
     {
         $path = $this->f3->get('getAssetPath')($params, 'img');
+
+        if (empty($path)) {
+            $f3->error(404);
+        }
+
+        exit(\Web::instance()->send($path, null, 1024, false));
+    }
+    
+    /**
+     * Fonts load & send
+     */
+    public function fonts(\Base $f3, $params)
+    {
+        $path = $this->f3->get('getAssetPath')($params, 'fonts');
 
         if (empty($path)) {
             $f3->error(404);

@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">
-            Settings
-        </h1>
+        <!--<h1 class="page-header">-->
+        <!--    Settings-->
+        <!--</h1>-->
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li class="active"><i class="fa fa-cogs"></i> Settings</li>
@@ -61,7 +61,7 @@
                                             <?php if ($current  == '1'): ?>
                                             <span class="help-block">Visit any url to automatically generate your pages.</span>
                                             <?php else: ?>
-                                            <span class="help-block">Pages are not generated, instead users will be shown a 404.</span>
+                                            <span class="help-block text-muted">Pages are not generated, instead users will be shown a 404.</span>
                                             <?php endif ?>
                                         <?php endif ?>
                                     </div>
@@ -80,6 +80,39 @@
                                         <?php if (!empty($form['errors']['error_template'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
                                         <?php if (!empty($form['errors']['error_template'])): ?>
                                             <span class="help-block"><?= $form['errors']['error_template'] ?></span>
+                                        <?php endif ?>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="form-group<?= (!empty($form['errors']['side_nav_color']) ? ' has-error has-feedback' : '') ?>">
+                                <td class="text-right col-md-2"><label for="input-side_nav_color" class="control-label">Side Nav Colour</label></td>
+                                <td>
+                                    <div class="input-group col-xs-10">
+                                        <select class="form-control" id="input-side_nav_color" name="side_nav_color">
+                                            <?php $current = $helper['extractValue']('side_nav_color'); ?>
+                                            <option value="light"<?= ($current  == 'light' ? ' selected' : '') ?>>Light</option>
+                                            <option value="dark"<?= ($current  == 'dark' ? ' selected' : '') ?>>Dark</option>
+                                        </select>
+                                        <?php if (!empty($form['errors']['side_nav_color'])): ?>
+                                            <span class="help-block"><?= $form['errors']['side_nav_color'] ?></span>
+                                        <?php endif ?>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="form-group<?= (!empty($form['errors']['active_color']) ? ' has-error has-feedback' : '') ?>">
+                                <td class="text-right col-md-2"><label for="input-active_color" class="control-label">Side Nav Active Colour</label></td>
+                                <td>
+                                    <div class="input-group col-xs-10">
+                                        <select class="form-control" id="input-active_color" name="active_color">
+                                            <?php $current = $helper['extractValue']('active_color'); ?>
+                                            <option value="primary"<?= ($current  == 'primary' ? ' selected' : '') ?>>Primary</option>
+                                            <option value="info"<?= ($current  == 'info' ? ' selected' : '') ?>>Info</option>
+                                            <option value="success"<?= ($current  == 'success' ? ' selected' : '') ?>>Success</option>
+                                            <option value="warning"<?= ($current  == 'warning' ? ' selected' : '') ?>>Warning</option>
+                                            <option value="danger"<?= ($current  == 'danger' ? ' selected' : '') ?>>Danger</option>
+                                        </select>
+                                        <?php if (!empty($form['errors']['active_color'])): ?>
+                                            <span class="help-block"><?= $form['errors']['active_color'] ?></span>
                                         <?php endif ?>
                                     </div>
                                 </td>

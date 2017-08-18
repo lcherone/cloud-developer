@@ -2348,15 +2348,14 @@ echo json_encode($result);
                             }
                         }
 
-                        // good
-                        $settings = $this->settings->findAll();
-                        $form = [
-                            'errors' => [
-                                'success' => !$task_requested ? 'Settings updated.' : 'Settings updated, a background task will now run composer update.'
-                            ],
-                            'values' => $settings
-                        ];
+                        //
+                        $f3->reroute('/admin/settings?t='.$task_requested);
                     }
+                }
+                
+                //
+                if (isset($_GET['t'])) {
+                    $form['errors']['success'] = !empty($_GET['t']) ? 'Settings updated.' : 'Settings updated, the background task will now run composer update.';
                 }
 
                 try {

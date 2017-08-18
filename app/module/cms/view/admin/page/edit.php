@@ -7,9 +7,9 @@ $formStyle = [
 
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">
-            Pages <small> - Edit</small>
-        </h1>
+        <!--<h1 class="page-header">-->
+        <!--    Pages <small> - Edit</small>-->
+        <!--</h1>-->
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="/admin/page"><i class="fa fa-file-o"></i> Pages</a></li>

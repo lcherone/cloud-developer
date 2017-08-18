@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">
-            Snippets
-        </h1>
+        <!--<h1 class="page-header">-->
+        <!--    Snippets-->
+        <!--</h1>-->
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li class="active"><i class="fa fa-code"></i> Snippets</li>

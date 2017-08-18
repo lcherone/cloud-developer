@@ -61,10 +61,16 @@ class Error extends \Prefab
                 </div>
             </div>
         </div>';
+        
+        $template_id = $f3->get('setting.error_template');
+        
+        if (empty($template_id)) {
+            $template_id = 1;
+        }
 
         //
         $f3->mset([
-            'template' => 'tmp/template/'.$f3->get('setting.error_template').'/template.php',
+            'template' => 'tmp/template/'.$template_id.'/template.php',
             'page' => [
                 'page_id' => 0,
                 'title' => $f3->get('ERROR.code').': '.$f3->get('ERROR.status'),
