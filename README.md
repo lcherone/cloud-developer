@@ -3,6 +3,13 @@ Cloud Developer (PHP)
 
 A CMS for coders, build your system directly through the CMS, inception style!
 
+ 
+:: Quick Overview ::
+---
+
+![](https://cherone.co.uk/files/screens/cloud-developer/59974ca26e529807929822.gif "")
+
+
 :: Installing ::
 ---
 
@@ -73,11 +80,7 @@ And then complete the post install setup.
  - Directly manage the `composer.json` file with automatic composer updates which are run by a task.
  - Database backups and restore (On request and by cron job).
 
- 
-:: Quick Overview ::
 ---
-
-![](https://cherone.co.uk/files/screens/cloud-developer/59974ca26e529807929822.gif "")
 
 :: Not working? ::
 ---
