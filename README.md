@@ -77,7 +77,7 @@ And then complete the post install setup.
 :: Quick Overview ::
 ---
 
-![](https://cherone.co.uk/files/screens/cloud-developer/quick.flickthroughx.gif "")
+![](https://cherone.co.uk/files/screens/cloud-developer/59974ca26e529807929822.gif "")
 
 :: Not working? ::
 ---
