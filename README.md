@@ -9,6 +9,8 @@ A CMS for coders, build your system directly through the CMS, inception style!
 
 ![](https://cherone.co.uk/files/screens/cloud-developer/59974ca26e529807929822.gif "")
 
+[See a better quality .gif here.](https://cherone.co.uk/files/screens/cloud-developer/quick.flickthrough.gif)
+
 
 :: Installing ::
 ---
