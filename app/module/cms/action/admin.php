@@ -2261,9 +2261,35 @@ echo json_encode($result);
                     if (empty($form['values']['sitename'])) {
                         $form['errors']['title'] = 'Site name is a required field.';
                     }
+                    
+                    // check username
+                    if (empty($form['values']['username'])) {
+                        $form['errors']['username'] = 'Username is a required field.';
+                    }
 
                     // alls good
                     if (empty($form['errors'])) {
+                        
+                        // get user 
+                        $user = $this->user->findOne('username = ?', [$f3->get('SESSION.developer.username')]);
+                        
+                        // update username
+                        if ($form['values']['username'] != $f3->get('SESSION.developer.username')) {
+                            $user->username = $form['values']['username'];
+                            $this->user->store($user);
+                        }
+
+                        // if password is set then update
+                        if (!empty($form['values']['password'])) {
+                            $user->password = password_hash($form['values']['password'], PASSWORD_BCRYPT);
+                            $this->user->store($user);
+                        }
+
+                        // update session
+                        $f3->set('SESSION.developer', [
+                            'id' => $user->id,
+                            'username' => $user->username
+                        ]);
                         
                         //
                         $task_requested = false;
@@ -2318,7 +2344,7 @@ echo json_encode($result);
                 
                 //
                 if (isset($_GET['t'])) {
-                    $form['errors']['success'] = !empty($_GET['t']) ? 'Settings updated.' : 'Settings updated, the background task will now run composer update.';
+                    $form['errors']['success'] = empty($_GET['t']) ? 'Settings updated.' : 'Settings updated, the background task will now run composer update.';
                 }
 
                 try {

@@ -8,27 +8,27 @@
 
         <title><?= $meta['name'] ?><?= (!empty($page['title']) ? ' - '.$page['title'] : '') ?></title>
 
-        <!-- Bootstrap core CSS -->
-        <link href="/css/bootstrap.min.css?developer" rel="stylesheet" />
-
+        <!-- Bootstrap core CSS from CDNs -->
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Muli:400,300" type="text/css" />
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/min/dropzone.min.css" integrity="sha256-e47xOkXs1JXFbjjpoRr1/LhVcqSzRmGmPqsrUQeVs+g=" crossorigin="anonymous" />
+        
         <!-- Animation library for notifications -->
-        <link href="/css/animate.min.css?developer" rel="stylesheet"/>
+        <link href="/css/animate.min.css?developer" rel="stylesheet" />
 
         <!--  Paper Dashboard core CSS -->
-        <link href="/css/paper-dashboard.css?developer" rel="stylesheet"/>
+        <link href="/css/paper-dashboard.css?developer" rel="stylesheet" />
+        <link href="/css/themify-icons.css?developer" rel="stylesheet" />
 
         <!--  Cloud Developer App CSS -->
         <link href="/css/app.css?developer" rel="stylesheet" />
 
-        <!--  Fonts and icons -->
-        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-        <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/min/dropzone.min.css" integrity="sha256-e47xOkXs1JXFbjjpoRr1/LhVcqSzRmGmPqsrUQeVs+g=" crossorigin="anonymous" />
-        <link href="/css/themify-icons.css?developer" rel="stylesheet">
         <?= $f3->decode($css) ?>
     </head>
     <body>
         <div class="wrapper">
+            <?php if (!empty($_SESSION['developer'])): ?>
             <div class="sidebar" data-background-color="<?= ($f3->get('setting.side_nav_color') == 'light' ? 'white' : 'black') ?>" data-active-color="<?= $f3->get('setting.active_color') ?>">
                 <div class="sidebar-wrapper">
                     <div class="logo">
@@ -52,11 +52,13 @@
                     </ul>
                 </div>
             </div>
+            <?php endif ?>
             <!-- -->
-            <div class="main-panel">
+            <div class="<?= (!empty($_SESSION['developer']) ? 'main-panel' : '') ?>">
                 <nav class="navbar navbar-default">
                     <div class="container-fluid">
                         <div class="navbar-header">
+                            <?php if (!empty($_SESSION['developer'])): ?>
                             <button type="button" class="navbar-toggle">
                                 <span class="sr-only">Toggle navigation</span>
                                 <span class="icon-bar bar1"></span>
@@ -64,16 +66,19 @@
                                 <span class="icon-bar bar3"></span>
                             </button>
                             <a class="navbar-brand" href="#"><?= (!empty($page['title']) ? $page['title'] : '') ?></a>
+                            <?php else: ?>
+                            <a class="navbar-brand" href="#"><i class="fa fa-cloud"></i> <?= $meta['name'] ?></a>
+                            <?php endif ?>
                         </div>
+                        <?php if (!empty($_SESSION['developer'])): ?>
                         <div class="collapse navbar-collapse">
                             <form class="navbar-form navbar-left navbar-search-form" role="search">
-    	    					<div class="input-group">
-    	    						<span class="input-group-addon"><i class="fa fa-search"></i></span>
-    	    						<input type="text" value="" id="search-value" class="form-control" placeholder="Search...">
-    	    					</div>
-    	    				</form>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                    <input type="text" value="" id="search-value" class="form-control" placeholder="Search...">
+                                </div>
+                            </form>
                             <ul class="nav navbar-nav navbar-right">
-                                
                                 <li>
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                         <i class="ti-panel"></i>
@@ -103,6 +108,7 @@
                                 </li>
                             </ul>
                         </div>
+                        <?php endif ?>
                     </div>
                 </nav>
                 <!-- -->
@@ -110,10 +116,26 @@
                     <div class="container-fluid ajax-container">
                         <?= $f3->decode($page['body']) ?>
                     </div>
+                    
                 </div>
                 <!-- -->
             </div>
+            <?php if (empty($_SESSION['developer'])): ?>
+            <div id="push"></div>
+            <?php endif ?>
         </div>
+        <?php if (empty($_SESSION['developer'])): ?>
+        <div class="footer">
+            <div class="container-fluid">
+                <div class="copyright pull-left">
+                    By <a href="https://cherone.co.uk" target="_blank">Lawrence Cherone</a>, Fork from <a href="https://github.com/lcherone/cloud-developer">GitHub</a>. v0.1.18
+                </div>
+                <div class="copyright pull-right">
+                    Theme by <a href="http://www.creative-tim.com" target="_blank">Creative Tim</a>.
+                </div>
+            </div>
+        </div>
+        <?php endif ?>
     </body>
 
     <!--   Core JS Files   -->
@@ -129,7 +151,7 @@
     <script src="/js/bootstrap-checkbox-radio.js?developer"></script>
 
     <!--  Charts Plugin -->
-    <script src="/js/chartist.min.js?developer"></script>
+    <!--<script src="/js/chartist.min.js?developer"></script>-->
 
     <!--  Notifications Plugin -->
     <script src="/js/bootstrap-notify.js?developer"></script>
@@ -140,5 +162,7 @@
     <!-- App JS -->
     <script src="/js/app.js?developer"></script>
     <?= $f3->decode($javascript) ?>
-
+    <?php if (empty($_SESSION['developer'])): ?>
+    <script>$('.breadcrumb').remove();</script>
+    <?php endif ?>
 </html>

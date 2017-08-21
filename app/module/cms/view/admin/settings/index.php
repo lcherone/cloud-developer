@@ -137,6 +137,51 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-user-secret fa-fw"></i> Developer</h3>
+                </div>
+                <div class="panel-body nopadding">
+                    <table class="table table-condensed form-table">
+                        <tbody>
+                            <tr class="form-group<?= (!empty($form['errors']['username']) ? ' has-error has-feedback' : '') ?>">
+                                <td class="text-right col-md-2"><label for="input-username" class="control-label">Username</label></td>
+                                <td>
+                                    <div class="input-group col-xs-10">
+                                        <input type="text" class="form-control" id="input-username" name="username" value="<?= $f3->get('SESSION.developer.username') ?>" placeholder="enter username...">
+                                    </div>
+                                    <?php if (!empty($form['errors']['username'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
+                                    <?php if (!empty($form['errors']['username'])): ?><span class="help-block"><?= $form['errors']['username'] ?></span><?php endif ?>
+                                </td>
+                            </tr>
+                            <tr class="form-group<?= (!empty($form['errors']['password']) ? ' has-error has-feedback' : '') ?>">
+                                <td class="text-right col-md-2"><label for="input-password" class="control-label">Password</label></td>
+                                <td>
+                                    <div class="input-group col-xs-10">
+                                        <input type="password" class="form-control" id="input-password" name="password" value="" placeholder="enter password, leave blank for no change...">
+                                    </div>
+                                    <?php if (!empty($form['errors']['password'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
+                                    <?php if (!empty($form['errors']['password'])): ?><span class="help-block"><?= $form['errors']['password'] ?></span><?php endif ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="form-group">
+                                <td class="text-right"></td>
+                                <td>
+                                    <div class="input-group col-xs-10">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
                     <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> Composer</h3>
                 </div>
                 <div class="panel-body nopadding">

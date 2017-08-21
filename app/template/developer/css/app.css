@@ -261,7 +261,7 @@ table {
 }
 
 .form-table .control-label {
-    padding-top: 10px;
+    /*padding-top: 10px;*/
 }
 
 .form-table tbody tr td:first-child label {
