@@ -95,8 +95,6 @@ echo json_encode($result);
                 );
             } catch (\Exception $e) {
                 if ($e->getMessage() == 'Unauthorised') {
-                    //alert('warning', '<strong>Error:</strong> Connected successfully but could not authenticate! Check public and private keys.');
-                    //redirect('/nodes');
                     $form['errors']['global'] = '<strong>Plinker Error:</strong> Connected successfully but could not authenticate! Check public and private keys.';
                 } else {
                     $form['errors']['global'] = '<strong>Plinker Error:</strong> '.str_replace('Could not unserialize response:', '', trim(htmlentities($e->getMessage())));
@@ -1031,7 +1029,7 @@ echo json_encode($result);
 
                     // check source
                     if (empty($form['values']['source'])) {
-                        $form['errors']['source'] = 'Source is a required field.';
+                        $form['errors']['source'] = 'Code is a required field.';
                     }
 
                     $form['values']['site'] = $_SERVER['HTTP_HOST'];
@@ -1154,7 +1152,7 @@ echo json_encode($result);
 
                     // check source
                     if (empty($form['values']['source'])) {
-                        $form['errors']['source'] = 'Source is a required field.';
+                        $form['errors']['source'] = 'Code is a required field.';
                     }
 
                     // alls good
@@ -1448,7 +1446,7 @@ echo json_encode($result);
 
                     // source
                     if (empty($form['values']['source'])) {
-                        $form['errors']['source'] = 'Source is a required field.';
+                        $form['errors']['source'] = 'Code is a required field.';
                     }
 
                     // alls good
@@ -1526,7 +1524,7 @@ echo json_encode($result);
 
                     // source
                     if (empty($form['values']['source'])) {
-                        $form['errors']['source'] = 'Source is a required field.';
+                        $form['errors']['source'] = 'Code is a required field.';
                     }
 
                     // alls good
@@ -1641,37 +1639,6 @@ echo json_encode($result);
                     'values' => !empty($f3->get('POST')) ? $f3->get('POST') : $task
                 ];
 
-                // if (!empty($f3->get('POST'))) {
-
-                //     // check csrf
-                //     if (!$this->check_csrf($f3->get('POST.csrf'))) {
-                //         $form['errors']['global'] = 'Invalid CSRF token.';
-                //     }
-                //     // expire csrf
-                //     $f3->set('SESSION.csrf', '');
-                //     unset($form['values']['csrf']);
-
-                //     // check title
-                //     if (empty($form['values']['title'])) {
-                //         $form['errors']['title'] = 'Title is a required field.';
-                //     }
-
-                //     // check source
-                //     if (empty($form['values']['source'])) {
-                //         $form['errors']['source'] = 'Source is a required field.';
-                //     }
-
-                //     // alls good
-                //     if (empty($form['errors'])) {
-                //         // ..
-                //         $task->import($form['values']);
-                //         $this->tasks->store($task);
-
-                //         // success
-                //         $form['errors']['success'] = 'Task updated.';
-                //     }
-                // }
-                
                 if (isset($_GET['c'])) {
                     $form['errors']['success'] = 'Task created.';
                 }
@@ -1780,7 +1747,7 @@ echo json_encode($result);
 
                     // check source
                     if (empty($form['values']['source'])) {
-                        $form['errors']['source'] = 'Source is a required field.';
+                        $form['errors']['source'] = 'Code is a required field.';
                     }
 
                     // check type
@@ -1845,7 +1812,7 @@ echo json_encode($result);
 
                     // check source
                     if (empty($form['values']['source'])) {
-                        $form['errors']['source'] = 'Source is a required field.';
+                        $form['errors']['source'] = 'Code is a required field.';
                     }
 
                     // check type
@@ -1961,7 +1928,7 @@ echo json_encode($result);
 
                     // check source
                     if (empty($form['values']['source'])) {
-                        $form['errors']['source'] = 'Source is a required field.';
+                        $form['errors']['source'] = 'Code is a required field.';
                     }
 
                     $form['values']['site'] = $_SERVER['HTTP_HOST'];
@@ -2051,7 +2018,7 @@ echo json_encode($result);
 
                     // check source
                     if (empty($form['values']['source'])) {
-                        $form['errors']['source'] = 'Source is a required field.';
+                        $form['errors']['source'] = 'Code is a required field.';
                     }
 
                     // alls good

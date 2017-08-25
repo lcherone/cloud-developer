@@ -125,7 +125,7 @@
             <?php endif ?>
         </div>
         <?php if (empty($_SESSION['developer'])): ?>
-        <div class="footer">
+        <footer class="footer">
             <div class="container-fluid">
                 <div class="copyright pull-left">
                     By <a href="https://cherone.co.uk" target="_blank">Lawrence Cherone</a>, Fork from <a href="https://github.com/lcherone/cloud-developer">GitHub</a>. v0.1.18
@@ -134,7 +134,7 @@
                     Theme by <a href="http://www.creative-tim.com" target="_blank">Creative Tim</a>.
                 </div>
             </div>
-        </div>
+        </footer>
         <?php endif ?>
     </body>
 
