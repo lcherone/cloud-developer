@@ -24,7 +24,15 @@
         "plinker/core": ">=v0.1",
         "plinker/redbean": ">=v0.1",
         "plinker/system": ">=v1.0.1",
-        "plinker/tasks": "dev-master"
+        "plinker/tasks": "dev-master",
+        
+        "owasp/phprbac": "2.0.*@dev",
+        "hashids/hashids": "^1.0",
+        "guzzlehttp/guzzle": ">=6.2.1",
+        "php-http/guzzle6-adapter": "^1.1",
+        "opensaucesystems/lxd": "^0.6.0",
+        "phpseclib/phpseclib": "^2.0",
+        "lcherone/php-petname": "^1.0"
     },
     "autoload": {
         "psr-4": {
