@@ -222,7 +222,7 @@
                         <div class="col-xs-7">
                             <div class="numbers">
                                 <p>Settings</p>
-                                <?= count($templates) ?>
+                                &nbsp;
                             </div>
                         </div>
                     </div>

@@ -75,7 +75,11 @@ class Controller extends \Prefab
      */
     public function afterRoute(\Base $f3, $params)
     {
-        echo \View::instance()->render($f3->get('template'));
+        if ($f3->get('AJAX') && file_exists(dirname($f3->get('template')).'/ajax.php')) {
+            echo \View::instance()->render(dirname($f3->get('template')).'/ajax.php');
+        } else {
+            echo \View::instance()->render($f3->get('template'));
+        }
     }
     
 }
