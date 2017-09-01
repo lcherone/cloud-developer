@@ -35,16 +35,24 @@
                 <div class="collapse navbar-collapse navbar-collapse">
                     <ul class="nav navbar-nav side-nav">
                         <?php foreach ($menus as $row): ?>
-                        <?php 
-                        // check for admin only
-                        if (empty($f3->get('SESSION.user')) && $row->visibility == 4) {
+                        <?php
+                        // when not signed in
+                        if (!empty($f3->get('SESSION.user')) && $row->visibility == 2) {
+                            continue;
+                        }
+                        // when signed in
+                        if (empty($f3->get('SESSION.user')) && $row->visibility == 3) {
+                            continue;
+                        }
+                        // check for admin/developer
+                        if (empty($f3->get('SESSION.developer')) && $row->visibility == 4) {
                             continue;
                         }
                         ?>
                         <li<?= ($PATH == $row->slug ? ' class="active"' : '') ?>><a href="<?= $row->slug ?>"><?= (!empty($row->icon) ? '<i class="'.$row->icon.'"></i> ' : '') ?><?= $row->title ?></a></li>
                         <?php endforeach ?>
-                        <?php if (!empty($_SESSION['user'])): ?>
-                        <li<?= ($PATH == '/admin' ? ' class="active"' : '') ?>><a href="/admin"><i class="fa fa-user-secret"></i> Developer</a></li>
+                        <?php if (!empty($f3->get('SESSION.developer')) ): ?>
+                        <li<?= ($PATH == '/admin' ? ' class="active"' : '') ?>><a href="/admin"><i class="fa fa-user-secret"></i> Admin</a></li>
                         <?php endif ?>
                     </ul>
                 </div>
