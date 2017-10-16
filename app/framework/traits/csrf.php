@@ -22,19 +22,19 @@ trait CSRF
     /**
      * Checks passed token against one in sesssion.
      * 
-     * @param string $csrf - Value to compare with current
-     * @param bool $use_once - Token is refreshed everytime
-     * @param string $target - Token is targeted to a specific form/role..etc
+     * @param string $csrf       - Value to compare with current
+     * @param bool   $single_use - Token is refreshed everytime
+     * @param string $target     - Token is targeted to a specific form/action
      * @return bool
      */
-    public function check_csrf($csrf = null, $use_once = true, $target = null)
+    public function check_csrf($csrf = null, $single_use = true, $target = null)
     {
         // check both passed and session are not empty
         if (is_null($csrf) || $this->f3->devoid('SESSION.csrf.secret')) {
             return false;
         }
 
-        // check
+        // no target
         if ($target === null) {
             $token = hash_hmac(
                 'sha256',
@@ -42,26 +42,28 @@ trait CSRF
                 $this->f3->get('SESSION.csrf.tokens.default.secret')
             );
             // expire current
-            if ($use_once) {
+            if ($single_use) {
                 $this->f3->set('SESSION.csrf.tokens.default', '');
             }
             // check
             return hash_equals($csrf, $token);
-        } else {
+        }
+        // targeted
+        else {
+            // hash target to get array key
+            $target = hash('sha256', $target);
             // pre check
-            if ($this->f3->devoid('SESSION.csrf.tokens.'.hash('sha256', $target).'.secret')) {
+            if ($this->f3->devoid('SESSION.csrf.tokens.'.$key.'.secret')) {
                 return false;
             }
-            
             $token = hash_hmac(
                 'sha256',
                 $target,
-                $this->f3->get('SESSION.csrf.tokens.'.hash('sha256', $target).'.secret')
+                $this->f3->get('SESSION.csrf.tokens.'.$key.'.secret')
             );
-            
             // expire current
-            if ($use_once) {
-                $this->f3->set('SESSION.csrf.tokens.'.hash('sha256', $target), '');
+            if ($single_use) {
+                $this->f3->set('SESSION.csrf.tokens.'.$key, '');
             }
             // check
             return hash_equals($csrf, $token);
@@ -73,18 +75,18 @@ trait CSRF
      * 
      * Supports single use and by targeting a specific form or action.
      * 
-     * @param bool $use_once - Token is refreshed everytime
-     * @param string $target - Token is targeted to a specific form/action..etc
+     * @param bool   $single_use - Token is refreshed everytime
+     * @param string $target     - Token is targeted to a specific form/action
      * @return string
      */
-    public function set_csrf($use_once = true, $target = null)
+    public function set_csrf($single_use = true, $target = null)
     {
-        // set secret token
-        if ($use_once || $this->f3->devoid('SESSION.csrf.secret')) {
+        // set secret token, 
+        if ($single_use || $this->f3->devoid('SESSION.csrf.secret')) {
             $this->f3->set('SESSION.csrf.secret', $this->generateToken());
         }
 
-        // sign token
+        // no target
         if ($target === null) {
             $token = hash_hmac(
                 'sha256',
@@ -94,10 +96,12 @@ trait CSRF
             $this->f3->set(
                 'SESSION.csrf.tokens.default', [
                     'secret' => $this->f3->get('SESSION.csrf.secret'),
-                    'token' => $token
+                    'token'  => $token
                 ]
             );
-        } else {
+        } 
+        // targeted
+        else {
             $token = hash_hmac(
                 'sha256',
                 $target,
@@ -106,7 +110,7 @@ trait CSRF
             $this->f3->set(
                 'SESSION.csrf.tokens.'.hash('sha256', $target), [
                     'secret' => $this->f3->get('SESSION.csrf.secret'),
-                    'token' => $token,
+                    'token'  => $token
                 ]
             );
         }
