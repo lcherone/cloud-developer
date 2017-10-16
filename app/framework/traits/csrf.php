@@ -43,7 +43,7 @@ trait CSRF
             );
             // expire current
             if ($single_use) {
-                $this->f3->set('SESSION.csrf.tokens.default', '');
+                $this->f3->clear('SESSION.csrf.tokens.default');
             }
             // check
             return hash_equals($csrf, $token);
@@ -51,7 +51,7 @@ trait CSRF
         // targeted
         else {
             // hash target to get array key
-            $target = hash('sha256', $target);
+            $key = hash('sha256', $target);
             // pre check
             if ($this->f3->devoid('SESSION.csrf.tokens.'.$key.'.secret')) {
                 return false;
@@ -63,7 +63,7 @@ trait CSRF
             );
             // expire current
             if ($single_use) {
-                $this->f3->set('SESSION.csrf.tokens.'.$key, '');
+                $this->f3->clear('SESSION.csrf.tokens.'.$key);
             }
             // check
             return hash_equals($csrf, $token);
