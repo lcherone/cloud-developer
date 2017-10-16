@@ -1,0 +1,28 @@
+{
+    "name": "plinker/tasks",
+    "minimum-stability": "dev",
+    "description": "",
+    "license": "MIT",
+    "keywords": [],
+    "homepage": "https://bitbucket.org/plinker/example/",
+    "authors": [
+        {
+            "name": "Lawrence Cherone",
+            "email": "lawrence@cherone.co.uk",
+            "homepage": "http://cherone.co.uk/",
+            "role": "Owner"
+        }
+    ],
+    "support": {
+        "email": "plinker@icodes.it"
+    },
+    "require": {
+        "league/climate": "^3.2",
+        "plinker/core": ">=0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Plinker\\Tasks\\": "src"
+        }
+    }
+}

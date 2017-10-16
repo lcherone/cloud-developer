@@ -44,7 +44,7 @@ class Controller extends \Framework\Controller
                     'endpoint' => 'http://'.$_SERVER['HTTP_HOST'],
 
                     // network keys
-                    'public_key'  => hash('sha256', microtime(true).uniqid(true)),
+                    'public_key'  => hash('sha256', random_bytes(16)),
 
                     // should be the same across all servers
                     'private_key' => $f3->get('plinker.private_key'),

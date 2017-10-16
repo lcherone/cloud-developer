@@ -5,6 +5,8 @@ class Controller extends \Prefab
 {
     protected $f3;
     protected $view;
+    
+    use \Framework\Traits\CSRF;
 
     /**
      * 
@@ -21,46 +23,7 @@ class Controller extends \Prefab
         $this->f3->set('view', $this->view);
         $this->f3->set('template', $this->template);
     }
-    
-    /**
-     * Checks passed token against one in sesssion
-     * 
-     * Expires the one in session once checked, so it must be right first time 
-     * to obtain true return value
-     * 
-     * @param string $csrf - Value to compare with current
-     */
-    public function check_csrf($csrf = null)
-    {
-        // check both passed and session are not empty
-        if (is_null($csrf) || $this->f3->devoid('SESSION.csrf')) {
-            return false;
-        }
 
-        // check
-        $result = ($csrf == $this->f3->get('SESSION.csrf'));
-        
-        // expire current
-        $this->f3->set('SESSION.csrf', '');
-        
-        return $result;
-    }
-
-    /**
-     * Generate and set csrf token into session
-     */
-    public function set_csrf()
-    {
-        $csrf = hash('sha256', uniqid(true).microtime(true));
-        
-        $this->f3->mset([
-            'csrf' => $csrf,
-            'SESSION.csrf' => $csrf
-        ]);
-        
-        return $csrf;
-    }
-    
     /**
      * Send json
      */
