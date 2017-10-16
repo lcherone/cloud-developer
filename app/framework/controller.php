@@ -1,0 +1,113 @@
+<?php
+namespace Framework;
+
+class Controller extends \Prefab
+{
+    protected $f3;
+    protected $view;
+
+    /**
+     * 
+     */
+    public function __construct()
+    {
+        // framework
+        $this->f3       = \Base::instance();
+        $this->view     = \View::instance();
+        $this->template = \Template::instance();
+        
+        // set framework into view scope
+        $this->f3->set('f3', $this->f3);
+        $this->f3->set('view', $this->view);
+        $this->f3->set('template', $this->template);
+    }
+    
+    /**
+     * Checks passed token against one in sesssion
+     * 
+     * Expires the one in session once checked, so it must be right first time 
+     * to obtain true return value
+     * 
+     * @param string $csrf - Value to compare with current
+     */
+    public function check_csrf($csrf = null)
+    {
+        // check both passed and session are not empty
+        if (is_null($csrf) || $this->f3->devoid('SESSION.csrf')) {
+            return false;
+        }
+
+        // check
+        $result = ($csrf == $this->f3->get('SESSION.csrf'));
+        
+        // expire current
+        $this->f3->set('SESSION.csrf', '');
+        
+        return $result;
+    }
+
+    /**
+     * Generate and set csrf token into session
+     */
+    public function set_csrf()
+    {
+        $csrf = hash('sha256', uniqid(true).microtime(true));
+        
+        $this->f3->mset([
+            'csrf' => $csrf,
+            'SESSION.csrf' => $csrf
+        ]);
+        
+        return $csrf;
+    }
+    
+    /**
+     * Send json
+     */
+    public function json($data = null)
+    {
+        header('Content-Type: application/json;charset=utf8');
+        exit(json_encode($data, JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK));
+    }
+    
+    /**
+     *
+     */
+    public function beforeRoute(\Base $f3, $params)
+    {
+        // is https - fatfree version dose not do X_FOWARDED_PROTO  
+        $https = false;
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+            $https = true;
+        }
+        elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+            $https = true;
+        }
+        // set https in hive
+        $this->f3->set('https', $https);
+
+        // is https required set in config
+        if (!$https) {
+            // allow plinker on non ssl
+            if (!isset($_POST['data']) &&
+                !isset($_POST['token']) &&
+                !isset($_POST['public_key'])
+            ) {
+                //exit(header('Location: https://deploy.lxc.systems', 302));
+            }
+        }
+    }
+    
+    /**
+     *
+     */
+    public function afterRoute(\Base $f3, $params)
+    {
+        if ($f3->get('AJAX') && file_exists(dirname($f3->get('template')).'/ajax.php')) {
+            echo \View::instance()->render(dirname($f3->get('template')).'/ajax.php');
+        } else {
+            echo \View::instance()->render($f3->get('template'));
+        }
+    }
+    
+}

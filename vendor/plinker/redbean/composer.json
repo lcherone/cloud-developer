@@ -1,0 +1,29 @@
+{
+    "name": "plinker/redbean",
+    "minimum-stability": "dev",
+    "description": "",
+    "license": "MIT",
+    "keywords": [],
+    "homepage": "https://bitbucket.org/plinker/example/",
+    "authors": [
+        {
+            "name": "Lawrence Cherone",
+            "email": "lawrence@icodes.it",
+            "homepage": "http://icodes.it/",
+            "role": "Owner"
+        }
+    ],
+    "support": {
+        "email": "plinker@icodes.it"
+    },
+    "require": {
+        "php": ">=5.3.4",
+        "gabordemooij/redbean": ">=4.2",
+        "plinker/core": ">=0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Plinker\\Redbean\\": "src"
+        }
+    }
+}

@@ -1,0 +1,33 @@
+a.close {
+    color:white;
+}
+a.close:hover {
+    color:white;
+    opacity: .75;
+}
+
+table {
+    position: relative;    
+    overflow: hidden;
+    border-collapse: collapse;
+    z-index: 1; 
+}
+tr, td {
+    background: none;
+}
+.tr-progress {
+    position: absolute;
+    left: 0;
+    width: 0%;
+    height: 0px;
+    margin-top:-14px;
+    z-index: -1;    
+    background: #8F8;    
+    transition:width 1s;
+}
+.card {
+    z-index: 0;
+}
+.dropdown {
+   position: relative !important;
+}

@@ -1,0 +1,21 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # hide files and folders with 404
+  RedirectMatch 404 ^/\.c9
+  RedirectMatch 404 /\.git
+  RedirectMatch 404 ^/vendor
+  RedirectMatch 404 ^/tmp
+  RedirectMatch 404 ^/app
+  RedirectMatch 404 ^/backups
+  RedirectMatch 404 ^/bin
+  RedirectMatch 404 ^/tasks
+  RedirectMatch 404 ^/\.gitignore
+  RedirectMatch 404 ^/composer
+  RedirectMatch 404 ^/README.md
+
+  # main application rewrite
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule .* public/index.php [QSA,L]
+  RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
+</IfModule>

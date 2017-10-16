@@ -1,0 +1,27 @@
+{
+    "name": "plinker/core",
+    "description": "",
+    "license": "MIT",
+    "keywords": [],
+    "homepage": "https://github.com/lcherone/plinker-core",
+    "authors": [
+        {
+            "name": "Lawrence Cherone",
+            "email": "lawrence@cherone.co.uk",
+            "homepage": "https://cherone.co.uk",
+            "role": "Owner"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "plinker/base91": ">=0.1",
+        "rmccue/requests": "^1.7",
+        "phpseclib/phpseclib": "^2.0",
+        "opis/closure": "^2.2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Plinker\\Core\\": "src"
+        }
+    }
+}
