@@ -59,8 +59,9 @@ class Asset extends \Prefab
         if (empty($path)) {
             $f3->error(404);
         }
-
+        
         exit(\Web::instance()->send($path, null, 1024, false));
+        //exit(\Web::instance()->minify($path, 'text/css'));
     }
 
     /**
@@ -75,6 +76,7 @@ class Asset extends \Prefab
         }
 
         exit(\Web::instance()->send($path, null, 1024, false));
+        //exit(\Web::instance()->minify($path, 'application/javascript'));
     }
 
     /**
@@ -89,6 +91,7 @@ class Asset extends \Prefab
         }
 
         exit(\Web::instance()->send($path, null, 1024, false));
+        //exit(\Web::instance()->minify($path, 'application/javascript'));
     }
 
     /**

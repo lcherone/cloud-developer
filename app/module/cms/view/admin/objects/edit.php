@@ -65,7 +65,7 @@
                                 <td class="text-right"></td>
                                 <td>
                                     <div class="input-group col-xs-10">
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="submit" class="btn btn-primary ajax_save" data-message="Object saved.">Save</button>
                                     </div>
                                 </td>
                             </tr>
@@ -111,17 +111,6 @@
         editorSession.setValue(textarea.val());
         editorSession.on('change', function() {
             textarea.val(editorSession.getValue());
-        });
-        
-        $(window).bind('keydown', function(event) {
-            if (event.ctrlKey || event.metaKey) {
-                switch (String.fromCharCode(event.which).toLowerCase()) {
-                    case 's':
-                        event.preventDefault();
-                        $('[type="submit"]').trigger('click');
-                    break;
-                }
-            }
         });
 
         // load.script('/js/module/tasks.js', function() {

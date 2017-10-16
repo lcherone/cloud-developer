@@ -318,17 +318,6 @@
             textarea.val(editorSession.getValue());
         });
 
-        $(window).bind('keydown', function(event) {
-            if (event.ctrlKey || event.metaKey) {
-                switch (String.fromCharCode(event.which).toLowerCase()) {
-                    case 's':
-                        event.preventDefault();
-                        $('[type="submit"]').trigger('click');
-                    break;
-                }
-            }
-        });
-        
         // load.script('/js/module/tasks.js', function() {
         //     nodes.init();
         // });

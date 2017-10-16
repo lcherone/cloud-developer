@@ -88,6 +88,21 @@ window.app = (function() {
         };
     };
 
+    var debounce = function(func, wait, immediate) {
+        var timeout;
+        return function() {
+            var context = this,
+                args = arguments;
+            clearTimeout(timeout);
+            timeout = setTimeout(function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            }, wait);
+            if (immediate && !timeout) func.apply(context, args);
+        };
+    };
+
+
     /**
      * Ajax load content into (.ajax-container)
      * ajax_load('/');
@@ -163,18 +178,64 @@ window.app = (function() {
         //}
     };
 
+    // notification trigger
+    var showNotification = function(message) {
+        $.notify({
+            message: message
+
+        }, {
+            type: 'success',
+            timer: 100,
+            placement: {
+                from: 'top',
+                align: 'right'
+            }
+        });
+    };
+
     /**
      * Event handlers
      */
     var events = function() {
 
+        // ajax form save
+        $(document).find('.ajax_save').unbind('click').on('click', function(e) {
+            e.preventDefault();
+            var btn = $(this),
+                form = btn.closest('form');
+
+            if (btn.data('message') == '') {
+                var message = 'Page saved.';
+            }
+            else {
+                var message = btn.data('message');
+            }
+
+            $.post(form.prop('action'), form.serialize(), function(data, status) {
+                showNotification(message);
+            });
+        });
+
+        // ctrl-s save
+        $(window).bind('keydown', function(event) {
+            if (event.ctrlKey || event.metaKey) {
+                switch (String.fromCharCode(event.which).toLowerCase()) {
+                    case 's':
+                        event.preventDefault();
+                        $('[type="submit"]').trigger('click');
+                        break;
+                }
+            }
+        });
+
+        // search
         $(document).find('#search-value').unbind('keyup').on('keyup', debounce(function(e) {
             var value = $(this).val();
-            
+
             if (value.length < 2) {
                 return false;
             }
-            
+
             $.ajax({
                 type: "GET",
                 url: "/admin/search",
@@ -266,6 +327,7 @@ window.app = (function() {
             e.preventDefault();
             // stop all timers
             timers.stopAll();
+
             // call ajax load function
             ajax_load($(this).prop('href'), '.ajax-container', $(this).data('keep-state'));
         });

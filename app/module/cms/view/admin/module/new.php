@@ -52,7 +52,7 @@
                                 <td class="text-right"></td>
                                 <td>
                                     <div class="input-group col-xs-10">
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="submit" class="btn btn-primary ajax_save" data-message="Module created.">Save</button>
                                     </div>
                                 </td>
                             </tr>
@@ -140,17 +140,6 @@
             });
         });
 
-        $(window).bind('keydown', function(event) {
-            if (event.ctrlKey || event.metaKey) {
-                switch (String.fromCharCode(event.which).toLowerCase()) {
-                    case 's':
-                        event.preventDefault();
-                        $('[type="submit"]').trigger('click');
-                    break;
-                }
-            }
-        });
-        
         // load.script('/js/tasks.js', function() {
         //     tasks.view();
         // });

@@ -45,7 +45,7 @@
 
                     <div class="form-group">
                         <div class="col-xs-offset-2 col-xs-10">
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary ajax_save" data-message="Module saved.">Save</button>
                         </div>
                     </div>
                 </form>
@@ -66,17 +66,6 @@
             $.each(parsedYaml.icons, function(index, icon) {
             	select.append('<option value="fa fa-' + icon.id + '"' + (selected === 'fa fa-' + icon.id ? ' selected' : '') + '></option>');
             });
-        });
-        
-        $(window).bind('keydown', function(event) {
-            if (event.ctrlKey || event.metaKey) {
-                switch (String.fromCharCode(event.which).toLowerCase()) {
-                    case 's':
-                        event.preventDefault();
-                        $('[type="submit"]').trigger('click');
-                    break;
-                }
-            }
         });
 
         // load.script('/js/module/tasks.js', function() {

@@ -90,7 +90,7 @@
                                 <td class="text-right"></td>
                                 <td>
                                     <div class="input-group col-xs-10">
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="submit" class="btn btn-primary ajax_save" data-message="Task saved.">Save</button>
                                     </div>
                                 </td>
                             </tr>

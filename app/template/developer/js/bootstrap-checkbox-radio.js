@@ -5,14 +5,14 @@
 
   var Checkbox = function (element, options) {
     this.init(element, options);
-  }
+  };
 
   Checkbox.prototype = {
 
     constructor: Checkbox
 
   , init: function (element, options) {
-    var $el = this.$element = $(element)
+    var $el = this.$element = $(element);
 
     this.options = $.extend({}, $.fn.checkbox.defaults, options);
     $el.before(this.options.template);
@@ -32,7 +32,7 @@
         , $el = this.$element
         , $parent = $el.closest('.checkbox')
         , checked = $el.prop(ch)
-        , e = $.Event('toggle')
+        , e = $.Event('toggle');
 
       if ($el.prop('disabled') == false) {
         $parent.toggleClass(ch) && checked ? $el.removeAttr(ch) : $el.prop(ch, ch);
@@ -46,19 +46,19 @@
         , $el = this.$element
         , $parent = $el.closest('.checkbox')
         , checkAction = option == 'check' ? true : false
-        , e = $.Event(option)
+        , e = $.Event(option);
 
       $parent[checkAction ? 'addClass' : 'removeClass' ](ch) && checkAction ? $el.prop(ch, ch) : $el.removeAttr(ch);
       $el.trigger(e).trigger('change');
     }
 
-  }
+  };
 
 
  /* CHECKBOX PLUGIN DEFINITION
   * ======================== */
 
-  var old = $.fn.checkbox
+  var old = $.fn.checkbox;
 
   $.fn.checkbox = function (option) {
     return this.each(function () {
@@ -66,15 +66,15 @@
         , data = $this.data('checkbox')
         , options = $.extend({}, $.fn.checkbox.defaults, $this.data(), typeof option == 'object' && option);
       if (!data) $this.data('checkbox', (data = new Checkbox(this, options)));
-      if (option == 'toggle') data.toggle()
-      if (option == 'check' || option == 'uncheck') data.setCheck(option)
+      if (option == 'toggle') data.toggle();
+      if (option == 'check' || option == 'uncheck') data.setCheck(option);
       else if (option) data.setState();
     });
-  }
+  };
 
   $.fn.checkbox.defaults = {
     template: '<span class="icons"><span class="first-icon fa fa-square fa-base"></span><span class="second-icon fa fa-check-square fa-base"></span></span>'
-  }
+  };
 
 
  /* CHECKBOX NO CONFLICT
@@ -83,7 +83,7 @@
   $.fn.checkbox.noConflict = function () {
     $.fn.checkbox = old;
     return this;
-  }
+  };
 
 
  /* CHECKBOX DATA-API
@@ -118,14 +118,14 @@
 
   var Radio = function (element, options) {
     this.init(element, options);
-  }
+  };
 
   Radio.prototype = {
 
     constructor: Radio
 
   , init: function (element, options) {
-      var $el = this.$element = $(element)
+      var $el = this.$element = $(element);
 
       this.options = $.extend({}, $.fn.radio.defaults, options);
       $el.before(this.options.template);
@@ -148,7 +148,7 @@
         , $parent = $el.closest('.radio')
         , $parentWrap = $el.closest('form').length ? $el.closest('form') : $el.closest('body')
         , $elemGroup = $parentWrap.find(':radio[name="' + $el.attr('name') + '"]')
-        , e = $.Event('toggle')
+        , e = $.Event('toggle');
 
         if ($el.prop(d) == false) {
             $elemGroup.not($el).each(function () {
@@ -177,7 +177,7 @@
         , checked = $el.prop(ch)
         , $parentWrap = $el.closest('form').length ? $el.closest('form') : $el.closest('body')
         , $elemGroup = $parentWrap.find(':radio[name="' + $el['attr']('name') + '"]')
-        , e = $.Event(option)
+        , e = $.Event(option);
 
       $elemGroup.not($el).each(function () {
         var $el = $(this)
@@ -194,13 +194,13 @@
       }
     }
 
-  }
+  };
 
 
  /* RADIO PLUGIN DEFINITION
   * ======================== */
 
-  var old = $.fn.radio
+  var old = $.fn.radio;
 
   $.fn.radio = function (option) {
     return this.each(function () {
@@ -208,15 +208,15 @@
         , data = $this.data('radio')
         , options = $.extend({}, $.fn.radio.defaults, $this.data(), typeof option == 'object' && option);
       if (!data) $this.data('radio', (data = new Radio(this, options)));
-      if (option == 'toggle') data.toggle()
-      if (option == 'check' || option == 'uncheck') data.setCheck(option)
+      if (option == 'toggle') data.toggle();
+      if (option == 'check' || option == 'uncheck') data.setCheck(option);
       else if (option) data.setState();
     });
-  }
+  };
 
   $.fn.radio.defaults = {
     template: '<span class="icons"><span class="first-icon fa fa-circle-o fa-base"></span><span class="second-icon fa fa-dot-circle-o fa-base"></span></span>'
-  }
+  };
 
 
  /* RADIO NO CONFLICT
@@ -225,7 +225,7 @@
   $.fn.radio.noConflict = function () {
     $.fn.radio = old;
     return this;
-  }
+  };
 
 
  /* RADIO DATA-API
