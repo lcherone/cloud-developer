@@ -149,7 +149,7 @@ echo json_encode($result);
         if (!empty($f3->get('POST'))) {
             
             // check csrf
-            if (!$this->check_csrf($f3->get('POST.csrf'), false, 'admin')) {
+            if (!$this->check_csrf($f3->get('POST.csrf'), true, 'admin')) {
                 $form['errors']['global'] = 'Invalid CSRF token, please try again.';
             }
 
@@ -210,7 +210,7 @@ echo json_encode($result);
         $f3->set('form', $form);
 
         //
-        $this->set_csrf(false, 'admin');
+        $this->set_csrf(true, 'admin');
 
         $f3->mset([
             'template' => 'app/module/cms/view/admin.php',

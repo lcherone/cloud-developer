@@ -141,7 +141,7 @@ main() {
     write_backup_script $DBHOST $DBNAME $DBUSER $DBPASS
 
     # Write cron jobs
-    crontab -l | { cat; echo -e "* * * * * cd $PWD/tasks && /usr/bin/php $PWD/tasks/run.php >> /dev/null 2>&1"; } | crontab -
+    crontab -l | { cat; echo -e "@reboot while sleep 1; do cd $PWD/tasks && /usr/bin/php $PWD/tasks/run.php ; done"; } | crontab -
     crontab -l | { cat; echo -e "0 0 * * * cd $PWD/bin && bash backup.sh"; } | crontab -
     
     # Add directorys & change ownership
