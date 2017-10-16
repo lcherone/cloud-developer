@@ -149,7 +149,7 @@ echo json_encode($result);
         if (!empty($f3->get('POST'))) {
             
             // check csrf
-            if (!$this->check_csrf($f3->get('POST.csrf'))) {
+            if (!$this->check_csrf($f3->get('POST.csrf'), false, 'admin')) {
                 $form['errors']['global'] = 'Invalid CSRF token, please try again.';
             }
 
@@ -210,7 +210,7 @@ echo json_encode($result);
         $f3->set('form', $form);
 
         //
-        $this->set_csrf();
+        $this->set_csrf(false, 'admin');
 
         $f3->mset([
             'template' => 'app/module/cms/view/admin.php',
@@ -263,7 +263,7 @@ echo json_encode($result);
                 if (!empty($f3->get('POST'))) {
 
                     // check csrf
-                    if (!$this->check_csrf($f3->get('POST.csrf'))) {
+                    if (!$this->check_csrf($f3->get('POST.csrf'), false, 'admin')) {
                         $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
                     unset($form['values']['csrf']);
@@ -350,7 +350,7 @@ echo json_encode($result);
                 });
 
                 //
-                $this->set_csrf();
+                $this->set_csrf(false, 'admin');
 
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
@@ -376,7 +376,7 @@ echo json_encode($result);
                 if (!empty($f3->get('POST'))) {
 
                     // check csrf
-                    if (!$this->check_csrf($f3->get('POST.csrf'))) {
+                    if (!$this->check_csrf($f3->get('POST.csrf'), false, 'admin')) {
                         $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
                     unset($form['values']['csrf']);
@@ -461,7 +461,7 @@ echo json_encode($result);
 
                 
                 //
-                $this->set_csrf();
+                $this->set_csrf(false, 'admin');
 
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
@@ -564,7 +564,7 @@ echo json_encode($result);
                 if (!empty($f3->get('POST'))) {
 
                     // check csrf
-                    if (!$this->check_csrf($f3->get('POST.csrf'))) {
+                    if (!$this->check_csrf($f3->get('POST.csrf'), false, 'admin')) {
                         $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
                     unset($form['values']['csrf']);
@@ -611,7 +611,7 @@ echo json_encode($result);
                 });
 
                 //
-                $this->set_csrf();
+                $this->set_csrf(false, 'admin');
 
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
@@ -637,7 +637,7 @@ echo json_encode($result);
                 if (!empty($f3->get('POST'))) {
 
                     // check csrf
-                    if (!$this->check_csrf($f3->get('POST.csrf'))) {
+                    if (!$this->check_csrf($f3->get('POST.csrf'), false, 'admin')) {
                         $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
                     unset($form['values']['csrf']);
@@ -683,7 +683,7 @@ echo json_encode($result);
                 });
 
                 //
-                $this->set_csrf();
+                $this->set_csrf(false, 'admin');
 
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
@@ -751,7 +751,7 @@ echo json_encode($result);
                 if (!empty($f3->get('POST'))) {
 
                     // check csrf
-                    if (!$this->check_csrf($f3->get('POST.csrf'))) {
+                    if (!$this->check_csrf($f3->get('POST.csrf'), false, 'admin')) {
                         $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
                     unset($form['values']['csrf']);
@@ -801,7 +801,7 @@ echo json_encode($result);
                 });
 
                 //
-                $this->set_csrf();
+                $this->set_csrf(false, 'admin');
 
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
@@ -827,7 +827,7 @@ echo json_encode($result);
                 if (!empty($f3->get('POST'))) {
 
                     // check csrf
-                    if (!$this->check_csrf($f3->get('POST.csrf'))) {
+                    if (!$this->check_csrf($f3->get('POST.csrf'), false, 'admin')) {
                         $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
                     unset($form['values']['csrf']);
@@ -874,7 +874,7 @@ echo json_encode($result);
                 });
 
                 //
-                $this->set_csrf();
+                $this->set_csrf(false, 'admin');
 
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
@@ -904,7 +904,7 @@ echo json_encode($result);
                 if (!empty($f3->get('POST'))) {
 
                     // check csrf
-                    if (!$this->check_csrf($f3->get('POST.csrf'))) {
+                    if (!$this->check_csrf($f3->get('POST.csrf'), false, 'admin')) {
                         $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
                     unset($form['values']['csrf']);
@@ -958,7 +958,7 @@ echo json_encode($result);
                 });
 
                 //
-                $this->set_csrf();
+                $this->set_csrf(false, 'admin');
 
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
@@ -1017,7 +1017,7 @@ echo json_encode($result);
                 if (!empty($f3->get('POST'))) {
 
                     // check csrf
-                    if (!$this->check_csrf($f3->get('POST.csrf'))) {
+                    if (!$this->check_csrf($f3->get('POST.csrf'), false, 'admin')) {
                         $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
                     unset($form['values']['csrf']);
@@ -1073,7 +1073,7 @@ echo json_encode($result);
 
 
                 //
-                $this->set_csrf();
+                $this->set_csrf(false, 'admin');
 
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
@@ -1140,7 +1140,7 @@ echo json_encode($result);
                 if (!empty($f3->get('POST'))) {
 
                     // check csrf
-                    if (!$this->check_csrf($f3->get('POST.csrf'))) {
+                    if (!$this->check_csrf($f3->get('POST.csrf'), false, 'admin')) {
                         $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
                     unset($form['values']['csrf']);
@@ -1190,7 +1190,7 @@ echo json_encode($result);
                 $f3->set('form', $form);
 
                 //
-                $this->set_csrf();
+                $this->set_csrf(false, 'admin');
                 
                 // snippets helper
                 $snippets = $this->snippet->findAll();
@@ -1411,7 +1411,7 @@ echo json_encode($result);
                 if (!empty($f3->get('POST'))) {
 
                     // check csrf
-                    if (!$this->check_csrf($f3->get('POST.csrf'))) {
+                    if (!$this->check_csrf($f3->get('POST.csrf'), false, 'admin')) {
                         $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
                     unset($form['values']['csrf']);
@@ -1473,7 +1473,7 @@ echo json_encode($result);
                 $f3->set('form', $form);
 
                 //
-                $this->set_csrf();
+                $this->set_csrf(false, 'admin');
 
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
@@ -1500,7 +1500,7 @@ echo json_encode($result);
                 if (!empty($f3->get('POST'))) {
 
                     // check csrf
-                    if (!$this->check_csrf($f3->get('POST.csrf'))) {
+                    if (!$this->check_csrf($f3->get('POST.csrf'), false, 'admin')) {
                         $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
                     unset($form['values']['csrf']);
@@ -1551,7 +1551,7 @@ echo json_encode($result);
                 $f3->set('form', $form);
 
                 //
-                $this->set_csrf();
+                $this->set_csrf(false, 'admin');
 
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
@@ -1650,7 +1650,7 @@ echo json_encode($result);
                 $f3->set('form', $form);
 
                 //
-                $this->set_csrf();
+                $this->set_csrf(false, 'admin');
 
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
@@ -1735,7 +1735,7 @@ echo json_encode($result);
                 if (!empty($f3->get('POST'))) {
 
                     // check csrf
-                    if (!$this->check_csrf($f3->get('POST.csrf'))) {
+                    if (!$this->check_csrf($f3->get('POST.csrf'), false, 'admin')) {
                         $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
                     unset($form['values']['csrf']);
@@ -1774,7 +1774,7 @@ echo json_encode($result);
                 $f3->set('form', $form);
 
                 //
-                $this->set_csrf();
+                $this->set_csrf(false, 'admin');
 
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
@@ -1800,7 +1800,7 @@ echo json_encode($result);
                 if (!empty($f3->get('POST'))) {
 
                     // check csrf
-                    if (!$this->check_csrf($f3->get('POST.csrf'))) {
+                    if (!$this->check_csrf($f3->get('POST.csrf'), false, 'admin')) {
                         $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
                     unset($form['values']['csrf']);
@@ -1842,7 +1842,7 @@ echo json_encode($result);
                 $f3->set('form', $form);
 
                 //
-                $this->set_csrf();
+                $this->set_csrf(false, 'admin');
 
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
@@ -1916,7 +1916,7 @@ echo json_encode($result);
                 if (!empty($f3->get('POST'))) {
 
                     // check csrf
-                    if (!$this->check_csrf($f3->get('POST.csrf'))) {
+                    if (!$this->check_csrf($f3->get('POST.csrf'), false, 'admin')) {
                         $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
                     unset($form['values']['csrf']);
@@ -1960,7 +1960,7 @@ echo json_encode($result);
                 $f3->set('form', $form);
 
                 //
-                $this->set_csrf();
+                $this->set_csrf(false, 'admin');
                 
                 //
                 $objects = (array) $this->objects->findAll();
@@ -2006,7 +2006,7 @@ echo json_encode($result);
                 if (!empty($f3->get('POST'))) {
 
                     // check csrf
-                    if (!$this->check_csrf($f3->get('POST.csrf'))) {
+                    if (!$this->check_csrf($f3->get('POST.csrf'), false, 'admin')) {
                         $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
                     unset($form['values']['csrf']);
@@ -2072,7 +2072,7 @@ echo json_encode($result);
                 }
 
                 //
-                $this->set_csrf();
+                $this->set_csrf(false, 'admin');
 
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
@@ -2219,7 +2219,7 @@ echo json_encode($result);
                 if (!empty($f3->get('POST'))) {
 
                     // check csrf
-                    if (!$this->check_csrf($f3->get('POST.csrf'))) {
+                    if (!$this->check_csrf($f3->get('POST.csrf'), false, 'admin')) {
                         $form['errors']['global'] = 'Invalid CSRF token, please try again.';
                     }
                     unset($form['values']['csrf']);
@@ -2333,7 +2333,7 @@ echo json_encode($result);
                 });
 
                 //
-                $this->set_csrf();
+                $this->set_csrf(false, 'admin');
 
                 $f3->mset([
                     'template' => 'app/module/cms/view/admin.php',
@@ -2482,7 +2482,7 @@ echo json_encode($result);
         }
 
         //
-        $this->set_csrf();
+        $this->set_csrf(false, 'admin');
 
         $f3->set('results', $results);
 
