@@ -16,6 +16,21 @@ class System
         $this->host_os = trim(strtoupper(strstr(php_uname(), ' ', true)));
     }
     
+    public function enumarate($methods = [])
+    {
+        $methods = $methods[0];
+        
+        if (is_array($methods)) {
+            $return = [];
+            foreach ($methods as $method) {
+                $return[$method] = $this->$method();
+            }
+            return $return;
+        } elseif (is_string($methods)) {
+            return $this->$methods();
+        }
+    }
+    
     /**
      * Check system for updates
      *

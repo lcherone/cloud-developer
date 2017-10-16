@@ -1,4 +1,0 @@
-[2017-09-18 00:56:18] task_log.INFO: Reconcile Web Forwards - Routes: 1 [] []
-[2017-09-18 00:56:18] task_log.INFO: Reconcile Web Forwards - Route local update: cloud-developer-hybrid-cms-5wxf1 [] []
-[2017-09-18 00:56:18] task_log.INFO: Reconcile Web Forwards - Route good updating local upstream: cloud-developer-hybrid-cms-5wxf1 [] []
-[2017-09-18 00:56:18] task_log.INFO: Reconcile Web Forwards - Storing local route: cloud-developer-hybrid-cms-5wxf1 [] []

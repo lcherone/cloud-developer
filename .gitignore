@@ -1,1 +1,5 @@
 tasks/pids/Daemon.pid
+tmp/
+tasks/logs/
+/app/config.ini
+/bin/backup.sh

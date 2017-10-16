@@ -322,7 +322,7 @@ $formStyle = [
         });
 
         editorSessionCSS.setUseWorker(false);
-        editorSessionCSS.setMode("ace/mode/css");
+        editorSessionCSS.setMode("ace/mode/php");
         editorSessionCSS.setValue(textareaCSS.val());
         editorSessionCSS.on('change', function() {
             textareaCSS.val(editorSessionCSS.getValue());
@@ -387,7 +387,7 @@ $formStyle = [
         });
 
         editorSessionJS.setUseWorker(false);
-        editorSessionJS.setMode("ace/mode/javascript");
+        editorSessionJS.setMode("ace/mode/php");
         editorSessionJS.setValue(textareaJS.val());
         editorSessionJS.on('change', function() {
             textareaJS.val(editorSessionJS.getValue());

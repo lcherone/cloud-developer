@@ -1,8 +1,0 @@
-[2017-09-17 14:54:15] task_log.INFO: Reconcile Web Forwards - Routes: 1 [] []
-[2017-09-17 14:54:15] task_log.INFO: Reconcile Web Forwards - Route local update: jjj-vlofz [] []
-[2017-09-17 14:54:15] task_log.INFO: Reconcile Web Forwards - Route remote still has 127.0.0.1 IP: jjj-vlofz [] []
-[2017-09-17 14:54:15] task_log.INFO: Reconcile Web Forwards - Storing local route: jjj-vlofz [] []
-[2017-09-17 23:11:03] task_log.INFO: Reconcile Web Forwards - Routes: 1 [] []
-[2017-09-17 23:11:03] task_log.INFO: Reconcile Web Forwards - Route local update: lxd2-0-pplc4 [] []
-[2017-09-17 23:11:03] task_log.INFO: Reconcile Web Forwards - Route good updating local upstream: lxd2-0-pplc4 [] []
-[2017-09-17 23:11:03] task_log.INFO: Reconcile Web Forwards - Storing local route: lxd2-0-pplc4 [] []

@@ -60,7 +60,7 @@ class Asset extends \Prefab
             $f3->error(404);
         }
 
-        exit(\Web::instance()->send($path, 'text/css', 4096, false));
+        exit(\Web::instance()->send($path, null, 1024, false));
     }
 
     /**
@@ -74,7 +74,7 @@ class Asset extends \Prefab
             $f3->error(404);
         }
 
-        exit(\Web::instance()->send($path, 'application/javascript', 4096, false));
+        exit(\Web::instance()->send($path, null, 1024, false));
     }
 
     /**
@@ -87,19 +87,8 @@ class Asset extends \Prefab
         if (empty($path)) {
             $f3->error(404);
         }
-        
-        $ext = pathinfo($path, PATHINFO_EXTENSION);
-        
-        $mime = null;
-        if ($ext == 'css') {
-            $mime = 'text/css';
-        }
-        
-        if ($ext == 'js') {
-            $mime = 'application/javascript';
-        }
 
-        exit(\Web::instance()->send($path, $mime, 4096, false));
+        exit(\Web::instance()->send($path, null, 1024, false));
     }
 
     /**
@@ -113,7 +102,7 @@ class Asset extends \Prefab
             $f3->error(404);
         }
 
-        exit(\Web::instance()->send($path, null, 4096, false));
+        exit(\Web::instance()->send($path, null, 1024, false));
     }
     
     /**
@@ -127,7 +116,7 @@ class Asset extends \Prefab
             $f3->error(404);
         }
 
-        exit(\Web::instance()->send($path, null, 4096, false));
+        exit(\Web::instance()->send($path, null, 1024, false));
     }
 
     /**
@@ -141,7 +130,7 @@ class Asset extends \Prefab
             $f3->error(404);
         }
 
-        exit(\Web::instance()->send($path, null, 4096, false));
+        exit(\Web::instance()->send($path, null, 1024, false));
     }
 
 }

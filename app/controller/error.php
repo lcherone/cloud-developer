@@ -47,14 +47,16 @@ class Error extends \Prefab
             .error-details {}
             .error-actions { margin-top:15px }
         </style>
-        <div class="mx-auto" style="max-width: 420px">
-            <div class="card mt-4">
-                <?php if (!$is_deployment): ?>
-                <div class="card-body" style="background:white">
-                    <h2 class="section-heading pt-1">'.$f3->get('ERROR.code').' '.$f3->get('ERROR.status').'!</h2>
-                    <p class="card-text">The requested page was <strong>'.strtolower($f3->get('ERROR.status')).'</strong>.</p>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="error-template">
+                    <h1>Oops!</h1>
+                    <h2>'.$f3->get('ERROR.code').' '.$f3->get('ERROR.status').'</h2>
+                    <div class="error-details">
+                        Sorry, an error has occured, requested page was '.strtolower($f3->get('ERROR.status')).'!
+                    </div>
                     <div class="error-actions">
-                        <a href="/" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-home"></span> Return to homepage</a>
+                        <a href="/" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-home"></span> Got to Home</a>
                     </div>
                 </div>
             </div>

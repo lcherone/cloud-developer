@@ -29,9 +29,8 @@ class Controller extends \Framework\Controller
      */
     public function index(\Base $f3, $params)
     {
-        
         // load local plinker server config
-        $server = $this->servers->findOne('endpoint = ?', ['http'.($f3->get('https') ? 's' : '').'://'.$_SERVER['HTTP_HOST']]);
+        $server = $this->servers->load(1);
 
         // if empty insert self into db
         if (empty($server->id)) {
@@ -42,7 +41,7 @@ class Controller extends \Framework\Controller
                 // plinker configuration
                 'plinker' => [
                     // endpoint should point to this instance
-                    'endpoint' => 'http'.($f3->get('https') ? 's' : '').'://'.$_SERVER['HTTP_HOST'],
+                    'endpoint' => 'http://'.$_SERVER['HTTP_HOST'],
 
                     // network keys
                     'public_key'  => hash('sha256', microtime(true).uniqid(true)),
@@ -148,17 +147,9 @@ class Controller extends \Framework\Controller
                     dirname($f3->get('PATH'))
                 ]);
 
-                // attempt closest module
+                // must be found
                 if (empty($page)) {
-                    // second attempt - get page by dirname(path)
-                    $page = $this->page->findOne('slug = ?', [
-                        dirname(dirname($f3->get('PATH')))
-                    ]);
-    
-                    // no goal
-                    if (empty($page)) {
-                        $f3->error(404);
-                    }
+                    $f3->error(404);
                 }
             }
         }
@@ -174,7 +165,7 @@ class Controller extends \Framework\Controller
         }
         // check for admin/developer
         if (empty($f3->get('SESSION.developer')) && $page->visibility == 4) {
-           $f3->error(401);
+            $f3->error(401);
         }
         // page is disabled
         if ($page->visibility == 5) {
@@ -252,16 +243,6 @@ class Controller extends \Framework\Controller
             $page->body = ob_get_clean().$page->body;
         }
 
-        // check template exists - fallback to default
-        if (!file_exists('tmp/template/'.$page->template_id.'/template.php')) {
-            //
-            $_SESSION['template_path'] = 'app/template/default/';
-            $_SESSION['template_id'] = null;
-            $template = 'app/template/default/template.php';
-        } else {
-            $template = 'tmp/template/'.$page->template_id.'/template.php';
-        }
-
         // execute module beforeload source
         ob_start();
         eval('?>'.@$page->module->beforeload);
@@ -281,56 +262,22 @@ class Controller extends \Framework\Controller
             $page->body = ob_get_clean();
         }
 
-        /**
-         * CSS Asset
-         */
-        if (!empty($page->css)) {
-            ob_start();
-            eval('?>'.$page->css);
-            
-            // check dir exists
-            if (!file_exists(dirname($template).'/dist/')) {
-                mkdir(dirname($template).'/dist/', 0775, true);
-            }
-            
-            // set path
-            $asset = dirname($template).'/dist/'.md5($page->id).'.css';
-            
-            // compar file
-            $src = ob_get_clean();
-            if (!file_exists($asset) || md5_file($asset) != md5($src)) {
-                file_put_contents(dirname($template).'/dist/'.md5($page->id).'.css', $src);
-            }
-            
-            $f3->set('css', $f3->get('css').'<link href="/dist/'.md5($page->id).'.css" rel="stylesheet" />');
-        }
-
-        /**
-         * Javascript Asset
-         */
+        // execute page javascript
         if (!empty($page->javascript)) {
             ob_start();
             eval('?>'.$page->javascript);
-            
-            // check dir exists
-            if (!file_exists(dirname($template).'/dist/')) {
-                mkdir(dirname($template).'/dist/', 0775, true);
-            }
-            
-            // set path
-            $asset = dirname($template).'/dist/'.md5($page->id).'.js';
-            
-            // compar file
-            $src = ob_get_clean();
-            if (!file_exists($asset) || md5_file($asset) != md5($src)) {
-                file_put_contents(dirname($template).'/dist/'.md5($page->id).'.js', $src);
-            }
-            
-            $f3->set('javascript', '<script type="text/javascript" src="/dist/'.md5($page->id).'.js"></script>'.PHP_EOL.$f3->get('javascript'));
+            $f3->set('javascript', $f3->get('javascript').ob_get_clean());
+        }
+
+        // execute page css
+        if (!empty($page->css)) {
+            ob_start();
+            eval('?>'.$page->css);
+            $f3->set('css', $f3->get('css').ob_get_clean());
         }
 
         // inject additional js for live preview
-        if (false && !empty($f3->get('SESSION.developer'))) {
+        if (!empty($f3->get('SESSION.developer'))) {
             ob_start();
             ?>
             <script>
@@ -345,6 +292,16 @@ class Controller extends \Framework\Controller
             </script>
             <?php
             $f3->set('javascript', $f3->get('javascript').ob_get_clean());
+        }
+
+        // check template exists - fallback to default
+        if (!file_exists('tmp/template/'.$page->template_id.'/template.php')) {
+            //
+            $_SESSION['template_path'] = 'app/template/default/';
+            $_SESSION['template_id'] = null;
+            $template = 'app/template/default/template.php';
+        } else {
+            $template = 'tmp/template/'.$page->template_id.'/template.php';
         }
 
         //

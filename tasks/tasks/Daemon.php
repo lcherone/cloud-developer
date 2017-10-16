@@ -109,8 +109,6 @@ namespace Tasks\Task {
 
                         $this->db->store($task);
 
-                        print_r($task->result);
-                       
                     } else {
                         $this->db->trash($task);
                         $this->task->climate->out(

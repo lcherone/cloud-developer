@@ -194,12 +194,6 @@ echo json_encode($result);
                     $user = $user->fresh();
 
                     // update user session
-                    $f3->set('SESSION.user', [
-                        'id' => $user->id,
-                        'username' => $user->username
-                    ]);
-                    
-                    // update user session
                     $f3->set('SESSION.developer', [
                         'id' => $user->id,
                         'username' => $user->username
@@ -232,7 +226,7 @@ echo json_encode($result);
      */
     public function sign_out(\Base $f3, $params)
     {
-        $f3->clear('SESSION');
+        $f3->set('SESSION', []);
         $f3->reroute('/admin');
     }
 

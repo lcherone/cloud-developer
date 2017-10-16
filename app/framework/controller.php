@@ -69,35 +69,7 @@ class Controller extends \Prefab
         header('Content-Type: application/json;charset=utf8');
         exit(json_encode($data, JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK));
     }
-    
-    /**
-     *
-     */
-    public function beforeRoute(\Base $f3, $params)
-    {
-        // is https - fatfree version dose not do X_FOWARDED_PROTO  
-        $https = false;
-        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
-            $https = true;
-        }
-        elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
-            $https = true;
-        }
-        // set https in hive
-        $this->f3->set('https', $https);
 
-        // is https required set in config
-        if (!$https) {
-            // allow plinker on non ssl
-            if (!isset($_POST['data']) &&
-                !isset($_POST['token']) &&
-                !isset($_POST['public_key'])
-            ) {
-                //exit(header('Location: https://deploy.lxc.systems', 302));
-            }
-        }
-    }
-    
     /**
      *
      */
