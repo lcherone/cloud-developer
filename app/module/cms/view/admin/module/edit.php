@@ -1,8 +1,5 @@
 <div class="row">
     <div class="col-lg-12">
-        <!--<h1 class="page-header">-->
-        <!--    Modules <small> - Edit</small>-->
-        <!--</h1>-->
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="/admin/module"><i class="fa fa-list"></i> Modules</a></li>
@@ -31,9 +28,8 @@
                 <h3 class="panel-title"><i class="fa fa-list fa-fw"></i> Edit Module</h3>
             </div>
             <div class="panel-body">
-                <form class="form-horizontal" method="post">
+                <form class="form-horizontal" method="post" action="/admin/module/edit/<?= (!empty($form['values']['id']) ? htmlentities($form['values']['id']) : '') ?>">
                     <input type="hidden" name="csrf" value="<?= $csrf ?>">
-
                     <div class="form-group<?= (!empty($form['errors']['name']) ? ' has-error has-feedback' : '') ?>">
                         <label for="input-name" class="control-label col-xs-2">Name</label>
                         <div class="col-xs-8">
@@ -42,10 +38,9 @@
                             <?php if (!empty($form['errors']['name'])): ?><span class="help-block"><?= $form['errors']['title'] ?></span><?php endif ?>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <div class="col-xs-offset-2 col-xs-10">
-                            <button type="submit" class="btn btn-primary ajax_save" data-message="Module saved.">Save</button>
+                            <button type="submit" class="btn btn-primary ajax_save" data-message="Module saved." data-goto="/admin/module">Save</button>
                         </div>
                     </div>
                 </form>
@@ -55,22 +50,11 @@
 </div>
 
 <?php ob_start() ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.6.0/js-yaml.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $.get('https://rawgit.com/FortAwesome/Font-Awesome/master/src/icons.yml', function(data){    
-            var parsedYaml = jsyaml.load(data);
-            var select = $('datalist#input-icon');
-            var selected = select.data('value');
-            
-            $.each(parsedYaml.icons, function(index, icon) {
-            	select.append('<option value="fa fa-' + icon.id + '"' + (selected === 'fa fa-' + icon.id ? ' selected' : '') + '></option>');
-            });
-        });
-
-        // load.script('/js/module/tasks.js', function() {
-        //     nodes.init();
-        // });
+$(document).ready(function() {
+    load.script('/js/module/module.js?developer', function(){
+        module.edit();
     });
+ });
 </script>
 <?php $f3->set('javascript', $f3->get('javascript').ob_get_clean()) ?>

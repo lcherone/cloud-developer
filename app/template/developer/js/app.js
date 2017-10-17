@@ -215,7 +215,7 @@ window.app = (function() {
                 showNotification(message);
                 if (btn.data('goto') != '') {
                     // call ajax load function
-                    ajax_load(btn.data('goto'), '.ajax-container');
+                    ajax_load(btn.data('goto'), '.ajax-container', true);
                 }
             });
         });

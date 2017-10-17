@@ -1,8 +1,5 @@
 <div class="row">
     <div class="col-lg-12">
-        <!--<h1 class="page-header">-->
-        <!--    Modules <small> - New</small>-->
-        <!--</h1>-->
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="/admin/module"><i class="fa fa-folder-o"></i> Modules</a></li>
@@ -26,7 +23,6 @@
 
 <form class="form-horizontal" method="post" action="/admin/module/new">
     <input type="hidden" name="csrf" value="<?= $csrf ?>">
-
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -52,7 +48,7 @@
                                 <td class="text-right"></td>
                                 <td>
                                     <div class="input-group col-xs-10">
-                                        <button type="submit" class="btn btn-primary ajax_save" data-message="Module created.">Save</button>
+                                        <button type="submit" class="btn btn-primary ajax_save" data-message="Module created." data-goto="/admin/module">Save</button>
                                     </div>
                                 </td>
                             </tr>
@@ -91,58 +87,11 @@
 </form>
 
 <?php ob_start() ?>
-<script src="https://ajaxorg.github.io/ace-builds/src-min-noconflict/ace.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        
-        //
-        var textareaA = $('textarea[name="beforeload"]').hide(),
-            editorA = ace.edit("beforeload"),
-            editorSessionA = editorA.getSession();
-
-        editorA.setTheme("ace/theme/eclipse");
-        editorA.setOptions({
-            minLines: 20,
-            maxLines: Infinity
-        });
-
-        editorSessionA.setUseWorker(false);
-        editorSessionA.setMode("ace/mode/php");
-        editorSessionA.setValue(textareaA.val());
-        editorSessionA.on('change', function() {
-            textareaA.val(editorSessionA.getValue());
-        });
-        
-        $(document).on('click', '.fetch-snippet', function(){
-            var id = $(this).data('id');
-            var type = $(this).data('type');
-            $.ajax({
-                type: "GET",
-                url: '/admin/snippet/get/'+id,
-                dataType: "text",
-                success: function(data) {
-                    if (type == 'beforeload') {
-                        editorSessionA.insert(editorA.getCursorPosition(), data);
-                    }
-                    
-                    if (type == 'body') {
-                        editorSession.insert(editor.getCursorPosition(), data);
-                    }
-                    
-                    if (type == 'javascript') {
-                        editorSessionJS.insert(editorJS.getCursorPosition(), data);
-                    }
-                    
-                    if (type == 'css') {
-                        editorSession.insert(editor.getCursorPosition(), data);
-                    }
-                }
-            });
-        });
-
-        // load.script('/js/tasks.js', function() {
-        //     tasks.view();
-        // });
+<script>
+$(document).ready(function() {
+    load.script('/js/module/module.js?developer', function(){
+        module.add();
     });
+ });
 </script>
 <?php $f3->set('javascript', $f3->get('javascript').ob_get_clean()) ?>
