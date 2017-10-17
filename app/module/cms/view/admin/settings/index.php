@@ -1,8 +1,5 @@
 <div class="row">
     <div class="col-lg-12">
-        <!--<h1 class="page-header">-->
-        <!--    Settings-->
-        <!--</h1>-->
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li class="active"><i class="fa fa-cogs"></i> Settings</li>
@@ -23,9 +20,8 @@
     </div>
 <?php endif ?>
 
-<form class="form-horizontal" method="post">
+<form class="form-horizontal" method="post" action="/admin/settings">
     <input type="hidden" name="csrf" value="<?= $csrf ?>">
-
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -123,7 +119,7 @@
                                 <td class="text-right"></td>
                                 <td>
                                     <div class="input-group col-xs-10">
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="submit" class="btn btn-primary ajax_save" data-message="Settings saved." data-goto="/admin/settings">Save</button>
                                     </div>
                                 </td>
                             </tr>
@@ -196,7 +192,7 @@
                     <?php if (!empty($form['values']['composer_result']->result)): ?>
                     <pre style="padding:7px 10px;font-size:90%"><?= $form['values']['composer_result']->result ?></pre>
                     <?php elseif (empty($form['values']['composer_result']->result) || empty($form['values']['composer_result']->completed)): ?>
-                    <div style="padding:7px 10px">Composer update task will run shortly, <a href="/admin/settings">click here to reload</a>.</div>
+                    <div style="padding:7px 10px">Composer update task will run shortly, <a href="/admin/settings" class="ajax-link">click here to reload</a>.</div>
                     <?php endif ?>
                 </div>
             </div>
@@ -248,7 +244,6 @@
         </div>
     </div>
 </div>
-
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -285,42 +280,10 @@
 
 <?php ob_start() ?>
 <script>
-    $(document).ready(function() {
-        
-        $(document).on('click', '.remove-backup', function(e){
-            e.preventDefault();
-            
-            var elm = $(this);
-            var url = $(this).attr('href');
-            $.ajax({
-                type: "GET",
-                url: url,
-                success: function(data) {
-                    elm.closest('tr').remove();
-                }
-            });
-        });
-        
-        var textarea = $('textarea[name="composer"]').hide(),
-            editor = ace.edit("composer"),
-            editorSession = editor.getSession();
-
-        editor.setTheme("ace/theme/eclipse");
-        editor.setOptions({
-            minLines: 20,
-            maxLines: Infinity
-        });
-
-        editorSession.setUseWorker(false);
-        editorSession.setMode("ace/mode/json");
-        editorSession.setValue(textarea.val());
-        editorSession.on('change', function() {
-            textarea.val(editorSession.getValue());
-        });
-
-        // load.script('/js/module/tasks.js', function() {
-        //     nodes.init();
-        // });
+$(document).ready(function() {
+    load.script('/js/module/settings.js?developer', function(){
+        settings.index();
     });
+ });
 </script>
 <?php $f3->set('javascript', $f3->get('javascript').ob_get_clean()) ?>
