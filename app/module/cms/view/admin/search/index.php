@@ -1,8 +1,5 @@
 <div class="row">
     <div class="col-lg-12">
-        <!--<h1 class="page-header">-->
-        <!--    Settings-->
-        <!--</h1>-->
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li class="active"><i class="fa fa-cogs"></i> Settings</li>
@@ -43,7 +40,7 @@
                             <?php foreach ((array) $results as $type => $result): ?>
                             <?php foreach ($result as $row): ?>
                             <tr>
-                                <td><a href="/admin/<?= ($type == 'task' ? 'tasks' : ($type == 'object' ? 'objects' : $type)) ?>/<?= ($type == 'task' ? 'view' : 'edit') ?>/<?= $row->id ?>"><?= $row->title ?></a></td>
+                                <td><a href="/admin/<?= ($type == 'task' ? 'tasks' : ($type == 'object' ? 'objects' : $type)) ?>/<?= ($type == 'task' ? 'view' : 'edit') ?>/<?= $row->id ?>" class="ajax-link"><?= $row->title ?></a></td>
                                 <td><?= ucfirst($type) ?></td>
                                 <td>
                                     <?php if (in_array($type, ['page', 'object', 'snippet', 'task', 'template'])): ?>
@@ -70,42 +67,10 @@
 
 <?php ob_start() ?>
 <script>
-    $(document).ready(function() {
-
-        $('.show-code').on('click', function() {
-            var btn   = $(this);
-            var id    = btn.data('id');
-            var panel = $('#code-'+id);
-         
-            if (panel.hasClass('hidden')) {
-                btn.html('<i class="fa fa-eye-slash"></i> Hide Code');
-                panel.removeClass('hidden');
-            } else {
-                btn.html('<i class="fa fa-eye"></i> Show Code');
-                panel.addClass('hidden');
-            }
-        });
-        
-        $('textarea.editor').each(function () {
-            //
-            var textarea = $(this),
-                editor = ace.edit("editor-"+textarea.data('id')),
-                editorSession = editor.getSession();
-    
-            editor.setTheme("ace/theme/eclipse");
-            editor.setOptions({
-                minLines: 1,
-                maxLines: Infinity
-            });
-            editorSession.setUseWorker(false);
-            editorSession.setMode("ace/mode/php");
-
-            editor.findAll(new RegExp(textarea.data('term').replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")),{
-                caseSensitive: false,
-                regExp: true
-            });
-        });
-
+$(document).ready(function() {
+    load.script('/js/module/search.js?developer', function(){
+        search.index();
     });
+ });
 </script>
 <?php $f3->set('javascript', $f3->get('javascript').ob_get_clean()) ?>
