@@ -171,7 +171,7 @@ window.app = (function() {
         /**
          * Attach on click event to open popup window to data-type="popup" elements
          */
-        $(document).find('[data-type="popup"]').unbind('click').on('click', function(e) {
+        $(document).find('[data-type="popup"]').off('click').on('click', function(e) {
             popup($(this).data('url'), $(this).data('name'), 1024, 768);
         });
 
@@ -201,7 +201,7 @@ window.app = (function() {
         //  * bootstrap tabs - save selected tab after reload
         //  */
         // if (typeof Storage !== "undefined") {
-        //     $(document).find('a[data-toggle="tab"]').unbind('click').on('click', function(e) {
+        //     $(document).find('a[data-toggle="tab"]').off('click').on('click', function(e) {
         //         var target = $(e.target).attr("href");
         //         sessionStorage.setItem("current-tab", target);
         //     });
@@ -232,7 +232,7 @@ window.app = (function() {
         /**
          * AJAX links event handler
          */
-        $(document).find('.ajax-link').unbind('click').on('click', function(e) {
+        $(document).find('.ajax-link').off('click').on('click', function(e) {
             return;
             var link = $(this);
             // fix side menu links
@@ -250,7 +250,7 @@ window.app = (function() {
         /**
          * attach AJAX modal links event handler
          */
-        $(document).find('.ajax-modal-link').unbind('click').on('click', function(e) {
+        $(document).find('.ajax-modal-link').off('click').on('click', function(e) {
             e.preventDefault();
             // stop all timers
             timers.stopAll();
@@ -261,7 +261,7 @@ window.app = (function() {
         /**
          * AJAX modal event handler
          */
-        $(document).find('.ajax-modal').unbind('click').on('click', function(e) {
+        $(document).find('.ajax-modal').off('click').on('click', function(e) {
             e.preventDefault();
 
             var modal = '.modal-content';
@@ -312,7 +312,7 @@ window.app = (function() {
                 /**
                  * attach AJAX modal links event handler
                  */
-                $(document).find('.ajax-modal-link').unbind('click').on('click', function(e) {
+                $(document).find('.ajax-modal-link').off('click').on('click', function(e) {
                     e.preventDefault();
                     // stop all timers
                     timers.stopAll();

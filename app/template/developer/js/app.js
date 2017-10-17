@@ -24,11 +24,11 @@ var load = (function() {
 
 /**
  * Module - timers handler
- * 
+ *
  * Polling run by timers become troublesome when your loading content via ajax,
- * as new content comes in global timers wont stop for previous content, 
+ * as new content comes in global timers wont stop for previous content,
  * this then can causes issues.
- * 
+ *
  * This is to store timer ids which then can be stopped.
  *
  * @usage:  load.script('/load/js/timers.js', function(){});
@@ -199,12 +199,15 @@ window.app = (function() {
     var events = function() {
 
         // ajax form save
-        $(document).find('.ajax_save').unbind('click').on('click', function(e) {
+        $(document).find('.ajax_save').off('click').on('click', function(e) {
             e.preventDefault();
             var btn = $(this),
                 form = btn.closest('form');
 
-            if (btn.data('message') == '') {
+            var message = btn.data('message'),
+                goto = btn.data('goto');
+
+            if (typeof message === 'undefined') {
                 var message = 'Page saved.';
             }
             else {
@@ -213,7 +216,7 @@ window.app = (function() {
 
             $.post(form.prop('action'), form.serialize(), function(data, status) {
                 showNotification(message);
-                if (btn.data('goto') != '') {
+                if (typeof goto !== 'undefined') {
                     // call ajax load function
                     ajax_load(btn.data('goto'), '.ajax-container', true);
                 }
@@ -221,7 +224,7 @@ window.app = (function() {
         });
 
         // ctrl-s save
-        $(window).bind('keydown', function(event) {
+        $(document).off('keydown').on('keydown', function(e) {
             if (event.ctrlKey || event.metaKey) {
                 switch (String.fromCharCode(event.which).toLowerCase()) {
                     case 's':
@@ -233,7 +236,7 @@ window.app = (function() {
         });
 
         // search
-        $(document).find('#search-value').unbind('keyup').on('keyup', debounce(function(e) {
+        $(document).find('#search-value').off('keyup').on('keyup', debounce(function(e) {
             var value = $(this).val();
 
             if (value.length < 2) {
@@ -258,7 +261,7 @@ window.app = (function() {
         /**
          * Attach on click event to open popup window to data-type="popup" elements
          */
-        $(document).find('[data-type="popup"]').unbind('click').on('click', function(e) {
+        $(document).find('[data-type="popup"]').off('click').on('click', function(e) {
             popup($(this).data('url'), $(this).data('name'), 1024, 768);
         });
 
@@ -288,7 +291,7 @@ window.app = (function() {
         //  * bootstrap tabs - save selected tab after reload
         //  */
         // if (typeof Storage !== "undefined") {
-        //     $(document).find('a[data-toggle="tab"]').unbind('click').on('click', function(e) {
+        //     $(document).find('a[data-toggle="tab"]').off('click').on('click', function(e) {
         //         var target = $(e.target).attr("href");
         //         sessionStorage.setItem("current-tab", target);
         //     });
@@ -319,7 +322,7 @@ window.app = (function() {
         /**
          * AJAX links event handler
          */
-        $(document).find('.ajax-link').unbind('click').on('click', function(e) {
+        $(document).find('.ajax-link').off('click').on('click', function(e) {
             //return;
             var link = $(this);
             // fix side menu links
@@ -339,7 +342,7 @@ window.app = (function() {
         /**
          * attach AJAX modal links event handler
          */
-        $(document).find('.ajax-modal-link').unbind('click').on('click', function(e) {
+        $(document).find('.ajax-modal-link').off('click').on('click', function(e) {
             e.preventDefault();
             // stop all timers
             timers.stopAll();
@@ -350,7 +353,7 @@ window.app = (function() {
         /**
          * AJAX modal event handler
          */
-        $(document).find('.ajax-modal').unbind('click').on('click', function(e) {
+        $(document).find('.ajax-modal').off('click').on('click', function(e) {
             e.preventDefault();
 
             var modal = '.modal-content';
@@ -401,7 +404,7 @@ window.app = (function() {
                 /**
                  * attach AJAX modal links event handler
                  */
-                $(document).find('.ajax-modal-link').unbind('click').on('click', function(e) {
+                $(document).find('.ajax-modal-link').off('click').on('click', function(e) {
                     e.preventDefault();
                     // stop all timers
                     timers.stopAll();
