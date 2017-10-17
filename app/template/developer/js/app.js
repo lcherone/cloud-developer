@@ -215,10 +215,19 @@ window.app = (function() {
             }
 
             $.post(form.prop('action'), form.serialize(), function(data, status) {
-                showNotification(message);
-                if (typeof goto !== 'undefined') {
-                    // call ajax load function
-                    ajax_load(btn.data('goto'), '.ajax-container', true);
+                // response has errors
+                if ($('<div />').html(data).find('.has-error').length > 0) {
+                    $('.ajax-container').replaceWith($('<div />').html(data).find('.ajax-container')[0]);
+                    // re attach events
+                    events();
+                }
+                // no errors
+                else {
+                    showNotification(message);
+                    if (typeof goto !== 'undefined') {
+                        // call ajax load function
+                        ajax_load(btn.data('goto'), '.ajax-container', true);
+                    }
                 }
             });
         });

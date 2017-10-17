@@ -1,8 +1,5 @@
 <div class="row">
     <div class="col-lg-12">
-        <!--<h1 class="page-header">-->
-        <!--    Pages <small> - New</small>-->
-        <!--</h1>-->
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="/admin/page"><i class="fa fa-file-o"></i> Pages</a></li>
@@ -24,9 +21,8 @@
 </div>
 <?php endif ?>
 
-<form class="form-horizontal" method="post">
+<form class="form-horizontal" method="post" action="/admin/page/new">
     <input type="hidden" name="csrf" value="<?= $csrf ?>">
-
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -107,7 +103,7 @@
                                 <td class="text-right"></td>
                                 <td>
                                     <div class="input-group col-xs-10">
-                                        <button type="submit" class="btn btn-primary ajax_save" data-message="Page created.">Save</button> <span class="text-muted" style="margin-left:15px"><i class="fa fa-lightbulb-o" aria-hidden="true"></i> Tip: You can also use Ctrl-s to save your changes.</span>
+                                        <button type="submit" class="btn btn-primary ajax_save" data-message="Page created." data-goto="/admin/page">Save</button> <span class="text-muted" style="margin-left:15px"><i class="fa fa-lightbulb-o" aria-hidden="true"></i> Tip: You can also use Ctrl-s to save your changes.</span>
                                     </div>
                                     <?php if (!empty($form['errors']['template_id'])): ?><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span><?php endif ?>
                                     <?php if (!empty($form['errors']['template_id'])): ?><span class="help-block"><?= $form['errors']['template_id'] ?></span><?php endif ?>
@@ -227,109 +223,10 @@
 
 <?php ob_start() ?>
 <script>
-    $(document).ready(function() {
-        
-        var textareaCSS = $('textarea[name="css"]').hide(),
-            editorCSS = ace.edit("css"),
-            editorSessionCSS = editorCSS.getSession();
-
-        editorCSS.setTheme("ace/theme/eclipse");
-        editorCSS.setOptions({
-            minLines: 20,
-            maxLines: Infinity
-        });
-
-        editorSessionCSS.setUseWorker(false);
-        editorSessionCSS.setMode("ace/mode/php");
-        editorSessionCSS.setValue(textareaCSS.val());
-        editorSessionCSS.on('change', function() {
-            textareaCSS.val(editorSessionCSS.getValue());
-        });
-
-        var textareaJS = $('textarea[name="javascript"]').hide(),
-            editorJS = ace.edit("javascript"),
-            editorSessionJS = editorJS.getSession();
-
-        editorJS.setTheme("ace/theme/eclipse");
-        editorJS.setOptions({
-            minLines: 20,
-            maxLines: Infinity
-        });
-
-        editorSessionJS.setUseWorker(false);
-        editorSessionJS.setMode("ace/mode/php");
-        editorSessionJS.setValue(textareaJS.val());
-        editorSessionJS.on('change', function() {
-            textareaJS.val(editorSessionJS.getValue());
-        });
-
-        var textareaA = $('textarea[name="beforeload"]').hide(),
-            editorA = ace.edit("beforeload"),
-            editorSessionA = editorA.getSession();
-
-        editorA.setTheme("ace/theme/eclipse");
-        editorA.setOptions({
-            minLines: 20,
-            maxLines: Infinity
-        });
-
-        editorSessionA.setUseWorker(false);
-        editorSessionA.setMode("ace/mode/php");
-        editorSessionA.setValue(textareaA.val());
-        editorSessionA.on('change', function() {
-            textareaA.val(editorSessionA.getValue());
-        });
-
-        var textarea = $('textarea[name="body"]').hide(),
-            editor = ace.edit("body"),
-            editorSession = editor.getSession();
-
-        editor.setTheme("ace/theme/eclipse");
-        editor.setOptions({
-            minLines: 20,
-            maxLines: Infinity
-        });
-
-        editorSession.setUseWorker(false);
-        editorSession.setMode("ace/mode/php");
-        editorSession.setValue(textarea.val());
-        editorSession.on('change', function() {
-            textarea.val(editorSession.getValue());
-            //console.log('sorry <script> tags wont work on live preview.');
-            //$('#page-preview').html($('<div/>').html(editorSession.getValue()).find('script').remove().end().contents());
-        });
-        //$('#page-preview').html($('<div/>').html(editorSession.getValue()).find('script').remove().end().contents());
-        
-        $(document).on('click', '.fetch-snippet', function(){
-            var id = $(this).data('id');
-            var type = $(this).data('type');
-            $.ajax({
-                type: "GET",
-                url: '/admin/snippet/get/'+id,
-                dataType: "text",
-                success: function(data) {
-                    if (type == 'beforeload') {
-                        editorSessionA.insert(editorA.getCursorPosition(), data);
-                    }
-                    
-                    if (type == 'body') {
-                        editorSession.insert(editor.getCursorPosition(), data);
-                    }
-                    
-                    if (type == 'javascript') {
-                        editorSessionJS.insert(editorJS.getCursorPosition(), data);
-                    }
-                    
-                    if (type == 'css') {
-                        editorSession.insert(editorCSS.getCursorPosition(), data);
-                    }
-                }
-            });
-        });
-
-        // load.script('/js/module/tasks.js', function() {
-        //     nodes.init();
-        // });
+$(document).ready(function() {
+    load.script('/js/module/page.js?developer', function(){
+        page.add();
     });
+ });
 </script>
 <?php $f3->set('javascript', $f3->get('javascript').ob_get_clean()) ?>

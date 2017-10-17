@@ -14,12 +14,12 @@
  
  */
 
-
 html,
 body {
   height: 100%;
   /* The html and body elements cannot have any padding or margin. */
 }
+
 
 /*      light colors - used for select dropdown         */
 
@@ -1743,8 +1743,8 @@ fieldset[disabled] .btn-neutral.active {
 }
 
 .has-success .form-control {
-  background-color: #ABF3CB;
   color: #7AC29A;
+  border: #a94442;
 }
 
 .has-success .form-control.border-input {
@@ -1756,8 +1756,8 @@ fieldset[disabled] .btn-neutral.active {
 }
 
 .has-error .form-control {
-  background-color: #FFC0A4;
-  color: #EB5E28;
+  border-bottom: 1px solid #a94442;
+  color: #66615b;
 }
 
 .has-error .form-control.border-input {
@@ -1793,7 +1793,7 @@ fieldset[disabled] .btn-neutral.active {
 
 .has-error .form-control-feedback,
 .has-error .control-label {
-  color: #EB5E28;
+  color: #a94442;
 }
 
 .has-success .form-control-feedback,
@@ -4450,7 +4450,6 @@ textarea.form-control {
     -webkit-overflow-scrolling: touch;
   }
 }
-
 
 
 /* Wrapper for page content to push down footer */
