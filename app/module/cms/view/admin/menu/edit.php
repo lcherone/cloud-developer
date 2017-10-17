@@ -1,8 +1,5 @@
 <div class="row">
     <div class="col-lg-12">
-        <!--<h1 class="page-header">-->
-        <!--    Menu <small> - Edit</small>-->
-        <!--</h1>-->
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="/admin/menu"><i class="fa fa-list"></i> Menu</a></li>
@@ -24,7 +21,7 @@
 </div>
 <?php endif ?>
 
-<form class="form-horizontal" method="post">
+<form class="form-horizontal" method="post" action="/admin/menu/edit/<?= (!empty($form['values']['id']) ? htmlentities($form['values']['id']) : '') ?>">
     <input type="hidden" name="csrf" value="<?= $csrf ?>">
     <div class="row">
         <div class="col-lg-12">
@@ -101,7 +98,7 @@
                                 <td class="text-right"></td>
                                 <td>
                                     <div class="input-group col-xs-10">
-                                        <button type="submit" class="btn btn-primary ajax_save" data-message="Menu saved.">Save</button>
+                                        <button type="submit" class="btn btn-primary ajax_save" data-message="Menu saved." data-goto="/admin/menu">Save</button>
                                     </div>
                                 </td>
                             </tr>
@@ -114,22 +111,11 @@
 </form>
 
 <?php ob_start() ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.6.0/js-yaml.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $.get('https://rawgit.com/FortAwesome/Font-Awesome/master/src/icons.yml', function(data){    
-            var parsedYaml = jsyaml.load(data);
-            var select = $('datalist#input-icon');
-            var selected = select.data('value');
-            
-            $.each(parsedYaml.icons, function(index, icon) {
-            	select.append('<option value="fa fa-' + icon.id + '"' + (selected === 'fa fa-' + icon.id ? ' selected' : '') + '></option>');
-            });
-        });
-
-        // load.script('/js/module/tasks.js', function() {
-        //     nodes.init();
-        // });
+$(document).ready(function() {
+    load.script('/js/module/menu.js?developer', function(){
+        menu.edit();
     });
+ });
 </script>
 <?php $f3->set('javascript', $f3->get('javascript').ob_get_clean()) ?>

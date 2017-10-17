@@ -19,25 +19,36 @@ class Asset extends \Prefab
 
         // helper - get active template path from session
         $this->f3->set('getAssetPath', function($params = [], $type = 'css') {
+            //dir
+            $dir = (!empty($params['dir']) ? basename($params['dir']) : null);
+            
+            //filename
+            $filename = (!empty($params['filename']) ? basename($params['filename']) : null);
+            
+            //
+            if (!empty($dir)) {
+                $filename = $dir.'/'.$filename;
+            }
+            
             //
             if (isset($_SESSION['template_path'])) {
                 //
                 if (isset($_SESSION['template_id']) && is_numeric($_SESSION['template_id'])) {
-                    $template = $_SESSION['template_path'].$_SESSION['template_id'].'/'.$type.'/'.basename($params['filename']);
+                    $template = $_SESSION['template_path'].$_SESSION['template_id'].'/'.$type.'/'.$filename;
                 }
                 //
                 else {
-                    $template = 'app/template/default/'.$type.'/'.basename($params['filename']);
+                    $template = 'app/template/default/'.$type.'/'.$filename;
                 }
 
                 // force to default
                 if (isset($_GET['developer'])) {
-                    $template = 'app/template/developer/'.$type.'/'.basename($params['filename']);
+                    $template = 'app/template/developer/'.$type.'/'.$filename;
                 }
             }
             //
             else {
-                $template = 'app/template/default/'.$type.'/'.basename($params['filename']);
+                $template = 'app/template/default/'.$type.'/'.$filename;
             }
 
             // check exists

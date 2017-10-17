@@ -1,9 +1,6 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <!--<h1 class="page-header">-->
-        <!--    Menu-->
-        <!--</h1>-->
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li class="active"><i class="fa fa-list"></i> Menu</li>
@@ -52,7 +49,7 @@
                             <?php foreach ($menus as $row): ?>
                             <tr>
                                 <td><?= (!empty($row->icon) ? '<i class="'.$row->icon.'"></i>' : '') ?></td>
-                                <td><a href="/admin/menu/edit/<?= $row->id ?>"><?= $row->title ?></a></td>
+                                <td><a href="/admin/menu/edit/<?= $row->id ?>" class="ajax-link"><?= $row->title ?></a></td>
                                 <td><?= $row->slug ?></td>
                                 <td><?= $visibilityname($row->visibility) ?></td>
                                 <td><a href="/admin/menu/delete/<?= $row->id ?>" class="btn btn-xs btn-danger remove-menu"><i class="fa fa-times"></i></a></td>
@@ -74,18 +71,8 @@
 <?php ob_start() ?>
 <script>
 $(document).ready(function() {
-    $(document).on('click', '.remove-menu', function(e){
-        e.preventDefault();
-            
-        var elm = $(this);
-        var url = $(this).attr('href');
-        $.ajax({
-            type: "GET",
-            url: url,
-            success: function(data) {
-                elm.closest('tr').remove();
-            }
-        });
+    load.script('/js/module/menu.js?developer', function(){
+        menu.index();
     });
  });
 </script>

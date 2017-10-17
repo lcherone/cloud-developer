@@ -24,7 +24,7 @@
 </div>
 <?php endif ?>
 
-<form class="form-horizontal" method="post">
+<form class="form-horizontal" method="post" action="/admin/menu/new">
     <input type="hidden" name="csrf" value="<?= $csrf ?>">
     <div class="row">
         <div class="col-lg-12">
@@ -101,7 +101,7 @@
                                 <td class="text-right"></td>
                                 <td>
                                     <div class="input-group col-xs-10">
-                                        <button type="submit" class="btn btn-primary ajax_save" data-message="Menu created.">Save</button>
+                                        <button type="submit" class="btn btn-primary ajax_save" data-message="Menu created." data-goto="/admin/menu">Save</button>
                                     </div>
                                 </td>
                             </tr>
@@ -114,22 +114,11 @@
 </form>
 
 <?php ob_start() ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.6.0/js-yaml.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $.get('https://rawgit.com/FortAwesome/Font-Awesome/master/src/icons.yml', function(data){    
-            var parsedYaml = jsyaml.load(data);
-            var select = $('datalist#input-icon');
-            var selected = select.data('value');
-            
-            $.each(parsedYaml.icons, function(index, icon) {
-            	select.append('<option value="fa fa-' + icon.id + '"' + (selected === 'fa fa-' + icon.id ? ' selected' : '') + '></option>');
-            });
-        });
-
-        // load.script('/js/module/tasks.js', function() {
-        //     nodes.init();
-        // });
+$(document).ready(function() {
+    load.script('/js/module/menu.js?developer', function(){
+        menu.add();
     });
+ });
 </script>
 <?php $f3->set('javascript', $f3->get('javascript').ob_get_clean()) ?>

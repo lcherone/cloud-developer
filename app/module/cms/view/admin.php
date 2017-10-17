@@ -79,6 +79,7 @@
                                 </div>
                             </form>
                             <ul class="nav navbar-nav navbar-right">
+                                <?php /*
                                 <li>
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                         <i class="ti-panel"></i>
@@ -100,8 +101,10 @@
                                         <li><a href="#">Another notification</a></li>
                                     </ul>
                                 </li>
+                                */
+                                ?>
                                 <li>
-                                    <a href="#">
+                                    <a href="/admin/settings">
                                         <i class="ti-settings"></i>
                                         <p>Settings</p>
                                     </a>

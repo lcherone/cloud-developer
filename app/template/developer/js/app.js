@@ -213,6 +213,10 @@ window.app = (function() {
 
             $.post(form.prop('action'), form.serialize(), function(data, status) {
                 showNotification(message);
+                if (btn.data('goto') != '') {
+                    // call ajax load function
+                    ajax_load(btn.data('goto'), '.ajax-container');
+                }
             });
         });
 
