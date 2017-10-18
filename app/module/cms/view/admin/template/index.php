@@ -1,8 +1,5 @@
 <div class="row">
     <div class="col-lg-12">
-        <!--<h1 class="page-header">-->
-        <!--    Templates-->
-        <!--</h1>-->
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li class="active"><i class="fa fa-columns"></i> Templates</li>
@@ -48,12 +45,12 @@
                         <tbody>
                             <?php foreach ($templates as $row): ?>
                             <tr>
-                                <td><a href="/admin/template/edit/<?= $row->id ?>"><?= $row->name ?></a></td>
+                                <td><a href="/admin/template/edit/<?= $row->id ?>" class="ajax-link"><?= $row->name ?></a></td>
                                 <td><?= count($row->ownPage) ?></td>
                                 <td>
                                     <div class="btn-group" style="display:flex">
-                                        <a href="/admin/template/clone/<?= $row->id ?>" title="Clone" class="btn btn-xs btn-default"><i class="fa fa-code-fork"></i></a>
-                                        <a href="/admin/template/delete/<?= $row->id ?>" title="Remove" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                                        <a href="/admin/template/clone/<?= $row->id ?>" title="Clone" class="btn btn-xs btn-default ajax-link"><i class="fa fa-code-fork"></i></a>
+                                        <a href="/admin/template/delete/<?= $row->id ?>" title="Remove" class="btn btn-xs btn-danger ajax-link"><i class="fa fa-times"></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -64,9 +61,19 @@
             </div>
             <?php else: ?>
             <div class="panel-body">
-                No tasks have been created.
+                No templates have been created.
             </div>
             <?php endif ?>
         </div>
     </div>
 </div>
+
+<?php ob_start() ?>
+<script>
+$(document).ready(function() {
+    load.script('/js/module/template.js?developer', function(){
+        template.index();
+    });
+ });
+</script>
+<?php $f3->set('javascript', $f3->get('javascript').ob_get_clean()) ?>

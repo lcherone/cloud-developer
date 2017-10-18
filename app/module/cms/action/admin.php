@@ -45,8 +45,8 @@ class Admin extends \Framework\Controller
         $tasks = new \Plinker\Core\Client(
             $server->endpoint,
             'Tasks\Manager',
-            hash('sha256', gmdate('h').$server->public_key),
-            hash('sha256', gmdate('h').$server->private_key),
+            $server->public_key,
+            $server->private_key,
             json_decode($server->config, true),
             $server->encrypted
         );
@@ -1283,8 +1283,8 @@ echo json_encode($result);
                 $tasks = new \Plinker\Core\Client(
                     $server->endpoint,
                     'Tasks\Manager',
-                    hash('sha256', gmdate('h').$server->public_key),
-                    hash('sha256', gmdate('h').$server->private_key),
+                    $server->public_key,
+                    $server->private_key,
                     json_decode($server->config, true),
                     $server->encrypted // enable encryption [default: true]
                 );
@@ -1305,9 +1305,9 @@ echo json_encode($result);
                         $this->template->store($template);
                     }
 
-                    exit(base64_decode($tasks->saveFile(getcwd().'/tmp/template/'.(int) $params['sub_action_id'].'/'.$path, base64_encode($_POST['data']))));
+                    exit($tasks->saveFile(getcwd().'/tmp/template/'.(int) $params['sub_action_id'].'/'.$path, base64_encode($_POST['data'])));
                 } else {
-                    exit(base64_decode($tasks->getFile(getcwd().'/tmp/template/'.(int) $params['sub_action_id'].'/'.$path)));
+                    exit($tasks->getFile(getcwd().'/tmp/template/'.(int) $params['sub_action_id'].'/'.$path));
                 }
 
                 $f3->reroute('/admin/template');
@@ -1325,8 +1325,8 @@ echo json_encode($result);
                 $tasks = new \Plinker\Core\Client(
                     $server->endpoint,
                     'Tasks\Manager',
-                    hash('sha256', gmdate('h').$server->public_key),
-                    hash('sha256', gmdate('h').$server->private_key),
+                    $server->public_key,
+                    $server->private_key,
                     json_decode($server->config, true),
                     $server->encrypted // enable encryption [default: true]
                 );
@@ -1387,8 +1387,8 @@ echo json_encode($result);
         $tasks = new \Plinker\Core\Client(
             $server->endpoint,
             'Tasks\Manager',
-            hash('sha256', gmdate('h').$server->public_key),
-            hash('sha256', gmdate('h').$server->private_key),
+            $server->public_key,
+            $server->private_key,
             json_decode($server->config, true),
             $server->encrypted
         );
@@ -2205,8 +2205,8 @@ echo json_encode($result);
                 $tasks = new \Plinker\Core\Client(
                     $server->endpoint,
                     'Tasks\Manager',
-                    hash('sha256', gmdate('h').$server->public_key),
-                    hash('sha256', gmdate('h').$server->private_key),
+                    $server->public_key,
+                    $server->private_key,
                     json_decode($server->config, true),
                     $server->encrypted
                 );

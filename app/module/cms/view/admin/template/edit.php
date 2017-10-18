@@ -1,8 +1,5 @@
 <div class="row">
     <div class="col-lg-12">
-        <!--<h1 class="page-header">-->
-        <!--    Templates <small> - Edit</small>-->
-        <!--</h1>-->
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="/admin/template"><i class="fa fa-columns"></i> Templates</a></li>
@@ -24,7 +21,7 @@
 </div>
 <?php endif ?>
 
-<form class="form-horizontal" method="post">
+<form class="form-horizontal" method="post" action="/admin/template/edit/<?= (!empty($form['values']['id']) ? htmlentities($form['values']['id']) : '') ?>">
     <input type="hidden" name="csrf" value="<?= $csrf ?>">
     <div class="row">
         <div class="col-lg-12">
@@ -51,7 +48,7 @@
                                 <td class="text-right"></td>
                                 <td>
                                     <div class="input-group col-xs-10">
-                                        <button type="submit" class="btn btn-primary save-details">Save</button>
+                                        <button type="submit" class="btn btn-primary save-details ajax_save">Save</button>
                                     </div>
                                 </td>
                             </tr>
@@ -82,16 +79,16 @@
                     <h3 class="panel-title"><i class="fa fa-files-o" aria-hidden="true"></i> Files</h3>
                     <div class="panel-form">
                          <form class="form-inline">
-                                <div class="input-group">
-                                        <span class="input-group-btn">
-                                         <button type="button" class="btn btn-xs btn-danger remove-file hidden"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
-                                        </span>
-                                        <input type="text" class="form-control col-xs-4" style="height:25px" id="new-file-name" value="" placeholder="Enter filename.ext&hellip;" >
-                                        <span class="input-group-btn">
-                                        <button type="button" class="btn btn-xs btn-success new-file"><i class="fa fa-file" aria-hidden="true"></i> New File</button>
-                                        </span>
-                                    </div>
-                                </form>
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-xs btn-danger remove-file hidden"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
+                                </span>
+                                <input type="text" class="form-control col-xs-4" style="height:25px" id="new-file-name" value="" placeholder="Enter filename.ext&hellip;" >
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-xs btn-success new-file"><i class="fa fa-file" aria-hidden="true"></i> New File</button>
+                                </span>
+                            </div>
+                        </form>
                     </div>
                     <div class="panel-buttons text-right">
                         <div class="btn-group-xs">
@@ -108,7 +105,6 @@
                 </div>
                 <div class="panel-body nopadding">
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 nopadding">
-                        
                         <div id="fileList" style="width:100%"></div>
                         <form action="/admin/template/upload-file/<?= $f3->get('PARAMS.sub_action_id') ?>" class="dropzone" role="form"></form>
                     </div>
@@ -122,7 +118,6 @@
     </div>
 </form> 
 
-<?php ob_start() ?>
 <?php
 $db = new \Framework\Model('servers');
 
@@ -133,8 +128,8 @@ try {
     $tasks = new Plinker\Core\Client(
         $server->endpoint,
         'Tasks\Manager',
-        hash('sha256', gmdate('h').$server->public_key),
-        hash('sha256', gmdate('h').$server->private_key),
+        $server->public_key,
+        $server->private_key,
         json_decode($server->config, true),
         $server->encrypted // enable encryption [default: true]
     );
@@ -143,195 +138,17 @@ try {
     $files = '{}';
 }
 ?>
-<script src="https://ajaxorg.github.io/ace-builds/src-min-noconflict/ace.js"></script>
-<script src="/js/filebrowser.js"></script>
+
+<?php ob_start() ?>
 <script>
-    $(function(){
-    /**
-     * Module - nodes
-     * 
-     * @usage:  load.script('/js/module/template.js', function(){});
-     */
-        /*global $, load, ace*/
-        var template = (function() {
-
-            var init = function(options) {
-
-                $('iframe#template-preview').attr('src', $('iframe#template-preview').data('src'));    
-
-                Dropzone.autoDiscover = false;
-                var myDropzone = new Dropzone("form.dropzone", { url: "/admin/template/upload-file/<?= $f3->get('PARAMS.sub_action_id') ?>"});
-
-                var textarea = $('textarea[name="source"]').hide();
-                var editor = ace.edit("source");
-                editor.getSession().setUseWorker(false);
-                editor.setTheme("ace/theme/eclipse");
-                editor.setOptions({
-                    minLines: 20,
-                    maxLines: Infinity
-                });
-                editor.getSession().setMode("ace/mode/php");
-
-                var whichForm = 'save-details';
-                editor.getSession().setValue(textarea.val());
-                editor.getSession().on('change', function() {
-                    whichForm = 'save-file';
-                    textarea.val(editor.getSession().getValue());
-                });
-
-                //if (options.files.length > 0) {
-                    $("#fileList").fileBrowser({
-                        json: options.files,
-                        path: '/',
-                        view: 'details',
-                        select: false,
-                        breadcrumbs: true,
-                        onSelect: function(obj, file, folder, type) {
-                            $('button.new-file').data('folder', folder);
-                        },
-                        onOpen: function(obj, file, folder, type) {
-                            if (type == 'file') {
-                                if (folder == '/') {
-                                    folder = '';
-                                }
-    
-                                $('.remove-file').removeClass('hidden').data('file', folder + '/' + file);
-                                $('.save-file').removeClass('hidden').data('file', folder + '/' + file);
-                                $('.new-file').data('file', folder + '/' + file);
-    
-                                $('.dropzone').addClass('hidden');
-    
-                                loadFile(folder + '/' + file);
-                            }
-                            else {
-                                if (folder == '/') {
-                                    folder = '';
-                                }
-    
-                                myDropzone.options.url = '/admin/template/upload-file/<?= $f3->get('PARAMS.sub_action_id') ?>' + folder;
-    
-                                $('.dropzone').removeClass('hidden');
-                                $('.remove-file').addClass('hidden');
-                                $('.save-file').addClass('hidden');
-                                $('button.new-file').data('folder', folder);
-                            }
-                            $('.fmBreadCrumbs li').first().html('/var/www/html');
-                        }
-                    });
-                //}
-
-                function loadFile(path) {
-                    if (path.charAt(0) == "/") path = path.substr(1);
-
-                    $.get('/admin/template/file/' + options.route_id + '/' + path,
-                          function(data, status) {
-                        textarea.val(data);
-                        editor.getSession().setValue(data);
-                        $("#select").html(data);
-                    });
-                }
-
-                $("input[name='path']").on("change", function() {
-                    var input = $(this);
-
-                    $("#example1").fileBrowser("chgOption", {
-                        path: input.val()
-                    });
-                    $("#example1").fileBrowser("redraw");
-                });
-
-                $('button.remove-file').on('click', function(e) {
-                    e.preventDefault();
-                    if (!$(this).data('file')) {
-                        $(this).data('file', '');
-                    }
-                    $.get('/admin/template/file/' + options.route_id + $(this).data('file') + '?del=1',
-                          function(data, status) {
-                        window.location = '/admin/template/edit/' + options.route_id;
-                    });
-                });
-
-                $('button.save-file').on('click', function(e) {
-                    e.preventDefault();
-
-                    var btn = $(this);
-
-                    if (!btn.data('file')) {
-                        btn.data('file', '');
-                    }
-
-                    var file = btn.data('file');
-
-                    if (file.charAt(0) == "/") {
-                        file = file.substr(1);
-                    }
-
-                    $.post('/admin/template/file/' + options.route_id + '/'+ file + '?save=1', { data: editor.getSession().getValue() },
-                    function(data, status) {
-                        $('#template-preview').attr("src", $('#template-preview').attr("src"));
-                        $('#file-saved').hide().removeClass('hidden').fadeIn(300, function(){
-                            var elm = $(this);
-                            setTimeout(function(){ 
-                                elm.fadeOut(1000, function(){
-                                    elm.addClass('hidden');
-                                });
-                            }, 1700);
-                        });
-                    });
-                });
-
-                $('button.new-file').on('click', function(e) {
-                    e.preventDefault();
-                    if (!$(this).data('folder')) {
-                        $(this).data('folder', '');
-                    }
-                    var new_file = $(this).data('folder') + '/' + $('#new-file-name').val();
-
-                    $.get('/admin/template/file/' + options.route_id + new_file,
-                          function(data, status) {
-                        window.location = '/admin/template/edit/' + options.route_id;
-                    });
-                });
-
-                $('.fmBreadCrumbs').first('li').html('/var/www/html');
-                
-                $(window).bind('keydown', function(event) {
-                    if (event.ctrlKey || event.metaKey) {
-                        switch (String.fromCharCode(event.which).toLowerCase()) {
-                            case 's':
-                                event.preventDefault();
-                                $('.'+whichForm).trigger('click');
-                            break;
-                        }
-                    }
-                });
-                
-                $(document).on('click', '.fetch-snippet', function(){
-                    var id = $(this).data('id');
-                    var type = $(this).data('type');
-                    $.ajax({
-                        type: "GET",
-                        url: '/admin/snippet/get/'+id,
-                        dataType: "text",
-                        success: function(data) {
-                            if (type == 'template') {
-                                editor.getSession().insert(editor.getCursorPosition(), data);
-                            }
-                        }
-                    });
-                });
-            };
-            
-            return {
-                init: init
-            };
-        })();
-
-        template.init({
+Dropzone.autoDiscover = false;
+$(document).ready(function() {
+    load.script('/js/module/template.js?developer', function(){
+        template.edit({
             route_id: '<?= (int) $f3->get('PARAMS.sub_action_id') ?>',
             files: <?= $files ?>
         });
-
     });
+ });
 </script>
 <?php $f3->set('javascript', $f3->get('javascript').ob_get_clean()) ?>

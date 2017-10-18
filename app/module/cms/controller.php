@@ -88,23 +88,21 @@ class Controller extends \Framework\Controller
          * Plinker Server
          */
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
             /**
-             * Plinker server listener
+             * Its Plinker!
              */
-            if (isset($_POST['data']) &&
-                isset($_POST['token']) &&
-                isset($_POST['public_key'])
-            ) {
+            if (isset($_SERVER['HTTP_PLINKER'])) {
                 // test its encrypted
-                file_put_contents('./tmp/encryption-proof.txt', print_r($_POST, true));
-
-                //
+                file_put_contents('./encryption-proof.txt', print_r($_POST, true));
+        
+                // init plinker server
                 $server = new \Plinker\Core\Server(
                     $_POST,
-                    hash('sha256', gmdate('h').$server->public_key),
-                    hash('sha256', gmdate('h').$server->private_key)
+                    $server->public_key,
+                    $server->private_key,
+                    (array) @$server->config
                 );
+        
                 exit($server->execute());
             }
         }
