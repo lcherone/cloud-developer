@@ -1,8 +1,5 @@
 <div class="row">
     <div class="col-lg-12">
-        <!--<h1 class="page-header">-->
-        <!--    Snippets-->
-        <!--</h1>-->
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li class="active"><i class="fa fa-code"></i> Snippets</li>
@@ -30,7 +27,7 @@
                 <h3 class="panel-title"><i class="fa fa-code fa-fw"></i> All Snippets</h3>
                 <div class="panel-buttons text-right">
                     <div class="btn-group-xs">
-                        <a href="/admin/snippet/new" class="btn btn-success"><i class="fa fa-plus"></i> New Snippet</a>
+                        <a href="/admin/snippet/new" class="btn btn-success ajax-link"><i class="fa fa-plus"></i> New Snippet</a>
                     </div>
                 </div>
             </div>
@@ -57,7 +54,7 @@
                             ?>
                             <?php foreach ($snippets as $row): ?>
                             <tr>
-                                <td><a href="/admin/snippet/edit/<?= $row->id ?>"><?= $row->title ?></a></td>
+                                <td><a href="/admin/snippet/edit/<?= $row->id ?>" class="ajax-link"><?= $row->title ?></a></td>
                                 <td><?= @$types[$row->type] ?></td>
                                 <td><a href="/admin/snippet/delete/<?= $row->id ?>" class="btn btn-xs btn-danger remove-snippet"><i class="fa fa-times"></i></a></td>
                             </tr>
@@ -78,18 +75,8 @@
 <?php ob_start() ?>
 <script>
 $(document).ready(function() {
-    $(document).on('click', '.remove-snippet', function(e){
-        e.preventDefault();
-            
-        var elm = $(this);
-        var url = $(this).attr('href');
-        $.ajax({
-            type: "GET",
-            url: url,
-            success: function(data) {
-                elm.closest('tr').remove();
-            }
-        });
+    load.script('/js/module/snippet.js?developer', function(){
+        snippet.index();
     });
  });
 </script>

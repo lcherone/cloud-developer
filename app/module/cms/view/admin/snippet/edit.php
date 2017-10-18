@@ -1,8 +1,5 @@
 <div class="row">
     <div class="col-lg-12">
-        <!--<h1 class="page-header">-->
-        <!--    Snippets <small> - Edit</small>-->
-        <!--</h1>-->
         <ol class="breadcrumb">
             <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="/admin/snippet"><i class="fa fa-code"></i> Snippets</a></li>
@@ -24,7 +21,7 @@
 </div>
 <?php endif ?>
 
-<form class="form-horizontal" method="post">
+<form class="form-horizontal" method="post" action="/admin/snippet/edit/<?= (!empty($form['values']['id']) ? htmlentities($form['values']['id']) : '') ?>">
     <input type="hidden" name="csrf" value="<?= $csrf ?>">
     <div class="row">
         <div class="col-lg-12">
@@ -96,28 +93,10 @@
 
 <?php ob_start() ?>
 <script>
-    $(document).ready(function() {
-
-        var textarea = $('textarea[name="source"]').hide(),
-            editor = ace.edit("source"),
-            editorSession = editor.getSession();
-
-        editor.setTheme("ace/theme/eclipse");
-        editor.setOptions({
-            minLines: 20,
-            maxLines: Infinity
-        });
-
-        editorSession.setUseWorker(false);
-        editorSession.setMode("ace/mode/php");
-        editorSession.setValue(textarea.val());
-        editorSession.on('change', function() {
-            textarea.val(editorSession.getValue());
-        });
-
-        // load.script('/js/module/tasks.js', function() {
-        //     nodes.init();
-        // });
+$(document).ready(function() {
+    load.script('/js/module/snippet.js?developer', function(){
+        snippet.edit();
     });
+ });
 </script>
 <?php $f3->set('javascript', $f3->get('javascript').ob_get_clean()) ?>

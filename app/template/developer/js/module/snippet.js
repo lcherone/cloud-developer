@@ -1,17 +1,17 @@
 /**
- * Module - objects
+ * Module - snippet
  * 
- * @usage:  load.script('/js/module/objects.js?developer', function(){});
+ * @usage:  load.script('/js/module/snippet.js?developer', function(){});
  */
-/*global $, load, ace, jsyaml*/
-var objects = (function() {
+/*global $, load, ace*/
+var snippet = (function() {
 
     var init = function(options) {
 
     };
 
     var index = function(options) {
-        $(document).find('.remove-object').off('click').on('click', function(e) {
+        $(document).find('.remove-snippet').off('click').on('click', function(e) {
             e.preventDefault();
 
             var elm = $(this);

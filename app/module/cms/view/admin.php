@@ -104,7 +104,7 @@
                                 */
                                 ?>
                                 <li>
-                                    <a href="/admin/settings">
+                                    <a href="/admin/settings" class="ajax-link">
                                         <i class="ti-settings"></i>
                                         <p>Settings</p>
                                     </a>
@@ -119,7 +119,6 @@
                     <div class="container-fluid ajax-container">
                         <?= $f3->decode($page['body']) ?>
                     </div>
-                    
                 </div>
                 <!-- -->
             </div>

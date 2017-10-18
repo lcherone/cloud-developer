@@ -10,20 +10,6 @@ var page = (function() {
 
     };
 
-    var _FontAwesomeList = function() {
-        load.script('/js/lib/js-yaml.min.js?developer', function() {
-            $.get('https://rawgit.com/FortAwesome/Font-Awesome/master/src/icons.yml', function(data) {
-                var parsedYaml = jsyaml.load(data);
-                var select = $('datalist#input-icon');
-                var selected = select.data('value');
-
-                $.each(parsedYaml.icons, function(index, icon) {
-                    select.append('<option value="fa fa-' + icon.id + '"' + (selected === 'fa fa-' + icon.id ? ' selected' : '') + '></option>');
-                });
-            });
-        });
-    };
-
     var index = function(options) {
         $(document).find('.toggle-hidden').off('click').on('click', function() {
             var toggle_hidden = $(this);
