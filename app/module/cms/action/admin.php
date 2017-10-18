@@ -100,7 +100,6 @@ echo json_encode($result);
                     $form['errors']['global'] = '<strong>Plinker Error:</strong> '.str_replace('Could not unserialize response:', '', trim(htmlentities($e->getMessage())));
                 }
             }
-        
         }
 
         // helper to get task result from systeminformation task
@@ -286,7 +285,7 @@ echo json_encode($result);
                     // count source lines
                     $form['values']['line_count'] = 1;
 
-                    $lineCount = function($key) use ($form) {
+                    $lineCount = function ($key) use ($form) {
                         $lines = substr_count($form['values'][$key], PHP_EOL);
                         return $lines === 0 ? 1 : $lines;
                     };
@@ -340,10 +339,12 @@ echo json_encode($result);
                 
                 // snippets helper
                 $snippets = $this->snippet->findAll();
-                $f3->set('getsnippets', function($type = null) use ($snippets) {
+                $f3->set('getsnippets', function ($type = null) use ($snippets) {
                     $return = [];
                     foreach ($snippets as $row) {
-                        if ($row->type != $type) { continue; }
+                        if ($row->type != $type) {
+                            continue;
+                        }
                         $return[] = $row;
                     }
                     return $return;
@@ -394,7 +395,7 @@ echo json_encode($result);
                     // count source lines
                     $form['values']['line_count'] = 1;
 
-                    $lineCount = function($key) use ($form) {
+                    $lineCount = function ($key) use ($form) {
                         $lines = substr_count($form['values'][$key], PHP_EOL);
                         return $lines === 0 ? 1 : $lines;
                     };
@@ -450,10 +451,12 @@ echo json_encode($result);
                 
                 // snippets helper
                 $snippets = $this->snippet->findAll();
-                $f3->set('getsnippets', function($type = null) use ($snippets) {
+                $f3->set('getsnippets', function ($type = null) use ($snippets) {
                     $return = [];
                     foreach ($snippets as $row) {
-                        if ($row->type != $type) { continue; }
+                        if ($row->type != $type) {
+                            continue;
+                        }
                         $return[] = $row;
                     }
                     return $return;
@@ -595,7 +598,7 @@ echo json_encode($result);
                 
                 // helper function pick out object based on priority
                 $menus = $this->menu->findAll();
-                $f3->set('helper.getMenuNameByOrder', function($order = null) use ($menus) {
+                $f3->set('helper.getMenuNameByOrder', function ($order = null) use ($menus) {
                     $matched = [];
                     foreach ($menus as $row) {
                         if ($row->order == $order) {
@@ -667,7 +670,7 @@ echo json_encode($result);
                 
                 // helper function pick out object based on priority
                 $menus = $this->menu->findAll();
-                $f3->set('helper.getMenuNameByOrder', function($order = null) use ($menus) {
+                $f3->set('helper.getMenuNameByOrder', function ($order = null) use ($menus) {
                     $matched = [];
                     foreach ($menus as $row) {
                         if ($row->order == $order) {
@@ -768,7 +771,7 @@ echo json_encode($result);
                         // count source lines
                         $form['values']['line_count'] = 1;
 
-                        $lineCount = function($key) use ($form) {
+                        $lineCount = function ($key) use ($form) {
                             $lines = substr_count($form['values'][$key], PHP_EOL);
                             return $lines === 0 ? 1 : $lines;
                         };
@@ -791,10 +794,12 @@ echo json_encode($result);
 
                 // snippets helper
                 $snippets = $this->snippet->findAll();
-                $f3->set('getsnippets', function($type = null) use ($snippets) {
+                $f3->set('getsnippets', function ($type = null) use ($snippets) {
                     $return = [];
                     foreach ($snippets as $row) {
-                        if ($row->type != $type) { continue; }
+                        if ($row->type != $type) {
+                            continue;
+                        }
                         $return[] = $row;
                     }
                     return $return;
@@ -842,7 +847,7 @@ echo json_encode($result);
                         // count source lines
                         $form['values']['line_count'] = 1;
 
-                        $lineCount = function($key) use ($form) {
+                        $lineCount = function ($key) use ($form) {
                             $lines = substr_count($form['values'][$key], PHP_EOL);
                             return $lines === 0 ? 1 : $lines;
                         };
@@ -864,10 +869,12 @@ echo json_encode($result);
 
                 // snippets helper
                 $snippets = $this->snippet->findAll();
-                $f3->set('getsnippets', function($type = null) use ($snippets) {
+                $f3->set('getsnippets', function ($type = null) use ($snippets) {
                     $return = [];
                     foreach ($snippets as $row) {
-                        if ($row->type != $type) { continue; }
+                        if ($row->type != $type) {
+                            continue;
+                        }
                         $return[] = $row;
                     }
                     return $return;
@@ -940,7 +947,9 @@ echo json_encode($result);
                 $f3->set('getsnippets', function ($type = null) use ($snippets) {
                     $return = [];
                     foreach ($snippets as $row) {
-                        if ($row->type != $type) { continue; }
+                        if ($row->type != $type) {
+                            continue;
+                        }
                         $return[] = $row;
                     }
                     return $return;
@@ -1062,10 +1071,12 @@ echo json_encode($result);
                 
                 // snippets helper
                 $snippets = $this->snippet->findAll();
-                $f3->set('getsnippets', function($type = null) use ($snippets) {
+                $f3->set('getsnippets', function ($type = null) use ($snippets) {
                     $return = [];
                     foreach ($snippets as $row) {
-                        if ($row->type != $type) { continue; }
+                        if ($row->type != $type) {
+                            continue;
+                        }
                         $return[] = $row;
                     }
                     return $return;
@@ -1085,12 +1096,12 @@ echo json_encode($result);
             } break;
             
             /**
-             * 
+             *
              */
             case "copy":
             case "clone": {
                 // helper folder copy
-                $copy_dir = function ($src, $dst) use (&$recurse_copy) { 
+                $copy_dir = function ($src, $dst) use (&$recurse_copy) {
                     `cp -ar {$src} {$dst}`;
                 };
                 
@@ -1194,10 +1205,12 @@ echo json_encode($result);
                 
                 // snippets helper
                 $snippets = $this->snippet->findAll();
-                $f3->set('getsnippets', function($type = null) use ($snippets) {
+                $f3->set('getsnippets', function ($type = null) use ($snippets) {
                     $return = [];
                     foreach ($snippets as $row) {
-                        if ($row->type != $type) { continue; }
+                        if ($row->type != $type) {
+                            continue;
+                        }
                         $return[] = $row;
                     }
                     return $return;
@@ -1295,7 +1308,7 @@ echo json_encode($result);
 
                 if (isset($_GET['del'])) {
                     exit(base64_decode($tasks->deleteFile(getcwd().'/tmp/template/'.(int) $params['sub_action_id'].'/'.$path)));
-                } elseif(isset($_GET['save'])) {
+                } elseif (isset($_GET['save'])) {
                     // if template.php also update database
                     if ($path == 'template.php') {
                         // ..
@@ -1335,14 +1348,14 @@ echo json_encode($result);
 
                 $fileData = '';
                 if (move_uploaded_file($_FILES["file"]["tmp_name"], getcwd().'/tmp/template/'.(int) $params['sub_action_id'].$path.'/'.basename($_FILES['file']['name']))) {
-                  $fileData = file_get_contents(getcwd().'/tmp/template/'.(int) $params['sub_action_id'].$path.'/'.basename($_FILES['file']['name']));
+                    $fileData = file_get_contents(getcwd().'/tmp/template/'.(int) $params['sub_action_id'].$path.'/'.basename($_FILES['file']['name']));
                 }
 
                 header('Content-Type: text/plain; charset=utf-8');
 
                 try {
                     $tasks->saveFile(getcwd().'/tmp/template/'.(int) $params['sub_action_id'].$path.'/'.basename($_FILES['file']['name']), base64_encode($fileData));
-                } catch(\Exception $e) {
+                } catch (\Exception $e) {
                     exit('error');
                 }
                 exit('1');
@@ -1451,7 +1464,6 @@ echo json_encode($result);
 
                     // alls good
                     if (empty($form['errors'])) {
-
                         $form['values']['params'] = json_encode($form['values']['params']);
 
                         $task = $this->tasksource->create($form['values']);
@@ -1529,7 +1541,6 @@ echo json_encode($result);
 
                     // alls good
                     if (empty($form['errors'])) {
-
                         $form['values']['params'] = json_encode($form['values']['params']);
                         // ..
                         $task->import($form['values']);
@@ -1567,7 +1578,6 @@ echo json_encode($result);
 
                 // AJAX
                 if (!empty($f3->get('AJAX'))) {
-                    
                     header('Content-Type: application/json; charset=utf-8');
 
                     if (!is_numeric($params['sub_action_id'])) {
@@ -1588,7 +1598,7 @@ echo json_encode($result);
                         exit('{"success": false, "msg": "Invalid task id."}');
                     }
                     
-                    if (!isset($task[$update['name']])){
+                    if (!isset($task[$update['name']])) {
                         exit('{"success": false, "msg": "Invalid task property."}');
                     }
                     
@@ -1939,7 +1949,7 @@ echo json_encode($result);
                         // count source lines
                         $form['values']['line_count'] = 1;
     
-                        $lineCount = function($key) use ($form) {
+                        $lineCount = function ($key) use ($form) {
                             $lines = substr_count($form['values'][$key], PHP_EOL);
                             return $lines === 0 ? 1 : $lines;
                         };
@@ -1967,7 +1977,7 @@ echo json_encode($result);
                 $f3->set('objects', $objects);
                 
                 // helper function pick out object based on priority
-                $f3->set('helper.getObjectNameByPriority', function($priority = null) use ($objects) {
+                $f3->set('helper.getObjectNameByPriority', function ($priority = null) use ($objects) {
                     $matched = [];
                     foreach ($objects as $row) {
                         if ($row->priority == $priority) {
@@ -2026,7 +2036,7 @@ echo json_encode($result);
                         // count source lines
                         $form['values']['line_count'] = 1;
     
-                        $lineCount = function($key) use ($form) {
+                        $lineCount = function ($key) use ($form) {
                             $lines = substr_count($form['values'][$key], PHP_EOL);
                             return $lines === 0 ? 1 : $lines;
                         };
@@ -2048,7 +2058,7 @@ echo json_encode($result);
                 $f3->set('objects', $objects);
                 
                 // helper function pick out object based on priority
-                $f3->set('helper.getObjectNameByPriority', function($priority = null) use ($objects) {
+                $f3->set('helper.getObjectNameByPriority', function ($priority = null) use ($objects) {
                     $matched = [];
                     foreach ($objects as $row) {
                         if ($row->priority == $priority) {
@@ -2161,14 +2171,13 @@ echo json_encode($result);
             case "backups": {
                 // create
                 if ($params['sub_action_id'] == 'new') {
-                    
                     $db = $f3->get('db');
                     $date = date_create()->format('Y-m-d_H:i:s');
                     $pwd = getcwd();
                     `mysqldump --add-drop-table --user={$db['username']} --password={$db['password']} --host=127.0.0.1 app | gzip > {$pwd}/backups/backup.{$date}.sql.gz &`;
                     
                     $f3->reroute('/admin/settings');
-                } 
+                }
                 // remove
                 elseif ($params['sub_action_id'] == 'remove') {
                     $file = base64_decode($f3->get('GET.file'));
@@ -2237,7 +2246,7 @@ echo json_encode($result);
                     // alls good
                     if (empty($form['errors'])) {
                         
-                        // get user 
+                        // get user
                         $user = $this->user->findOne('username = ?', [$f3->get('SESSION.developer.username')]);
                         
                         // update username
@@ -2288,7 +2297,6 @@ echo json_encode($result);
                                     );
                                     $tasks->run('Composer Update', []);
                                 } catch (\Exception $e) {
-                                    
                                 }
                                 
                                 //
@@ -2319,15 +2327,16 @@ echo json_encode($result);
                     $form['values']['composer_result'] = $tasks->getTasksLog($composerTask->id);
                     $form['values']['composer_result'] = array_values($form['values']['composer_result'])[0];
                 } catch (\Exception $e) {
-
                 }
 
                 $f3->set('form', $form);
                 $f3->set('templates', (array) $this->template->findAll());
 
-                $f3->set('helper.extractValue', function($key) use ($settings) {
+                $f3->set('helper.extractValue', function ($key) use ($settings) {
                     foreach ($settings as $row) {
-                        if ($row->key == $key) return $row->value;
+                        if ($row->key == $key) {
+                            return $row->value;
+                        }
                     }
                     return;
                 });
@@ -2494,5 +2503,4 @@ echo json_encode($result);
             ]
         ]);
     }
-
 }

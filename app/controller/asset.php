@@ -18,7 +18,7 @@ class Asset extends \Prefab
         $this->f3->set('f3', $this->f3);
 
         // helper - get active template path from session
-        $this->f3->set('getAssetPath', function($params = [], $type = 'css') {
+        $this->f3->set('getAssetPath', function ($params = [], $type = 'css') {
             //dir
             $dir = (!empty($params['dir']) ? basename($params['dir']) : null);
             
@@ -146,5 +146,4 @@ class Asset extends \Prefab
 
         exit(\Web::instance()->send($path, null, 1024, false));
     }
-
 }

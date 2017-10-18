@@ -24,17 +24,17 @@ class Controller extends \Framework\Controller
         $this->tasksource = new \Framework\Model('tasksource');
     }
 
-	/**
-	 *
-	 */
-	public function index(\Base $f3, $params)
-	{
-	    // get site settings
+    /**
+     *
+     */
+    public function index(\Base $f3, $params)
+    {
+        // get site settings
         foreach ((array) $this->settings->findAll() as $row) {
-            $f3->set('setting.'.$row->key, $row->value); 
+            $f3->set('setting.'.$row->key, $row->value);
         }
         
-	    // get site menus
+        // get site menus
         $f3->set('menus', (array) $this->menu->findAll());
 
         //
@@ -45,6 +45,5 @@ class Controller extends \Framework\Controller
                 'body' => $this->view->render('app/module/example/view/index.php')
             ]
         ]);
-	}
-
+    }
 }

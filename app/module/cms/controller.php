@@ -278,8 +278,7 @@ class Controller extends \Framework\Controller
 
         // inject additional js for live preview
         if (!empty($f3->get('SESSION.developer'))) {
-            ob_start();
-            ?>
+            ob_start(); ?>
             <script>
             // developer only - cross tab live content preview
             $(document).ready(function() {
@@ -356,5 +355,4 @@ class Controller extends \Framework\Controller
             $f3->error(404);
         }
     }
-
 }

@@ -9,7 +9,7 @@ class Controller extends \Prefab
     use \Framework\Traits\CSRF;
 
     /**
-     * 
+     *
      */
     public function __construct()
     {
@@ -44,5 +44,4 @@ class Controller extends \Prefab
             echo \View::instance()->render($f3->get('template'));
         }
     }
-    
 }

@@ -8,7 +8,7 @@ namespace Framework {
         protected $table;
 
         /**
-         * 
+         *
          */
         public function __construct($table = null)
         {
@@ -41,7 +41,9 @@ namespace Framework {
     	 */
         public function create($data = [])
         {
-            if ($this->table === null) return null;
+            if ($this->table === null) {
+                return null;
+            }
             
             $row = R::dispense($this->table);
             $row->import($data);
@@ -55,7 +57,9 @@ namespace Framework {
     	 */
         public function find($where = null, $params = null)
         {
-            if ($this->table === null) return null;
+            if ($this->table === null) {
+                return null;
+            }
             
             if ($where !== null && $params !== null) {
                 return R::find($this->table, $where, $params);
@@ -71,7 +75,9 @@ namespace Framework {
          */
         public function findAll($where = null, $params = null)
         {
-            if ($this->table === null) return null;
+            if ($this->table === null) {
+                return null;
+            }
             
             if ($where !== null && $params !== null) {
                 return R::findAll($this->table, $where, $params);
@@ -87,7 +93,9 @@ namespace Framework {
     	 */
         public function findOne($where = null, $params = null)
         {
-            if ($this->table === null) return null;
+            if ($this->table === null) {
+                return null;
+            }
             
             if ($where !== null && $params !== null) {
                 return R::findOne($this->table, $where, $params);
@@ -96,7 +104,7 @@ namespace Framework {
             } else {
                 return R::findOne($this->table);
             }
-        }    
+        }
         
         /**
     	 * Get all
@@ -110,7 +118,7 @@ namespace Framework {
             } else {
                 return [];
             }
-        }     
+        }
         
         /**
     	 * Get row
@@ -124,7 +132,7 @@ namespace Framework {
             } else {
                 return [];
             }
-        }      
+        }
         
         /**
     	 * Get col
@@ -167,7 +175,9 @@ namespace Framework {
     	 */
         public function count($where = null, $params = null)
         {
-            if ($this->table === null) return null;
+            if ($this->table === null) {
+                return null;
+            }
             
             if ($where !== null && $params !== null) {
                 return R::count($this->table, $where, $params);
@@ -183,7 +193,9 @@ namespace Framework {
          */
         public function load($id)
         {
-            if ($this->table === null) return null;
+            if ($this->table === null) {
+                return null;
+            }
             
             return R::load($this->table, $id);
         }
@@ -227,6 +239,5 @@ namespace Framework {
         {
             return R::trash($row);
         }
-
     }
 }

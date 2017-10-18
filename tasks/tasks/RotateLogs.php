@@ -11,7 +11,7 @@ namespace Tasks\Task {
         use Lib\Traits\Log;
 
         /**
-         * 
+         *
          */
         public function __construct($task)
         {
@@ -19,7 +19,7 @@ namespace Tasks\Task {
         }
         
         /**
-         * 
+         *
          */
         private function rotate($type = 'default')
         {
@@ -44,7 +44,7 @@ namespace Tasks\Task {
         }
 
         /**
-         * 
+         *
          */
         public function execute()
         {

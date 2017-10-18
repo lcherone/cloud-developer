@@ -21,7 +21,7 @@ trait CSRF
      
     /**
      * Checks passed token against one in sesssion.
-     * 
+     *
      * @param string $csrf       - Value to compare with current
      * @param bool   $single_use - Token is refreshed everytime
      * @param string $target     - Token is targeted to a specific form/action
@@ -72,16 +72,16 @@ trait CSRF
 
     /**
      * Generate and set csrf token/s into session.
-     * 
+     *
      * Supports single use and by targeting a specific form or action.
-     * 
+     *
      * @param bool   $single_use - Token is refreshed everytime
      * @param string $target     - Token is targeted to a specific form/action
      * @return string
      */
     public function set_csrf($single_use = true, $target = null)
     {
-        // set secret token, 
+        // set secret token,
         if ($single_use || $this->f3->devoid('SESSION.csrf.secret')) {
             $this->f3->set('SESSION.csrf.secret', $this->generateToken());
         }
@@ -94,12 +94,13 @@ trait CSRF
                 $this->f3->get('SESSION.csrf.secret')
             );
             $this->f3->set(
-                'SESSION.csrf.tokens.default', [
+                'SESSION.csrf.tokens.default',
+                [
                     'secret' => $this->f3->get('SESSION.csrf.secret'),
                     'token'  => $token
                 ]
             );
-        } 
+        }
         // targeted
         else {
             $token = hash_hmac(
@@ -108,7 +109,8 @@ trait CSRF
                 $this->f3->get('SESSION.csrf.secret')
             );
             $this->f3->set(
-                'SESSION.csrf.tokens.'.hash('sha256', $target), [
+                'SESSION.csrf.tokens.'.hash('sha256', $target),
+                [
                     'secret' => $this->f3->get('SESSION.csrf.secret'),
                     'token'  => $token
                 ]

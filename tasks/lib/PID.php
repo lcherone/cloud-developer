@@ -7,7 +7,7 @@ class PID
     public $running = false;
 
     /**
-     * 
+     *
      */
     public function __construct($directory = '', $task = 'default')
     {
@@ -24,7 +24,6 @@ class PID
             }
 
             if (file_exists($this->pidfile)) {
-
                 $pid = (int) trim(file_get_contents($this->pidfile));
 
                 if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
@@ -50,7 +49,7 @@ class PID
     }
 
     /**
-     * 
+     *
      */
     public function script_memory_usage()
     {
@@ -66,7 +65,7 @@ class PID
     }
 
     /**
-     * 
+     *
      */
     public function __destruct()
     {

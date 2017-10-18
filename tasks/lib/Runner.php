@@ -10,7 +10,7 @@ class Runner
     public $config = [];
 
     /**
-     * 
+     *
      */
     public function __construct($config = [])
     {
@@ -19,7 +19,7 @@ class Runner
     }
 
     /**
-     * setter 
+     * setter
      */
     public function __set($index, $value)
     {
@@ -27,7 +27,7 @@ class Runner
     }
 
     /**
-     * getter 
+     * getter
      */
     public function __get($index)
     {
@@ -86,7 +86,6 @@ class Runner
             }
             exit;
         } else {
-
             $startTime = microtime(true);
             $stopTime = $startTime + 59;
 
@@ -95,7 +94,6 @@ class Runner
             }
 
             while (microtime(true) < $stopTime) {
-                
                 if ($this->config['debug']) {
                     $this->climate->clear();
                     $this->climate->addArt('lib/art');
@@ -135,7 +133,6 @@ class Runner
 
                 // break if next task will overrun minute, +1 second fudge
                 if ((microtime(true)+(microtime(true) - $loopStart)) >= $stopTime) {
-                    
                     if ($this->config['debug']) {
                         $this->climate->out(" - Now: ".(microtime(true)+(microtime(true) - $loopStart)).' Stop time:'.$stopTime.' - When: '.($stopTime-(microtime(true)+(microtime(true) - $loopStart))));
                         $this->climate->out(" - Process completed in ".(microtime(true) - $loopStart)." seconds");
@@ -148,9 +145,6 @@ class Runner
                     $i++;
                 }
             }
-
         }
-
     }
-
 }

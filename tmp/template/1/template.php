@@ -38,7 +38,7 @@
                     ?>
                     <a class="nav-link<?= ($PATH == $row->slug ? ' active' : '') ?>" href="<?= $row->slug ?>"><?= (!empty($row->icon) ? '<i class="'.$row->icon.'"></i> ' : '') ?><?= $row->title ?></a>
                     <?php endforeach ?>
-                    <?php if (!empty($f3->get('SESSION.developer')) ): ?>
+                    <?php if (!empty($f3->get('SESSION.developer'))): ?>
                     <a class="nav-link<?= ($PATH == '/admin' ? ' class="active"' : '') ?>" href="/admin"><i class="fa fa-user-secret"></i> Admin</a>
                     <?php endif ?>
                 </nav>

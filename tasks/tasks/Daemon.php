@@ -42,7 +42,6 @@ namespace Tasks\Task {
                 }
 
                 foreach ($tasks as $task) {
-
                     if (!empty($task->run_last) && !empty($task->repeats)) {
                         if ((strtotime($task->run_last)+$task->sleep) > strtotime(date_create()->format('Y-m-d H:i:s'))) {
                             $this->task->climate->out(
@@ -84,7 +83,6 @@ namespace Tasks\Task {
                             $source = unserialize($task->tasksource->source);
                             $return = $source($params);
                             $task->result = ob_get_clean().$return;
-                            
                         } elseif ($task->tasksource->type == 'php-closure') {
                             ob_start();
                             $source = $task->tasksource->source;
@@ -93,13 +91,11 @@ namespace Tasks\Task {
                             eval('?>'.$source);
                             $return = $function(@$params);
                             $task->result = ob_get_clean().$return;
-                            
                         } elseif ($task->tasksource->type == 'php-raw') {
                             ob_start();
                             $source = $task->tasksource->source;
                             eval('?>'.$source);
                             $task->result = ob_get_clean();
-                            
                         } elseif ($task->tasksource->type == 'bash') {
                             file_put_contents('../tmp/'.md5($task->tasksource->name).'.sh', $task->tasksource->source);
                             ob_start();
@@ -108,7 +104,6 @@ namespace Tasks\Task {
                         }
 
                         $this->db->store($task);
-
                     } else {
                         $this->db->trash($task);
                         $this->task->climate->out(

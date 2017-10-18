@@ -1,10 +1,11 @@
 <?php
 namespace Tasks\Lib\Traits;
 
-trait Log {
+trait Log
+{
 
     /**
-     * 
+     *
      */
     public function __construct()
     {
@@ -32,5 +33,4 @@ trait Log {
             $log->$method($str, $data);
         }
     }
-
 }

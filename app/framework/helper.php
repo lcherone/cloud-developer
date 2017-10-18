@@ -19,11 +19,17 @@ namespace Framework {
          */
         public function format_bytes($bytes = 0)
         {
-            if ($bytes < 1024) return $bytes.' B';
-            elseif ($bytes < 1048576) return round($bytes / 1024, 2).' KiB';
-            elseif ($bytes < 1073741824) return round($bytes / 1048576, 2).' MiB';
-            elseif ($bytes < 1099511627776) return round($bytes / 1073741824, 2).' GiB';
-            else return round($bytes / 1099511627776, 2).' TiB';
+            if ($bytes < 1024) {
+                return $bytes.' B';
+            } elseif ($bytes < 1048576) {
+                return round($bytes / 1024, 2).' KiB';
+            } elseif ($bytes < 1073741824) {
+                return round($bytes / 1048576, 2).' MiB';
+            } elseif ($bytes < 1099511627776) {
+                return round($bytes / 1073741824, 2).' GiB';
+            } else {
+                return round($bytes / 1099511627776, 2).' TiB';
+            }
         }
 
         /**
@@ -35,13 +41,20 @@ namespace Framework {
             $n = (0+str_replace(",", "", $n));
 
             // is this a number?
-            if (!is_numeric($n)) return false;
+            if (!is_numeric($n)) {
+                return false;
+            }
 
             // now filter it;
-            if ($n > 1000000000000) return round(($n/1000000000000), 2).'t';
-            elseif ($n > 1000000000) return round(($n/1000000000), 2).'b';
-            elseif ($n > 1000000) return round(($n/1000000), 2).'m';
-            elseif ($n > 1000) return round(($n/1000), 2).'k';
+            if ($n > 1000000000000) {
+                return round(($n/1000000000000), 2).'t';
+            } elseif ($n > 1000000000) {
+                return round(($n/1000000000), 2).'b';
+            } elseif ($n > 1000000) {
+                return round(($n/1000000), 2).'m';
+            } elseif ($n > 1000) {
+                return round(($n/1000), 2).'k';
+            }
 
             return number_format($n);
         }
@@ -124,7 +137,7 @@ namespace Framework {
             $text = strtolower($text);
             // remove unwanted characters
             $text = preg_replace('~[^-\w]+~', '', $text);
-            if (empty($text)){
+            if (empty($text)) {
                 return 'n-a';
             }
             return $text;
@@ -262,7 +275,7 @@ namespace Framework {
                 //set status color to warning if not 200
                 if ($status == 200) {
                     $labelColor = 'success';
-                } elseif($status == 404) {
+                } elseif ($status == 404) {
                     $labelColor = 'warning';
                 } else {
                     $labelColor = 'danger';
@@ -277,7 +290,8 @@ namespace Framework {
         /**
          *
          */
-        public function response_code_text($code) {
+        public function response_code_text($code)
+        {
             switch ($code) {
                 case 100: $text = 'Continue'; break;
                 case 101: $text = 'Switching Protocols'; break;
@@ -406,7 +420,7 @@ namespace Framework {
             // if we dont have a status query the API
             if (empty($ipinfo['status'])) {
                 $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL,'http://ip-api.com/json/'.$ip);
+                curl_setopt($ch, CURLOPT_URL, 'http://ip-api.com/json/'.$ip);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                 $data = curl_exec($ch);
 
@@ -447,8 +461,8 @@ namespace Framework {
          * $ids = $this->app->helper->hashid()->decode($ids);
          */
         public function hashid(
-            $salt = 'SHA256ed.f0r.4a5h.sa1tlng', 
-            $length = 6, 
+            $salt = 'SHA256ed.f0r.4a5h.sa1tlng',
+            $length = 6,
             $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
         ) {
             return new \Hashids\Hashids(
@@ -466,7 +480,7 @@ namespace Framework {
          * @param int $last_page
          * @return string
          */
-        function pagination($totalposts, $p, $last_page, $link_class = 'ajax-link', $adjacents = 3, $key = 'pg')
+        public function pagination($totalposts, $p, $last_page, $link_class = 'ajax-link', $adjacents = 3, $key = 'pg')
         {
             $ret = null;
             $prev = ($p-1);
@@ -474,7 +488,7 @@ namespace Framework {
             $last_page = ($totalposts-1);
             
             // sorting
-            $sorting = 
+            $sorting =
             (!empty($_GET['c']) ? '&c='.$_GET['c'] : '').
             (!empty($_GET['o']) ? '&o='.($_GET['o'] == 'asc' ? 'asc' : 'desc') : '');
 
@@ -488,8 +502,8 @@ namespace Framework {
                     $ret.= '<li class="disabled"><a href="javascript:void(0)">&laquo; Previous</a></li> ';
                 }
                 
-                if ($totalposts < 7 + ($adjacents * 2)){
-                    for ($counter = 1; $counter <= $totalposts; $counter++){
+                if ($totalposts < 7 + ($adjacents * 2)) {
+                    for ($counter = 1; $counter <= $totalposts; $counter++) {
                         if ($counter == $p) {
                             $ret.= '<li class="active"><a href="javascript:void(0)">'.$counter.'</a></li> ';
                         } else {
@@ -498,7 +512,7 @@ namespace Framework {
                     }
                 } elseif ($totalposts > 5 + ($adjacents * 2)) {
                     if ($p < 1 + ($adjacents * 2)) {
-                        for ($counter = 1; $counter < 4 + ($adjacents * 2); $counter++){
+                        for ($counter = 1; $counter < 4 + ($adjacents * 2); $counter++) {
                             if ($counter == $p) {
                                 $ret.= '<li class="active"><a href="javascript:void(0)">'.$counter.'</a></li> ';
                             } else {
@@ -510,11 +524,11 @@ namespace Framework {
                         $ret.= ' <li><a href="?'.$key.'='.$totalposts.''.$sorting.'" class="'.$link_class.'" data-keep-state="true">'.$totalposts.'</a></li> ';
                     }
                     //in middle; hide some front and some back
-                    elseif($totalposts - ($adjacents * 2) > $p && $p > ($adjacents * 2)){
+                    elseif ($totalposts - ($adjacents * 2) > $p && $p > ($adjacents * 2)) {
                         $ret.= ' <li><a href="?'.$key.'=1'.$sorting.'" class="'.$link_class.'" data-keep-state="true">1</a></li> ';
                         $ret.= ' <li><a href="?'.$key.'=2'.$sorting.'" class="'.$link_class.'" data-keep-state="true">2</a></li> ';
                         $ret.= ' <li class="disabled"><a href="javascript:void(0)">...</a></li> ';
-                        for ($counter = $p - $adjacents; $counter <= $p + $adjacents; $counter++){
+                        for ($counter = $p - $adjacents; $counter <= $p + $adjacents; $counter++) {
                             if ($counter == $p) {
                                 $ret.= ' <li class="active"><a href="javascript:void(0)">'.$counter.'</a></li> ';
                             } else {
@@ -528,7 +542,7 @@ namespace Framework {
                         $ret.= ' <li><a href="?'.$key.'=1'.$sorting.'" class="'.$link_class.'" data-keep-state="true">1</a></li> ';
                         $ret.= ' <li><a href="?'.$key.'=2'.$sorting.'" class="'.$link_class.'" data-keep-state="true">2</a></li> ';
                         $ret.= ' <li class="active"><a href="javascript:void(0)">...</a></li> ';
-                        for ($counter = $totalposts - (2 + ($adjacents * 2)); $counter <= $totalposts; $counter++){
+                        for ($counter = $totalposts - (2 + ($adjacents * 2)); $counter <= $totalposts; $counter++) {
                             if ($counter == $p) {
                                 $ret.= ' <li class="active"><a href="javascript:void(0)">'.$counter.'</a></li> ';
                             } else {
@@ -605,7 +619,6 @@ namespace Framework {
             $angle = atan2(sqrt($a), $b);
             return $angle * $earthRadius;
         }
-
     }
 
 }

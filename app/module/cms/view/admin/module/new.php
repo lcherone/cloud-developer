@@ -66,7 +66,9 @@
                     <div class="btn-group pull-right">
                         <?php $snippets = $getsnippets('beforeload'); if (!empty($snippets)): ?>
                         <a href="#" role="button" class="btn btn-link btn-xs label-btn" aria-disabled="true">Snippets:</a>
-                        <?php foreach ($snippets as $row): if ($row->type != 'beforeload') { continue; } ?>
+                        <?php foreach ($snippets as $row): if ($row->type != 'beforeload') {
+    continue;
+} ?>
                         <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>
                         <?php endforeach ?>
                         <?php endif ?>

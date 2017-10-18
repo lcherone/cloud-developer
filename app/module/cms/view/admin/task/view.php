@@ -47,17 +47,17 @@
                 <div class="table-responsive">
                     <table class="table table-condensed form-table">
                         <tbody>
-                            <?php foreach ($task as $col => $value): 
+                            <?php foreach ($task as $col => $value):
                             // extract source from closure
                             if ($col == 'source') {
-                               preg_match('/"function";s:\d+:"(.*)";s:\d+:/smi', $value, $matches);
+                                preg_match('/"function";s:\d+:"(.*)";s:\d+:/smi', $value, $matches);
                                
-                               $value = (!empty($matches[1]) ? $matches[1] : $value);
+                                $value = (!empty($matches[1]) ? $matches[1] : $value);
                             }
                             
                             // humanize date
                             if ($col == 'created' || $col == 'updated') {
-                               $value = date_create($value)->format('F jS Y, g:ia');
+                                $value = date_create($value)->format('F jS Y, g:ia');
                             }
                             
                             if ($col == 'params') {
@@ -104,7 +104,7 @@
                         </thead>
                         <tbody>
                             <?php
-                            foreach ((array) $tasklog as $row): 
+                            foreach ((array) $tasklog as $row):
 
                             $params = json_decode(html_entity_decode($row->params));
 

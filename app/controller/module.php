@@ -12,8 +12,8 @@ class Module extends \Framework\Controller
     }
 
     /**
-	 *
-	 */
+     *
+     */
     public function init(\Base $f3, $params)
     {
         //
@@ -23,7 +23,6 @@ class Module extends \Framework\Controller
 
         //
         if (file_exists(getcwd().'/app/module/'.$params['module'].'/controller.php')) {
-
             $namespace = '\\Module\\'.ucfirst($params['module']).'\\Controller';
 
             $controller = new $namespace();
@@ -53,5 +52,4 @@ class Module extends \Framework\Controller
             }
         }
     }
-
 }

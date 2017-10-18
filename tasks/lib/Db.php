@@ -3,11 +3,10 @@ namespace Tasks;
 
 use RedBeanPHP\R;
 
-class Db {
-
+class Db
+{
     public function __construct()
     {
-
     }
 
     /**
@@ -26,7 +25,7 @@ class Db {
         $row->import($data);
 
         return $row;
-    }        
+    }
 
     /**
      * findOrCreate
@@ -63,7 +62,7 @@ class Db {
         } else {
             return R::find($table);
         }
-    } 
+    }
 
     /**
      * Find One
@@ -88,7 +87,7 @@ class Db {
             return R::findAll($table, $where, $params);
         } elseif ($where !== null && $params === null) {
             return R::findAll($table, $where);
-        }else{
+        } else {
             return R::findAll($table);
         }
     }
@@ -101,7 +100,7 @@ class Db {
         $row->import($data);
         
         return $row;
-    }        
+    }
 
     /**
      * Store
@@ -152,5 +151,4 @@ class Db {
     {
         return R::nuke();
     }
-
 }

@@ -228,7 +228,7 @@
                             <tr>
                                 <td><?= $row ?></td>
                                 <td><?= date_create('@'.filemtime('backups/'.$row))->format('F jS Y, g:ia') ?></td>
-                                <td><?= \utilphp\util::size_format(filesize('backups/'.$row), 2 ); ?></td>
+                                <td><?= \utilphp\util::size_format(filesize('backups/'.$row), 2); ?></td>
                                 <td>
                                     <div class="btn-group" style="display:flex">
                                         <a title="Restore" href="/admin/settings/backups/restore?file=<?= base64_encode($row) ?>" class="btn btn-xs btn-primary"><i class="fa fa-reply"></i></a>

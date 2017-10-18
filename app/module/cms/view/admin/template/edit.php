@@ -95,7 +95,9 @@
                             <a href="#" role="button" class="btn btn-link btn-xs label-btn hidden" id="file-saved" aria-disabled="true"><span class="text-success">File saved!</span></a>
                             <?php $snippets = $getsnippets('template'); if (!empty($snippets)): ?>
                             <a href="#" role="button" class="btn btn-link btn-xs label-btn" aria-disabled="true">Snippets:</a>
-                            <?php foreach ($snippets as $row): if ($row->type != 'template') { continue; } ?>
+                            <?php foreach ($snippets as $row): if ($row->type != 'template') {
+    continue;
+} ?>
                             <button type="button" data-id="<?= $row->id ?>" data-type="<?= $row->type ?>" class="btn btn-xs btn-default fetch-snippet"><?= $row->title ?></button>
                             <?php endforeach ?>
                             <?php endif ?>

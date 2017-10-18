@@ -7,7 +7,7 @@ class Error extends \Prefab
     protected $view;
 
     /**
-     * 
+     *
      */
     public function __construct()
     {
@@ -23,7 +23,7 @@ class Error extends \Prefab
         $this->settings = new \Framework\Model('settings');
     }
     
-	/**
+    /**
      * Needs doing
      */
     public function display(\Base $f3, $params)
@@ -86,5 +86,4 @@ class Error extends \Prefab
     {
         echo \View::instance()->render($f3->get('template'));
     }
-    
 }

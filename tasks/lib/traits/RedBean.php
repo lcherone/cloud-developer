@@ -3,10 +3,11 @@ namespace Tasks\Lib\Traits;
 
 use RedBeanPHP\R;
 
-trait RedBean {
+trait RedBean
+{
 
     /**
-     * 
+     *
      */
     public function redbeanConnect()
     {
@@ -15,7 +16,7 @@ trait RedBean {
                 'mysql:host='.$this->task->config['database']['host'].';dbname='.$this->task->config['database']['name'],
                 $this->task->config['database']['username'],
                 $this->task->config['database']['password']
-            );  
+            );
         } else {
             R::setup(
                 'mysql:host='.$this->task->config['database']['host'].';dbname='.$this->task->config['database']['name']
@@ -27,5 +28,4 @@ trait RedBean {
 
         $this->task->state['redbeanConnected'] = true;
     }
-
 }
