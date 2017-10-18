@@ -1433,16 +1433,16 @@
         },
         {
             "name": "plinker/core",
-            "version": "v2.0.9",
+            "version": "v2.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/plinker-rpc/core.git",
-                "reference": "e25ad47b17fc7155da5a5d16ecfc4553907d737d"
+                "reference": "0dd3b01b77ec2d7022c0b1586503723563dcfd5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/plinker-rpc/core/zipball/e25ad47b17fc7155da5a5d16ecfc4553907d737d",
-                "reference": "e25ad47b17fc7155da5a5d16ecfc4553907d737d",
+                "url": "https://api.github.com/repos/plinker-rpc/core/zipball/0dd3b01b77ec2d7022c0b1586503723563dcfd5a",
+                "reference": "0dd3b01b77ec2d7022c0b1586503723563dcfd5a",
                 "shasum": ""
             },
             "require": {
@@ -1471,7 +1471,7 @@
                 }
             ],
             "homepage": "https://github.com/lcherone/plinker-core",
-            "time": "2017-10-16T02:28:27+00:00"
+            "time": "2017-10-18T10:38:50+00:00"
         },
         {
             "name": "plinker/redbean",
@@ -1515,16 +1515,16 @@
         },
         {
             "name": "plinker/system",
-            "version": "v1.3.6",
+            "version": "v1.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/plinker-rpc/system.git",
-                "reference": "07fe6216416c36d15e6333d5e6f625896d4f81af"
+                "reference": "cf129fce15506210f7ce8b0ba7ce77ddfadd5243"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/plinker-rpc/system/zipball/07fe6216416c36d15e6333d5e6f625896d4f81af",
-                "reference": "07fe6216416c36d15e6333d5e6f625896d4f81af",
+                "url": "https://api.github.com/repos/plinker-rpc/system/zipball/cf129fce15506210f7ce8b0ba7ce77ddfadd5243",
+                "reference": "cf129fce15506210f7ce8b0ba7ce77ddfadd5243",
                 "shasum": ""
             },
             "require": {
@@ -1554,7 +1554,7 @@
                 "information",
                 "system"
             ],
-            "time": "2017-10-16T02:28:16+00:00"
+            "time": "2017-10-18T10:38:39+00:00"
         },
         {
             "name": "plinker/tasks",
