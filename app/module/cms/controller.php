@@ -22,6 +22,8 @@ class Controller extends \Framework\Controller
         $this->template = new \Framework\Model('template');
         $this->settings = new \Framework\Model('settings');
         $this->tasksource = new \Framework\Model('tasksource');
+        //
+        $this->helper     = \Framework\Helper::instance();
     }
 
     /**

@@ -17,7 +17,7 @@ class Controller extends \Prefab
         $this->f3       = \Base::instance();
         $this->view     = \View::instance();
         $this->template = \Template::instance();
-        
+
         // set framework into view scope
         $this->f3->set('f3', $this->f3);
         $this->f3->set('view', $this->view);
