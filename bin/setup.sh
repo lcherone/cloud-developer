@@ -3,7 +3,7 @@
 #
 # Project Post Setup Script
 #
-TITLE="Cloud Developer - v0.2.0 - Post Install"
+TITLE="Cloud Developer - v0.2.1 - Post Install"
 TERM=vt220
 PWD=$(pwd)
 
