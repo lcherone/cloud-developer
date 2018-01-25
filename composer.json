@@ -33,7 +33,7 @@
         "plinker/core": ">=v0.1",
         "plinker/redbean": ">=v0.1",
         "plinker/system": ">=v0.1",
-        "plinker/tasks": ">=v0.1"
+        "plinker/tasks": "v0.6.14"
     },
     "autoload": {
         "psr-4": {
