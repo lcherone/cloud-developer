@@ -24,7 +24,7 @@
         "plinker/core": "v2.1.8",
         "plinker/redbean": "v0.4.3",
         "plinker/system": "v1.5.1",
-        "plinker/tasks": "v0.6.13"
+        "plinker/tasks": "v0.6.15"
     },
     "autoload": {
         "psr-4": {
