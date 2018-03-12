@@ -2122,6 +2122,10 @@ echo json_encode($result);
      */
     public function settings(\Base $f3, $params)
     {
+        if (!file_exists(getcwd().'/backups')) {
+            mkdir(getcwd().'/backups');
+        }
+        
         switch ($params['sub_action']) {
             /**
              *
