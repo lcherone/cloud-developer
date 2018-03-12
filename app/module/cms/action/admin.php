@@ -1264,7 +1264,6 @@ echo json_encode($result);
                             <div class="col-lg-12">
                                 Your <code>'.htmlentities('<?= $f3->decode($page[\'body\']) ?>').'</code> contents will go here.
                             </div>
-                            <pre>'.print_r($_SESSION, true).'</pre>
                         </div>
                         <script>
                         window.onload = function() {
