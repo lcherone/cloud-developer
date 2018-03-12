@@ -2321,10 +2321,15 @@ echo json_encode($result);
                     $form['errors']['success'] = empty($_GET['t']) ? 'Settings updated.' : 'Settings updated, the background task will now run composer update.';
                 }
 
+                $form['values']['composer_result'] = '';
                 try {
                     $composerTask = $tasks->get('Composer Update');
-                    $form['values']['composer_result'] = $tasks->getTasksLog($composerTask->id);
-                    $form['values']['composer_result'] = array_values($form['values']['composer_result'])[0];
+                    if (!empty($composerTask->id)) {
+                        $form['values']['composer_result'] = $tasks->getTasksLog($composerTask->id);
+                    }
+                    if (!empty($form['values']['composer_result'])) {
+                        $form['values']['composer_result'] = array_values($form['values']['composer_result'])[0];
+                    }
                 } catch (\Exception $e) {
                 }
 
