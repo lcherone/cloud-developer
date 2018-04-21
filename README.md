@@ -2,9 +2,6 @@ Cloud Developer (PHP)
 =======
 
 A CMS for coders, build your system directly through the CMS, inception style!
-
-[![Deploy](https://i.imgur.com/GAqlyf0.png)](https://deploy.lxc.systems/dgOUZ)
-
  
 :: Quick Overview ::
 ---
@@ -113,3 +110,8 @@ But also feel free to run it as root and be able to create a task which you can 
 clear memory caches or swap space.
 
 **It's experimental, have Fun & Happy coding!**
+
+## Developer Support / Sponsor
+
+If you enjoy using this project and want to show your appreciation,
+please feel free to make a donation [https://www.paypal.me/lcherone](https://www.paypal.me/lcherone), thanks.
